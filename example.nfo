@@ -1,0 +1,43 @@
+Rezykled
+========
+
+Entry to the "One effect compo" at Assembly Summer 2018. Recycled
+stuff from Instanssi 2018 :).
+
+Author:     qma
+
+            ("The Old Dude" for Instanssi folk, Paavo Nieminen
+            <paavo.j.nieminen@jyu.fi> in the daily life)
+
+Techniques: Javascript, WebGL, SoundBox, Closure Compiler, Pnginator,
+            GNU toolchain, Emacs
+
+Files:      rezykled.compo.html  - Compo version under 4096 bytes,
+                                   tested on some recent versions
+                                   of Firefox, Chrome, MS Edge.
+                                       
+            rezykled.debug.html  - Debug version with some tests for
+                                   most common error conditions.
+
+            rezykled.nfo         - this file
+
+This production uses the SoundBox synthesizer tracker:
+(http://sb.bitsnbites.eu/). The playback library is not reproduced in
+my source code repository, but must be downloaded separately.
+
+
+
+Greets
+-----------------------
+
+Thanks to everyone at our "Let's make a demo" programming workshop! I
+had fun arranging it - I really hope that the participants enjoyed it,
+too!!
+
+The greatest thanks to Waffle, BJAKKE and sooda from Graffathon for
+co-organizing the workshop with me!
+
+THANK YOU, ASSEMBLY SUMMER 2018! THANK YOU, SCENE LOUNGE!
+
+See you at Instanssi 2019! There *might* be a 4k intro workshop there,
+we'll see :)
