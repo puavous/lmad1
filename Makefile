@@ -26,7 +26,7 @@ $(PRODNAME_FULL)_by_$(PRODAUTHOR).zip: $(PRODNAME).compo.html $(PRODNAME).debug.
 
 
 # Compo target: Remove all debugging code, minify and pack everything.
-$(PRODNAME).compo.html: glconstants.js player-small.js $(PRODNAME)_song.js $(PRODNAME).js
+$(PRODNAME).compo.html: glconstants.js library.js player-small.js $(PRODNAME)_song.js $(PRODNAME).js
 	echo "(function (){" > tmp.bulk.js
 	cat $^ >> tmp.bulk.js
 	echo "})();" >> tmp.bulk.js
@@ -40,7 +40,7 @@ $(PRODNAME).compo.html: glconstants.js player-small.js $(PRODNAME)_song.js $(PRO
 
 
 # Debug target: just catenate stuff to an HTML file:
-$(PRODNAME).debug.html: player-small.js $(PRODNAME)_song.js $(PRODNAME).js
+$(PRODNAME).debug.html: library.js player-small.js $(PRODNAME)_song.js $(PRODNAME).js
 	echo "<html><head /><body><script>" > $@
 	echo "(function (){" >> $@
 	cat $^ >> $@

@@ -45,3 +45,542 @@
  * minification).
  *
  **/
+
+
+// Constants
+    var PI=Math.PI;
+//    var PI=3.141593
+
+    // Bezier basis matrix
+    var bezB = [  1,  0,  0, 0,
+                 -3,  3,  0, 0,
+                  3, -6,  3, 0,
+                 -1,  3, -3, 1];
+
+    // B-spline basis matrix
+    var bspB = [ 1./6,  4./6,  1./6, 0./6,
+                -3./6,  0./6,  3./6, 0./6,
+                 3./6, -6./6,  3./6, 0./6,
+                -1./6,  3./6, -3./6, 1./6 ];
+
+    // "Re-implementing the wheel" ------------------------------
+    // Observe: Everything looks transposed compared to the theory
+    // slides and C++ codes. This is just because of column major
+    // ordering used by Javascript arrays and the WebGL interface. The
+    // mathematical meaning is the same, and you should remember that
+    // what looks like a row here is actually a column if written as
+    // actual math.
+
+    // zero-matrix
+    function zeros(){
+        return [ 0, 0, 0, 0,
+                 0, 0, 0, 0,
+                 0, 0, 0, 0,
+                 0, 0, 0, 0 ];
+    };
+
+    function translate(tx,ty,tz){
+        return [ 1, 0, 0, 0,
+                 0, 1, 0, 0,
+                 0, 0, 1, 0,
+                 tx, ty, tz, 1 ];
+    };
+
+    function scaleXYZ(sx,sy,sz){
+        return [ sx, 0, 0, 0,
+                 0, sy, 0, 0,
+                 0, 0, sz, 0,
+                 0, 0, 0, 1 ];
+    };
+
+    function scale(s){
+        return scaleXYZ(s,s,s);
+    };
+
+    function rotZ(theta){
+        var s = Math.sin(theta);
+        var c = Math.cos(theta);
+        return [ c, -s, 0, 0,
+                 s,  c, 0, 0,
+                 0,  0, 1, 0,
+                 0,  0, 0, 1];
+    };
+
+    function rotY(theta){
+        var s = Math.sin(theta);
+        var c = Math.cos(theta);
+        return [ c,  0, -s, 0,
+                 0,  1, 0, 0,
+                 s,  0, c, 0,
+                 0,  0, 0, 1];
+    };
+
+    function rotX(theta){
+        var s = Math.sin(theta);
+        var c = Math.cos(theta);
+        return [ 1,  0, 0, 0,
+                 0,  c, -s, 0,
+                 0,  s, c, 0,
+                 0,  0, 0, 1];
+    };
+
+    /** Perspective projection, imitates gluPerspective() */
+    function perspective(fov, ar, near, far) {
+        var f = 1/Math.tan(fov/2);
+        var div = near - far;
+        return [f/ar, 0,  0,               0,
+                0,    f,  0,               0,
+                0,    0,  (far+near)/div, -1,
+                0,    0,  2*far*near/div,  0 ];
+    };
+
+    /**
+     * Perspective projection as in gluPerspective() but assumes a
+     * precomputed f==1/Math.tan(fov/2)
+     */
+    function perspectiveF(f, ar, near, far) {
+        var div = near - far;
+        return [f/ar, 0,   0,               0,
+                0,    f,   0,               0,
+                0,    0,   (far+near)/div, -1,
+                0,    0,   2*far*near/div,  0 ];
+    };
+
+    /**
+     * Perspective with hardcoded near plane "quite near". Far plane
+     * is "far away". Might have issues with Z stability. Assumes
+     * precomputed f==1/Math.tan(fov/2).
+     */
+    function perspectiveFhc(f, ar) {
+        return [f/ar, 0,   0,  0,
+                0,    f,   0,  0,
+                0,    0,  -1, -1,
+                0,    0,  -1,  0 ];
+    };
+
+
+    /**
+     * Orthographic projection with fixed width
+     */
+    function orthographic(top, ar, near, far) {
+        var bottom=-top,right=top*ar, left=-top*ar;
+        return [2/(right-left), 0,                0,             0,
+                0,              2/(top-bottom),   0,             0,
+                0,              0,                -2/(far-near), 0,
+                -(right+left)/(right-left),
+                                -(top+bottom)/(top-bottom),
+                                                  -(far+near)/(far-near),
+                                                                 1 ];
+    };
+
+
+    /** 4x4 Matrix multiplication */
+    function matmul(a,b){
+        var i,j,k,m = zeros();
+        for (i=0;i<4;i++){
+            for (j=0;j<4;j++){
+                for(k=0;k<4;k++){
+                    m[j*4+i] += a[k*4+i]*b[j*4+k];
+                }
+            }
+        }
+        return m;
+    }
+
+    /** 4x4 Matrix times 4x1 vector multiplication */
+    function matvec(a,b){
+        var i,j,res = [0,0,0,0];
+        for (i=0;i<4;i++){
+            for(j=0;j<4;j++){
+                res[i] += a[j*4+i]*b[j];
+            }
+        }
+        return res;
+    }
+
+    /**
+     * 4x4 matrix times 4xN matrix multiplication. Does a bit of extra
+     * work but allows the same routine to multiply both matrices and
+     * vectors. The end result seems to be 15 bytes shorter when using
+     * this instead of separate matmul and matvec routines.
+     */
+    function matmul4(a,b){
+        var i,j,k,m=[];
+        for (i=0;i<b.length;i++){
+            m[i]=0;
+        }
+        for (i=0;i<4;i++){
+            for (j=0;j<(b.length/4);j++){
+                for(k=0;k<4;k++){
+                    m[j*4+i] += a[k*4+i]*b[j*4+k];
+                }
+            }
+        }
+        return m;
+    }
+
+
+    /** Cross product for homogeneous directions. "[(axb)^t,0]^t" */
+    function cross(a,b){
+        return [a[1]*b[2]-a[2]*b[1],
+                a[2]*b[0]-a[0]*b[2],
+                a[0]*b[1]-a[1]*b[0],
+                0];
+    }
+
+    /** Normalize x,y,z disregarding and untouching w */
+    function nmld(v){
+        var length3d=Math.sqrt(v[0]*v[0]+v[1]*v[1]+v[2]*v[2]);
+        return [v[0]/length3d,v[1]/length3d,v[2]/length3d,v[3]];
+    }
+
+
+    // "Re-inventing the cylinder" ------------------------------
+
+    /**
+     * Create an evaluator that can return a local frame for circle in
+     * the xy plane. As in the MIT course assignment, but transposed.
+     */
+    function funCircle(radius,n){
+        var r = radius;
+        this.n = n; // Fidelity hint for the plane evaluator
+        this.c = function(t){
+            var s = Math.sin(t * 2 * PI);
+            var c = Math.cos(t * 2 * PI);
+            return [-c,  -s,   0, 0,  // normal
+                     0,   0,   1, 0,  // binormal
+                    -s,   c,   0, 0,  // tangent
+                     c*r, s*r, 0, 1   // position
+                   ];
+        };
+    }
+
+    // Line from zero to length, along y axis
+    // Some bugs here? Haven't actually used this at all...
+    function funLine(length,n){
+        var l = length;
+        this.n = n;
+        this.c = function(t){
+            return [ 1,   0,   0, 0,   // "normal"/orientation
+                     0,   0,   1, 0,   // binormal
+                     0,   1,   0, 0,   // tangent
+                     0,   t*l, 0, 1    // position
+                   ];
+        };
+    }
+
+
+    /**
+     * Simple uniform B-spline evaluator.
+     *
+     * Hmm.. position and tangent could be evaluated for any t... But
+     * how to maintain correct normal and bi-normal for surface
+     * creation? Initial idea: pre-compute at some intervals using the
+     * cross product trick from lecture notes, and then evaluate a
+     * normalized interpolant upon call to eval(). NOTE: Only need to
+     * store binormal (?), because normal can be computed via cross
+     * product. The binormal rotations could be corrected while
+     * precomputing. (not yet done).
+     *
+     * Note that analytic tangent doesn't exist for all possible
+     * inputs - we don't handle curves with vanishing derivatives,
+     * so keep this in mind when defining control points.
+     *
+     * TODO: Maybe could be sloppy and not even interpolate, if result
+     * is OK visually? Hmm... we do have storage, so why not just
+     * precompute like a *lot* of values when creating the spline
+     * object, and then return the closest one in compute(t)? Nasty, but
+     * without redundance...
+     *
+     * Back-of-the-envelope: 100 control pts * 100 intermediates * 16
+     * * 8 byte float is 1280000 bytes... well.. that's a megabyte for
+     * one spline..  admittedly, it sounds like a lot..
+     *
+     * TODO (cheating a bit, though): Use only xy-curves with no
+     * change of curvature, and delete all the code about flipping
+     * gradients.  Would be so much smaller and leaner! Well.. if we
+     * don't cheat that much, then at least the production should USE
+     * the feature and have some twisty curve(s) to show it
+     * off.. ended up cheating for the first version, and this
+     * function was unused..
+     */
+
+    function funBSpline(pts) {
+        // Let us declare all vars here to shorten the code.
+        var i;
+        var g,Tt,dTt,v,T,N;
+        var t,ifirst,npts = this.n = pts.length/4;
+        var nsteps = (npts-3)*300; // internal points (actually +1 because we go to t=1.0)
+        var b = [];           // the internal storage
+        var B = [0,0,1,0];    // "arbitrary binormal at beginning"
+        //this.n=npts;
+
+        for (i=0;i<nsteps+1;i++){
+            t = i/nsteps; // scale t to [0,1] within curve
+            if (i<nsteps) {
+                ifirst = t*(npts-3) | 0; // 1st point is... (funny "|0" makes a floor())
+                t = t*(npts-3) - ifirst; // reset t to [0,1] within segm.
+            } else {
+                ifirst = npts-4;
+                t = 1;
+            }
+
+            g = pts.slice(ifirst*4,ifirst*4+16); // pick cps to G.
+            Tt = [1, t, t*t, t*t*t];
+            dTt = [0, 1, 2*t, 3*t*t];
+            v = matmul4(matmul4(g, bspB),Tt);
+            T = nmld(matmul4(matmul4(g, bspB),dTt));
+            N = nmld(cross(B,T));
+            B = nmld(cross(T,N));
+            b.push([].concat(N, // "normal"/orientation
+                             B, // binormal
+                             T, // tangent
+                             v)); // pos.
+        }
+
+        // as of now, we don't care to interpolate:
+        this.c = function(t){
+            return b[0 | t*(nsteps)];
+        }
+    }
+
+    /*Trying one with transformed control points..*/
+    function funBSplineTransformed(pts,tfm) {
+        // Let us declare all vars here to shorten the code.
+        var i;
+        var g,Tt,dTt,v,T,N;
+        var t,ifirst,npts = this.n = pts.length/4;
+        var nsteps = (npts-3)*300; // internal points (actually +1 because we go to t=1.0)
+        var b = [];           // the internal storage
+        var B = [0,0,1,0];    // "arbitrary binormal at beginning"
+        //this.n=npts;
+        pts = matmul4(tfm,pts); // transform!
+
+
+        for (i=0;i<nsteps+1;i++){
+            t = i/nsteps; // scale t to [0,1] within curve
+            if (i<nsteps) {
+                ifirst = t*(npts-3) | 0; // 1st point is... (funny "|0" makes a floor())
+                t = t*(npts-3) - ifirst; // reset t to [0,1] within segm.
+            } else {
+                ifirst = npts-4;
+                t = 1;
+            }
+
+            g = pts.slice(ifirst*4,ifirst*4+16); // pick cps to G.
+            Tt = [1, t, t*t, t*t*t];
+            dTt = [0, 1, 2*t, 3*t*t];
+            v = matmul4(matmul4(g, bspB),Tt);
+            T = nmld(matmul4(matmul4(g, bspB),dTt));
+            N = nmld(cross(B,T));
+            B = nmld(cross(T,N));
+            b.push([].concat(N, // "normal"/orientation
+                             B, // binormal
+                             T, // tangent
+                             v)); // pos.
+        }
+
+        // as of now, we don't care to interpolate:
+        this.c = function(t){
+            return b[0 | t*(nsteps)];
+        }
+    }
+
+
+
+    /**
+     * XY-plane curves with no inflection points (B==(0,0,1)).
+     *
+     * Some 58 bytes smaller than the more general version.
+     *
+     * TODO: Think about another parameter for transforming control
+     * points. Could be a size-aware way to get skewed shapes with
+     * correct normals.. no need for inverse matrices anywhere if done
+     * on the control point level!
+     */
+    function funBSplineXYnoInf(ipts) {
+        // Let us declare all vars here to shorten the code.
+        var npts = this.n = ipts.length/4;
+        var pts=ipts;
+
+        this.c = function(t){
+            var ifirst;
+            // t arrives as [0,1] within curve
+            if (t<1) {
+                ifirst = t*(npts-3) | 0;
+                t = t*(npts-3) - ifirst;
+            } else {
+                ifirst = npts-4;
+                //t = 1;
+            }
+
+            var g = pts.slice(ifirst*4,ifirst*4+16), // pick cps to G.
+                B = [0,0,1,0],    // Constant binormal
+                Tt = [1, t, t*t, t*t*t],
+                dTt = [0, 1, 2*t, 3*t*t],
+                T = nmld(matmul4(matmul4(g, bspB),dTt));
+            return [].concat(nmld(cross(B,T)), // "normal"/orientation
+                             B, // binormal
+                             T, // tangent
+                             matmul4(matmul4(g, bspB),Tt)); // pos.
+        }
+    }
+
+    /**
+     * Convert packed 2d-vectors to (x,y,0,1) homogenous 3d
+     * coordinates. (Abandoned idea - didn't gain anything)
+     */
+    function xyToHomog(ptsxy){
+        var res=[];
+        for(var i=0;i<ptsxy.length;){
+            res.push(ptsxy[i++],ptsxy[i++],0,1);
+        }
+        return res;
+    }
+
+    /**
+     * Push values of the matrix column icol to array, optionally
+     * multiply by mul!=0
+     */
+    function pushCol4(array,mat,icol,mul){
+        mul=mul?mul:1;
+        for(var i=0;i<4;i++){
+            array.push(mul*mat[4*icol+i]);
+        }
+    }
+
+    /** Helper function. More bloaty than the few inlined calls: */
+    function createAndFillArrayBuffer32(data){
+        var buf=gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+        gl.bufferData(gl.ARRAY_BUFFER,
+                      new Float32Array(data),
+                      gl.STATIC_DRAW);
+        return buf;
+    }
+
+    /**
+     * Prepare a drawable WebGL buffer of a generalized cylinder
+     * (swept profile + caps)
+     */
+    function GenCyl(prof, profilesz, swp) {
+        var j,i,t,fp,lf,fs,ts;
+        var vertices = [];
+        var normals = [];
+        var vind = [];
+        var colors = [];
+        //var numfaces = (profilesz-1)*(sweepsz-1)*2+2*profilesz;
+        var sweepsz = (swp.n*1.5)|0; // heuristic for sweep size.
+
+        //var numfaces = 2*(sweepsz)*(profilesz-1)+2;
+        var numfaces = 2*(sweepsz-1)*(profilesz-1);
+
+
+        // GL buffer objects, to be filled as the last stage of init
+        var vertexColorBuf = gl.createBuffer(),
+            vertexNormalBuf = gl.createBuffer(),
+            vertexBuf = gl.createBuffer(),
+            faceBuf = gl.createBuffer();
+
+
+        // location, normal, and color of each vertex
+        for (j=0; j<sweepsz; j++){
+            ts = j/(sweepsz-1);
+            fs = swp.c(ts);
+            for (i=0;i<profilesz;i++){
+                t = i/(profilesz-1);
+                fp = prof.c(t);
+                lf = matmul4(fs,fp);
+                //vertices.push(lf[12],lf[13],lf[14],1);
+                //normals.push(lf[0],lf[1],lf[2],0);
+                pushCol4(vertices,lf,3);
+                pushCol4(normals,lf,0,-1); // invert!
+                colors.push((2*j+i+0)%3?0:1,
+                            (2*j+i+1)%3?0:1,
+                            (2*j+i+2)%3?0:1,
+                            1);
+            }
+        }
+
+        // triangles as indices
+        for (j=0; j<sweepsz-1; j++){
+            for (i=0; i<profilesz-1; i++){
+                vind.push(j*profilesz+i,   j*profilesz+i+1,     (j+1)*profilesz+i);
+                vind.push(j*profilesz+i+1, (j+1)*profilesz+i+1, (j+1)*profilesz+i);
+            }
+        }
+
+
+        // Add end caps (quite naive, assume convex profile curve
+        // containing origin and curving to the left on xy-plane)
+
+/*
+        // start cap (normal opposite of sweep tangent)
+        fs = swp.c(0); // center point
+        pushCol4(vertices,fs,3);
+        pushCol4(normals,fs,2,-1);
+        colors.push(1,0,0,1);
+        for (i=0;i<profilesz;i++){
+            t = i/(profilesz-1);
+            fp = prof.c(t);
+            lf = matmul4(fs,fp);
+            colors.push(0,i%2,(i+1)%2,1);
+            pushCol4(vertices,lf,3);
+            pushCol4(normals,fs,2,-1);
+        }
+
+        // end cap (normal same as sweep tangent)
+        fs = swp.c(1); // center point
+        pushCol4(vertices,fs,3);
+        pushCol4(normals,fs,2);
+        colors.push(1,0,0,1);
+        for (i=0;i<profilesz;i++){
+            t = i/(profilesz-1);
+            fp = prof.c(t);
+            lf = matmul4(fs,fp);
+            colors.push(0,i%2,(i+1)%2,1);
+            pushCol4(vertices,lf,3);
+            pushCol4(normals,fs,2);
+
+            // Add faces here to avoid having another loop
+            vind.push(sweepsz*profilesz,
+                      1+sweepsz*profilesz+((i+1)%profilesz),
+                      1+sweepsz*profilesz+i,
+                      1+sweepsz*profilesz+profilesz,
+                      1+sweepsz*profilesz+i+profilesz+1,
+                      1+sweepsz*profilesz+((i+1)%profilesz)+profilesz+1
+                     );
+
+        }
+*/
+
+        // Fill in buffers (non-animated shapes)
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexColorBuf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexNormalBuf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normals), gl.STATIC_DRAW);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, faceBuf);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(vind), gl.STATIC_DRAW);
+
+        // "Compute", i.e., Bind and draw to pipeline
+        this.c = function(gl){
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexColorBuf);
+            gl.enableVertexAttribArray(i=gl.getAttribLocation(prg,"g"));
+            gl.vertexAttribPointer(i, 4, gl.FLOAT, false, 0, 0);
+
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuf);
+            gl.enableVertexAttribArray(i=gl.getAttribLocation(prg,"v"));
+            gl.vertexAttribPointer(i, 4, gl.FLOAT, false, 0, 0);
+
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexNormalBuf);
+            gl.enableVertexAttribArray(i=gl.getAttribLocation(prg,"N"));
+            gl.vertexAttribPointer(i, 4, gl.FLOAT, false, 0, 0);
+
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, faceBuf);
+            gl.drawElements(gl.TRIANGLES, numfaces*3, gl.UNSIGNED_SHORT,0);
+        };
+    };
+
