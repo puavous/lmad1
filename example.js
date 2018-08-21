@@ -101,14 +101,10 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7ds_a1NRGMfx37nn5mRIKFZnJdBB3OwLcHbpUKiTHX
         }
     }
 
-
     // --------------------------------------------------------------------------------
-
-    // control points for our cylinders
-    var cur =
-        [
-            // 0: A roundish, squarish, symmetrical profile curve:
-            [
+    // Could have like a "library of nice preset curves"
+    // 0: A roundish, squarish, symmetrical profile curve:
+    var cptsProfile = [
                   1, -1,0,1,
                   1, .0,0,1,
                   1,  1,0,1,
@@ -120,9 +116,9 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7ds_a1NRGMfx37nn5mRIKFZnJdBB3OwLcHbpUKiTHX
                   1, -1,0,1,
                   1, .0,0,1,
                   1,  1,0,1,
-            ],
-            // 1: Rim of "E", like a sharp-angled C
-            [
+    ];
+    // 1: Rim of "E", like a sharp-angled C
+    var cptsC = [
                 3,4-.4,0,1,
                 1,4-.4,0,1,
                -1,4-.4,0,1,
@@ -131,41 +127,15 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7ds_a1NRGMfx37nn5mRIKFZnJdBB3OwLcHbpUKiTHX
                -1, 0.4,0,1,
                 1, 0.4,0,1,
                 3, 0.4,0,1,
-            ],
-            //2: Horizontal middle bar, usable in "E" and "A", maybe "-" and "+"
-            [
-                -3  ,2,0,1,
-                -1  ,2,0,1,
-                 1  ,2,0,1,
-                 3  ,2,0,1,
-            ],
+    ];
+    // ... and so on.. some examples in the early "courselogo.js"
 
-            //3: bendy
-            [
-             -0 ,  30.11   ,0,1,
-              -1 ,  30   ,0,1,
-              -4  ,  15  ,0,1,
-              -4  ,  0   ,0,1,
-              -4  , -15  ,0,1,
-              -1  , -30.11,0,1,
-             -0 , -30.11,0,1,
-            ],
+    // --------------------------------------------------------------------------------
 
-            //4: Vertical line of length 4 as in "I" or "1"
-            [
-                0,-10,0,1,
-                0,2,0,1,
-                0,2,0,1,
-                0,14,0,1,
-            ],
-            //5: Yet another shape, for "surroundings"
-            [
-                -16, 32,0,1,
-                  4, -9,0,1,
-                  0,  4,0,1,
-                 -4, 32,0,1,
-            ],
-
+    // control points for our cylinders
+    var cur =
+        [
+            cptsProfile,
         ];
 
 
@@ -175,7 +145,7 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7ds_a1NRGMfx37nn5mRIKFZnJdBB3OwLcHbpUKiTHX
     var gl, C, Cw, Ch;
     var audio, prg, persmat;
 
-    var os;
+    var objTile, objBackground;
 
     var s;
 
@@ -214,16 +184,12 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7ds_a1NRGMfx37nn5mRIKFZnJdBB3OwLcHbpUKiTHX
             // "Camera":
             var sceneroot={f:[],o:[],c:[]};
 
+            // Re-build the scenegraph for every frame (can animate):
             // Animation parameters
             var camtrans=[translate(0,-1,-4),rotX(-.6)];
             var stufftrans=[rotX(-.3),translate(0,-2,-5),rotY(t*.2)];
+            var tt = Math.sin(t/8);
 
-            // take this somewhere?
-            var colors=
-                [.1,0,0,1,
-                 .1,.6,.8,2,
-                 2,2,1,1,
-                 8,1,0,0];
 
             // Clear buffer
             gl.clearColor(.3, .3, .3, 1);
@@ -237,9 +203,6 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7ds_a1NRGMfx37nn5mRIKFZnJdBB3OwLcHbpUKiTHX
             gl.uniform4fv(gl.getUniformLocation(prg, "l"),
                           nmld([1,1,1,0]));
 
-            // Re-build the scenegraph for every frame (can animate):
-            var tt =0;
-
             function makeStuff(t,ydist,disperse){
                 var stuff = {
                     f: [],
@@ -247,44 +210,23 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7ds_a1NRGMfx37nn5mRIKFZnJdBB3OwLcHbpUKiTHX
                     c: []
                 };
 
-
                 var clr=
                     [.1,0,0,1,
                      1,.1,.1,1,
                      .8,.8,.8,2,
                      12,1,0,0];
 
-                stuff.c.push({f: [rotX(0)],
-                              o: [new Material(clr),os[6]],
+                stuff.c.push({f: [translate(Math.sin(ydist),disperse,0), rotX(ydist)],
+                              o: [new Material(clr),objTile],
                               c: []
                              });
                 return stuff;
             }
 
-            var modder = 0;
-
             var stuff = makeStuff(t,
-                                  2,
-                                  2
+                                  t+2-(t%2),
+                                  Math.sin(t/20)
                                  );
-/*
-            for(var i=(t%4)|0;i<17-(t%4);i++){
-                for(var j=16-(t%16); j<18; j++){
-                    var c=(i+j)%4;
-                    var clr=
-                        [.1,0,0,1,
-                         .1,.1,c,1,
-                         .8,.8,.8,2,
-                         8,1,0,0];
-
-                    stuff.c.push({f: [rotX(j/2),rotZ(i/2),translate(i-9,2,j-9)],
-                                  o: [new Material(clr),os[6]],
-                                  c: []
-                                 });
-                }
-            }
-*/
-            var tsyk=1-(t%2);
 
             var ctausta=
                 [.1,.1,.1,1,
@@ -294,14 +236,12 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7ds_a1NRGMfx37nn5mRIKFZnJdBB3OwLcHbpUKiTHX
 
             var tausta = {
                 f:[translate(0,0,0),rotZ(t*.02),rotY(t*.02),rotX(Math.PI/2)],
-                o:[new Material(ctausta),os[7]],
+                o:[new Material(ctausta),objBackground],
                 c:[]
             };
 
-
-
             sceneroot.c.push({f:camtrans,
-                              o:[new Material(colors)],
+                              o:[],
                               c:[
                                   {f:stufftrans,
                                    o:[],
@@ -326,9 +266,8 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7ds_a1NRGMfx37nn5mRIKFZnJdBB3OwLcHbpUKiTHX
                              }
                             );
 
-            // Then we display it (unless at end):
-            if (t<170)
-                traverse(sceneroot,rotX(0));
+            // Then we display it
+            traverse(sceneroot,rotX(0));
 
         }                                                    //DEBUG
         catch (err)                                          //DEBUG
@@ -416,26 +355,13 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7ds_a1NRGMfx37nn5mRIKFZnJdBB3OwLcHbpUKiTHX
 
 
         // Create primitive building blocks by different profile sweeps:
-        var prof=cur[0];
-/*
-        os=cur.map(function(cps){
-            return new GenCyl(new funBSplineXYnoInf(prof),17,
-                              new funBSplineXYnoInf(cps));});
-        os.push(new GenCyl(new funBSplineXYnoInf(cur[3]),17,
-                           new funCircle(5, 5)));
-*/
-        os=cur.map(function(cps){
-            return new GenCyl(new funBSpline(prof),17,
-                              new funBSpline(cps));});
-/*
-        os.push(new GenCyl(new funBSplineTransformed(cur[0],scaleXYZ(.1,10,0)),17,
-                           new funCircle(15,  9)));
-*/
-        os.push(new GenCyl(new funBSplineTransformed(cur[0],scaleXYZ(.04,.45,0)),13,
-                           new funBSplineTransformed(cur[0],scaleXYZ(.45,.001,0))));
+        var prof=cptsProfile;
 
-        os.push(new GenCyl(new funBSplineTransformed(cur[0],scaleXYZ(.1,30,0)),27,
-                           new funCircle(25,  9)));
+        objTile = new GenCyl(new funBSplineTransformed(prof,scaleXYZ(.04,.45,0)),13,
+                             new funBSplineTransformed(prof,scaleXYZ(.45,.001,0)));
+
+        objBackground = new GenCyl(new funBSplineTransformed(prof,scaleXYZ(.1,30,0)),27,
+                                   new funCircle(25,  9));
 
 
 
