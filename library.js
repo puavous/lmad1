@@ -241,9 +241,9 @@
      * Create an evaluator that can return a local frame for circle in
      * the xy plane. As in the MIT course assignment, but transposed.
      */
-    function funCircle(radius,n){
+    function funCircleBasic(radius,n){
         var r = radius;
-        this.n = n; // Fidelity hint for the plane evaluator
+        this.n = n; // Fidelity hint for the surface evaluator
         this.c = function(t){
             var s = Math.sin(t * 2 * PI);
             var c = Math.cos(t * 2 * PI);
@@ -254,6 +254,30 @@
                    ];
         };
     }
+
+    /**
+     * Create an evaluator that can return a local frame for a part or
+     * whole circle on the xy plane. The starting point of the arc is
+     * at the highest y point "top", and direction is counterclockwise
+     * in right-handed coordinates, z towards viewer. Assumes
+     * 0<arclen<=1. Arclen is optional.
+     */
+    function funCircle(radius,swpfidel,arclen){
+        var r = radius;
+        var a = arclen?arclen:1;
+        // Fidelity hint for the sweep surface evaluator
+        this.n = swpfidel?swpfidel:10;
+        this.c = function(t){
+            var s = Math.sin(t * 2 * PI * a);
+            var c = Math.cos(t * 2 * PI * a);
+            return [    s,  -c,  0,  0,  // normal
+                        0,   0,  1,  0,  // binormal
+                       -c,  -s,  0,  0,  // tangent
+                     -s*r, c*r,  0,  1   // position
+                   ];
+        };
+    }
+
 
     // Line from zero to length, along y axis
     // Some bugs here? Haven't actually used this at all...

@@ -132,13 +132,6 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
 
     // --------------------------------------------------------------------------------
 
-    // control points for our cylinders
-    var cur =
-        [
-            cptsProfile,
-        ];
-
-
     // "Globals needed in many routines":
     // Note that in unstrict mode some of these could be left
     // as document object properties for rude size optimization.
@@ -232,7 +225,7 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
                 [.1,.1,.1,1,
                  .6,.6,.6,1,
                  .8,.8,.6,2,
-                 2,1,0.01,0];
+                 2,1,0.4,0];
 
             var tausta = {
                 f:[translate(0,0,0),rotZ(t*.02),rotY(t*.02),rotX(Math.PI/2)],
@@ -333,6 +326,7 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
 
         // Initializations seem to pack a bit better inlined.
         // prg = gl.createProgram();
+        // TODO: Multiple, switchable shaders!
 
         // Reuse the variable name "s"
         s = gl.createShader(gl.VERTEX_SHADER);
@@ -355,14 +349,18 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
 
 
         // Create primitive building blocks by different profile sweeps:
-        var prof=cptsProfile;
-
+/*
+        var prof=cptsHuge;
         objTile = new GenCyl(new funBSplineTransformed(prof,scaleXYZ(.04,.45,0)),13,
                              new funBSplineTransformed(prof,scaleXYZ(.45,.001,0)));
+*/
+        // Now we can make a ball by half-a-ball and zero-radius-ball
+        objTile = new GenCyl(new funCircle(1,12,.5), 12,
+                             new funCircle(0,12));
 
-        objBackground = new GenCyl(new funBSplineTransformed(prof,scaleXYZ(.1,30,0)),27,
-                                   new funCircle(25,  9));
-
+        // Can make the radius negative to make an interior of a ball:
+        objBackground = new GenCyl(new funCircle(-30,10,.5), 32,
+                                   new funCircle(0,32));
 
 
         var audio,player=new CPlayer();
