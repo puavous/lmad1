@@ -24,7 +24,7 @@
 The visuals of this production are synced to the following song
 created using the great SoundBox minisynth:
 
-http://sb.bitsnbites.eu/?data=U0JveAwC7ds_a1NRGMfx37nn5mRIKFZnJdBB3OwLcHbpUKiTHXRwNhBqWwzWy6ElNC2BcNGhi6LQF6CLs04uOrkVfA_S3T65MTaVq5PF3Pr9HJ7znD8Ezn1uuJDA_TYvNdUKWs2ke1lTamhBxis5llorPqaalutAh8Xo8Jf5C1XB6XmrqernBwAAAAAAAAAAmDlHj5y-P5RTGhbGK8mc3PWlmuSmJNF2fhMxxmI402LF71PkqwoAAAAAAAAAAPBX-QeZ_McssWFYtG4vdf7au43jPNwJLjlt2rSmoi_LT57O-oWuWxv3Zflxd9bP3-mos2VRnrd2-lJf-xpa39fweX_yuUHR7__z87fbanctynM39qSedi0GdthBboOzcup_3vU_U_PdH_kZz0gAAAAA-K_Y78Tun4IKAQCAi8Z_2nb-ZZRbTes3Rgup82_vXr5_q3apeJNstDTJP_9IL8k9SgkAAAAAAAAAAIAqce8zua9ZkGq3X9v8VeqS1lq9dTM5CMX-5J2yzYpf6Dr3GgAAAAAAAAAAAFMSZfIW-tAIyza_msp__jK8koc36WjfFWGtTa0AAAAAAAAAAABwgZwA
+http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSArLq440op4HGrKeoNhcZRGsrCzyC_IXUon-AW38B_bn3u1xZ5rUnn7f7pudN8w0w3YDb36sR3Riay0mxxF3j9citm90Y6aYRKzfKR-3YmkQo3gf7-JtHMbLGM7GqgAAAAAAAIAVNXmWMRlGHrXaN5uRovO6szXtZGbktM0YjyPqdxnj830AAAAAAABYKZ-qrCPyW-vSTp3eb0X59Ens7pQbOTsom5nNHM1XnPuOljkAAAAAAACsiuxVkWfV9CBsc6NuemUU905f_NprX8miWByT9edPRH_QX2SDGA4P4mBehPFv1r8w7_sPAAAAAAAA_jtVE4dRPmwG8uf3uHU79-d3kzVFFyMuDAAAAAAAAFglZa-K8qwq6m63WzcnVzOvf_n65vPlk_bybrL8OI7xB7sFAAAAAADAP2JadLFoii4-2I5p0cUsHp1ei73281zMyRjUn8Efy5r8Vd0e2UMAAAAAAABWzm8
 
 */
 
@@ -153,8 +153,8 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7ds_a1NRGMfx37nn5mRIKFZnJdBB3OwLcHbpUKiTHX
     {
         try                                                  //DEBUG
         {                                                    //DEBUG
-		    // Time from the audio object. Interpret as beat (bpm 144)
-            var t = audio.currentTime * 2.4;
+		    // Time from the audio object. Interpret as beat.
+            var t = audio.currentTime * (130/60);
             // Update canvas size
             //var w = window.innerWidth, h = window.innerHeight;
             var w = innerWidth, h = innerHeight;  //window object is implicit
@@ -307,7 +307,7 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7ds_a1NRGMfx37nn5mRIKFZnJdBB3OwLcHbpUKiTHX
                 e.pageX/C.width*audio.duration;          //DEBUG
             if (e.pageY<(C.height/2))audio.pause();      //DEBUG
             else audio.play();                           //DEBUG
-            for(var t=(audio.currentTime*2.75)|0;t>=0;t--){  //DEBUG
+            for(var t=(audio.currentTime*(130/60))|0;t>=0;t--){  //DEBUG
             }                                            //DEBUG
         });                                              //DEBUG
 
