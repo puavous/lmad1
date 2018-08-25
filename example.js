@@ -353,10 +353,14 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
         var prof=cptsHuge;
         objTile = new GenCyl(new funBSplineTransformed(prof,scaleXYZ(.04,.45,0)),13,
                              new funBSplineTransformed(prof,scaleXYZ(.45,.001,0)));
-*/
+
         // Now we can make a ball by half-a-ball and zero-radius-ball
         objTile = new GenCyl(new funCircle(1,12,.5), 12,
                              new funCircle(0,12));
+*/
+
+        // And now we can even make a box..
+        objTile = new Box(1);
 
         // Can make the radius negative to make an interior of a ball:
         objBackground = new GenCyl(new funCircle(-30,10,.5), 32,

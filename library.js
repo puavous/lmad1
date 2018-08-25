@@ -27,10 +27,11 @@
  *
  * If you're less experienced, try to keep on learning good
  * programming practices (in Javascript and other languages) from nice
- * tutorials. That said, some of this code may show you some features
- * that are less common in basic tutorials.
+ * tutorials. Listen to your teachers and coaches. They know what is
+ * best for you. That said, some of this code may show you some
+ * features that are less common in basic tutorials.
  *
- * Browser support: Productions made using this code seems to load and
+ * Browser support: Productions made using this code seem to load and
  * run in desktop Chrome, Edge, and Firefox, but not on IE. Mobile
  * browsers unknown.
  *
@@ -51,6 +52,15 @@
     var PI=Math.PI;
 //    var PI=3.141593
 
+    // Observe: Everything looks transposed compared to the theory
+    // slides and C++ codes of the course. This is because of column
+    // major ordering used by Javascript arrays and the WebGL
+    // interface. The mathematical meaning is the same as on the
+    // course, but you should remember that what looks like a row here
+    // is actually a column if written as actual math. Pen and paper
+    // and your own brains are very powerful tools, as I keep
+    // repeating on my lectures.
+
     // Bezier basis matrix
     var bezB = [  1,  0,  0, 0,
                  -3,  3,  0, 0,
@@ -64,14 +74,8 @@
                 -1./6,  3./6, -3./6, 1./6 ];
 
     // "Re-implementing the wheel" ------------------------------
-    // Observe: Everything looks transposed compared to the theory
-    // slides and C++ codes. This is just because of column major
-    // ordering used by Javascript arrays and the WebGL interface. The
-    // mathematical meaning is the same, and you should remember that
-    // what looks like a row here is actually a column if written as
-    // actual math.
 
-    // zero-matrix
+    /** Returns a 4x4 matrix of zeros */
     function zeros(){
         return [ 0, 0, 0, 0,
                  0, 0, 0, 0,
@@ -79,6 +83,7 @@
                  0, 0, 0, 0 ];
     };
 
+    /** Returns a translation matrix of homogeneous coordinates. */
     function translate(tx,ty,tz){
         return [ 1, 0, 0, 0,
                  0, 1, 0, 0,
@@ -86,6 +91,7 @@
                  tx, ty, tz, 1 ];
     };
 
+    /** Returns a scale matrix. */
     function scaleXYZ(sx,sy,sz){
         return [ sx, 0, 0, 0,
                  0, sy, 0, 0,
@@ -93,10 +99,12 @@
                  0, 0, 0, 1 ];
     };
 
+    /** Returns an isotropic scale matrix. */
     function scale(s){
         return scaleXYZ(s,s,s);
     };
 
+    /** Counter-clockwise rotation around the Z-axis */
     function rotZ(theta){
         var s = Math.sin(theta);
         var c = Math.cos(theta);
@@ -106,6 +114,7 @@
                  0,  0, 0, 1];
     };
 
+    /** Counter-clockwise rotation around the Y-axis */
     function rotY(theta){
         var s = Math.sin(theta);
         var c = Math.cos(theta);
@@ -115,6 +124,7 @@
                  0,  0, 0, 1];
     };
 
+    /** Counter-clockwise rotation around the X-axis */
     function rotX(theta){
         var s = Math.sin(theta);
         var c = Math.cos(theta);
@@ -247,10 +257,10 @@
         this.c = function(t){
             var s = Math.sin(t * 2 * PI);
             var c = Math.cos(t * 2 * PI);
-            return [-c,  -s,   0, 0,  // normal
-                     0,   0,   1, 0,  // binormal
-                    -s,   c,   0, 0,  // tangent
-                     c*r, s*r, 0, 1   // position
+            return [-c,  -s,   0,  0,  // normal
+                     0,   0,   1,  0,  // binormal
+                    -s,   c,   0,  0,  // tangent
+                     c*r, s*r, 0,  1   // position
                    ];
         };
     }
@@ -300,7 +310,7 @@
      * Hmm.. position and tangent could be evaluated for any t... But
      * how to maintain correct normal and bi-normal for surface
      * creation? Initial idea: pre-compute at some intervals using the
-     * cross product trick from lecture notes, and then evaluate a
+     * cross product trick from our lecture notes, and then evaluate a
      * normalized interpolant upon call to eval(). NOTE: Only need to
      * store binormal (?), because normal can be computed via cross
      * product. The binormal rotations could be corrected while
@@ -325,8 +335,10 @@
      * gradients.  Would be so much smaller and leaner! Well.. if we
      * don't cheat that much, then at least the production should USE
      * the feature and have some twisty curve(s) to show it
-     * off.. ended up cheating for the first version, and this
-     * function was unused..
+     * off.. Closure will omit unused functions, so we can have many
+     * versions here in the library. This is the bloaty, most general
+     * version. Depending on what you need, you can "cheat" more by
+     * using the restricted versions below.
      */
 
     function funBSpline(pts) {
@@ -368,7 +380,11 @@
         }
     }
 
-    /*Trying one with transformed control points..*/
+    /**
+     * Simple uniform B-spline with transformed control points.. This
+     * was "new" in Instanssi 2018 - allows scaled and/or skewed
+     * geometries but needs to be done during instantiation.
+     */
     function funBSplineTransformed(pts,tfm) {
         // Let us declare all vars here to shorten the code.
         var i;
@@ -417,10 +433,6 @@
      *
      * Some 58 bytes smaller than the more general version.
      *
-     * TODO: Think about another parameter for transforming control
-     * points. Could be a size-aware way to get skewed shapes with
-     * correct normals.. no need for inverse matrices anywhere if done
-     * on the control point level!
      */
     function funBSplineXYnoInf(ipts) {
         // Let us declare all vars here to shorten the code.
@@ -484,6 +496,212 @@
     }
 
     /**
+     * Prepare a drawable WebGL buffer that represents a box.
+     *
+     * It's a bit funny that even though the box is a very simple
+     * shape, the data and code required for making one is actually
+     * quite bloaty when compared to generalized cylinders. Hmm,
+     * technically it could be possible to make a box with a 4-point
+     * circle, but then there should be some clever way to make
+     * non-smooth normals. Think about this..
+     *
+     */
+    function Box(size){
+        // GL buffer objects
+        var vertexColorBuf = gl.createBuffer(),
+            vertexBuf = gl.createBuffer(),
+            vertexNormalBuf = gl.createBuffer(),
+            faceBuf = gl.createBuffer();
+
+        var vertices=[];
+        var normals=[];
+        var vind=[];
+
+        vertices = [
+            // Front
+            -1, -1,  1, 1,
+             1, -1,  1, 1,
+             1,  1,  1, 1,
+            -1,  1,  1, 1,
+            // Back
+            -1, -1, -1, 1,
+            -1,  1, -1, 1,
+             1,  1, -1, 1,
+             1, -1, -1, 1,
+            // Top
+            -1,  1, -1, 1,
+            -1,  1,  1, 1,
+             1,  1,  1, 1,
+             1,  1, -1, 1,
+            // Bottom
+            -1, -1, -1, 1,
+             1, -1, -1, 1,
+             1, -1,  1, 1,
+            -1, -1,  1, 1,
+            // Right
+            1.0, -1.0, -1.0, 1.0,
+            1.0,  1.0, -1.0, 1.0,
+            1.0,  1.0,  1.0, 1.0,
+            1.0, -1.0,  1.0, 1.0,
+            // Left
+            -1.0, -1.0, -1.0, 1.0,
+            -1.0, -1.0,  1.0, 1.0,
+            -1.0,  1.0,  1.0, 1.0,
+            -1.0,  1.0, -1.0, 1.0,
+        ];
+
+        normals = [
+            // Front
+            0, 0, 1, 0,
+            0, 0, 1, 0,
+            0, 0, 1, 0,
+            0, 0, 1, 0,
+            // Back
+            0, 0,-1, 0,
+            0, 0,-1, 0,
+            0, 0,-1, 0,
+            0, 0,-1, 0,
+            // Top
+            0, 1, 0, 0,
+            0, 1, 0, 0,
+            0, 1, 0, 0,
+            0, 1, 0, 0,
+            // Bottom
+            0,-1, 0, 0,
+            0,-1, 0, 0,
+            0,-1, 0, 0,
+            0,-1, 0, 0,
+            // Right face
+            1, 0, 0, 0,
+            1, 0, 0, 0,
+            1, 0, 0, 0,
+            1, 0, 0, 0,
+            // Left face
+            -1, 0, 0, 0,
+            -1, 0, 0, 0,
+            -1, 0, 0, 0,
+            -1, 0, 0, 0,
+        ]
+
+        vind = [
+            0,  1,  2,      0,  2,  3,    // front
+            4,  5,  6,      4,  6,  7,    // back
+            8,  9,  10,     8,  10, 11,   // top
+            12, 13, 14,     12, 14, 15,   // bottom
+            16, 17, 18,     16, 18, 19,   // right
+            20, 21, 22,     20, 22, 23,   // left
+        ];
+
+        // Fill in buffers (non-animated shapes)
+
+        //hmm?
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexColorBuf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normals), gl.STATIC_DRAW);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexNormalBuf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normals), gl.STATIC_DRAW);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, faceBuf);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(vind), gl.STATIC_DRAW);
+
+        // "Compute", i.e., Bind and draw to pipeline
+        this.c = function(gl){
+            var i;
+            // This quite unnecessary, actually (TODO:)
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexColorBuf);
+            gl.enableVertexAttribArray(i=gl.getAttribLocation(prg,"g"));
+            gl.vertexAttribPointer(i, 4, gl.FLOAT, false, 0, 0);
+
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuf);
+            gl.enableVertexAttribArray(i=gl.getAttribLocation(prg,"v"));
+            gl.vertexAttribPointer(i, 4, gl.FLOAT, false, 0, 0);
+
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexNormalBuf);
+            gl.enableVertexAttribArray(i=gl.getAttribLocation(prg,"N"));
+            gl.vertexAttribPointer(i, 4, gl.FLOAT, false, 0, 0);
+
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, faceBuf);
+            gl.drawElements(gl.TRIANGLES, 6*2*3, gl.UNSIGNED_SHORT,0);
+        };
+
+
+    }
+
+
+    /**
+     * A square [-1,1]^2 on xy-plane, z==0. This may not be very useful..
+     */
+    function Square(size){
+        // GL buffer objects
+        var vertexColorBuf = gl.createBuffer(),
+            vertexBuf = gl.createBuffer(),
+            vertexNormalBuf = gl.createBuffer(),
+            faceBuf = gl.createBuffer();
+
+        var vertices=[];
+        var normals=[];
+        var vind=[];
+
+        vertices = [
+            // Front
+            -1, -1,  0, 1,
+             1, -1,  0, 1,
+             1,  1,  0, 1,
+            -1,  1,  0, 1,
+        ];
+
+        normals = [
+            // Front
+            0, 0, 1, 0,
+            0, 0, 1, 0,
+            0, 0, 1, 0,
+            0, 0, 1, 0,
+        ]
+
+        vind = [
+            0,  1,  2,      0,  2,  3,
+        ];
+
+        // Fill in buffers (non-animated shapes)
+
+        //hmm?
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexColorBuf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normals), gl.STATIC_DRAW);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexNormalBuf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normals), gl.STATIC_DRAW);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, faceBuf);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(vind), gl.STATIC_DRAW);
+
+        // "Compute", i.e., Bind and draw to pipeline
+        this.c = function(gl){
+            var i;
+            // This quite unnecessary, actually (TODO:)
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexColorBuf);
+            gl.enableVertexAttribArray(i=gl.getAttribLocation(prg,"g"));
+            gl.vertexAttribPointer(i, 4, gl.FLOAT, false, 0, 0);
+
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuf);
+            gl.enableVertexAttribArray(i=gl.getAttribLocation(prg,"v"));
+            gl.vertexAttribPointer(i, 4, gl.FLOAT, false, 0, 0);
+
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexNormalBuf);
+            gl.enableVertexAttribArray(i=gl.getAttribLocation(prg,"N"));
+            gl.vertexAttribPointer(i, 4, gl.FLOAT, false, 0, 0);
+
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, faceBuf);
+            gl.drawElements(gl.TRIANGLES, 1*2*3, gl.UNSIGNED_SHORT,0);
+        };
+    }
+
+
+
+
+
+    /**
      * Prepare a drawable WebGL buffer of a generalized cylinder
      * (swept profile + caps)
      */
@@ -537,6 +755,7 @@
 
         // Add end caps (quite naive, assume convex profile curve
         // containing origin and curving to the left on xy-plane)
+        // TODO: Separate, optional, function for making caps if needed.
 
 /*
         // start cap (normal opposite of sweep tangent)
