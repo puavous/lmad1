@@ -138,7 +138,7 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
     var gl, C, Cw, Ch;
     var audio, prg, persmat;
 
-    var objTile, objBackground;
+    var objTile, objBackground, objBall;
 
     var s;
 
@@ -213,6 +213,12 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
                               o: [new Material(clr),objTile],
                               c: []
                              });
+
+                stuff.c.push({f: [translate(Math.sin(ydist),disperse,3), rotX(ydist)],
+                              o: [new Material(clr),objBall],
+                              c: []
+                             });
+
                 return stuff;
             }
 
@@ -228,7 +234,7 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
                  2,1,0.4,0];
 
             var tausta = {
-                f:[translate(0,0,0),rotZ(t*.02),rotY(t*.02),rotX(Math.PI/2)],
+                f:[translate(-10,-10,-16),rotZ(t*.02),rotY(t*.01),rotX(t*.11)],
                 o:[new Material(ctausta),objBackground],
                 c:[]
             };
@@ -242,15 +248,7 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
                                        o:[],
                                        c:[stuff]
                                       },
-                                     {f:[translate(0,-3,-tt),rotZ(t*.02)],
-                                       o:[],
-                                       c:[stuff]
-                                     },
-                                     {f:[translate(0,-3,-tt),rotX(t*.02)],
-                                       o:[],
-                                       c:[stuff]
-                                      }]
-                                  },
+                                     ]},
                                   {f:[],
                                    o:[],
                                    c:[tausta]
@@ -364,6 +362,10 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
 
         // Can make the radius negative to make an interior of a ball:
         objBackground = new GenCyl(new funCircle(-30,10,.5), 32,
+                                   new funCircle(0,32));
+
+        // Normal ball:
+        objBall = new GenCyl(new funCircle(1,10,.5), 32,
                                    new funCircle(0,32));
 
 
