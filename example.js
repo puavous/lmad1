@@ -31,8 +31,6 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
 // A redundant block to cheat automatic code formatting:
 { //DEBUG
 
-// DONE (in Makefile): gl.CONSTANT names -> actual values -> Closure can minify those too
-
     // Vertex shader: Just interpolate color (g) and position (v)
     // projected by perspective (p) and modelview (mv) transforms. We
     // transform normals by the modelview (not its inverse transpose)
@@ -52,6 +50,22 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
             "c=g;" +        // Color (in this case, graph coloring:))
             "r=-mv*v;" +    // View diRection
         "}";
+
+    // Vertex shader that uses normal matrix. It should be the inverse
+    // transpose of modelview. Otherwise simple as the previous one.
+
+    var v_wi =
+        //"precision mediump float;"+ //Vertex shader has default prec.
+        "uniform mat4 mv,nm,p;" +
+        "attribute vec4 g,v,N;" +
+        "varying vec4 c,n,r;" +
+        "void main(){" +
+            "gl_Position=p*mv*v;" +
+            "n=nm*N;" +     // Normal
+            "c=g;" +        // Color (in this case, graph coloring:))
+            "r=-mv*v;" +    // View diRection
+        "}";
+
 
     // Fragment shader: Only one unidirectional light is used.
 
@@ -160,9 +174,6 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
 
             persmat = perspectiveFhc(5,w/h);
 
-            // Could do funky perspective modulation:
-            //persmat = perspectiveF(5-4*Math.sin(t),w/h,.1,100.);
-
             function traverse(node,ms){
                 ms=node.f.reduce(matmul4,ms);
                 gl.uniformMatrix4fv(
@@ -170,6 +181,17 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
                 node.o.map(function(o){o.c(gl);}); // map < forEach :)
                 node.c.map(function(c){traverse(c,ms);});
             }
+
+            function traverse_wi(node,ms){
+                ms=node.f.reduce(matmul_wi,ms);
+                gl.uniformMatrix4fv(
+                    gl.getUniformLocation(prg,"mv"), false, ms);
+                gl.uniformMatrix4fv(
+                    gl.getUniformLocation(prg,"nm"), false, transposed3x3(ms.n));
+                node.o.map(function(o){o.c(gl);}); // map < forEach :)
+                node.c.map(function(c){traverse_wi(c,ms);});
+            }
+
 
 		    // Could switch the shader based on time / object properties:
             gl.useProgram(prg);
@@ -179,10 +201,8 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
 
             // Re-build the scenegraph for every frame (can animate):
             // Animation parameters
-            var camtrans=[translate(0,-1,-4),rotX(-.6)];
-            var stufftrans=[rotX(-.3),translate(0,-2,-5),rotY(t*.2)];
-            var tt = Math.sin(t/8);
-
+            var camtrans=[translate_wi(0,0,-10)];
+            var stufftrans=[translate_wi(0,0,0),rotY_wi(-t*.2),rotX_wi(t*.02)];
 
             // Clear buffer
             gl.clearColor(.3, .3, .3, 1);
@@ -209,23 +229,26 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
                      .8,.8,.8,2,
                      12,1,0,0];
 
-                stuff.c.push({f: [translate(Math.sin(ydist),disperse,0), rotX(ydist)],
+                stuff.c.push({f: [translate_wi(0,0,0)],
                               o: [new Material(clr),objTile],
                               c: []
                              });
 
-                stuff.c.push({f: [translate(Math.sin(ydist),disperse,3), rotX(ydist)],
+                stuff.c.push({f: [translate_wi(2,0,0)],
                               o: [new Material(clr),objBall],
                               c: []
                              });
 
+                stuff.c.push({f: [translate_wi(-2,0,0),scaleXYZ_wi(4,.2,1+.1*Math.sin(PI*t))],
+                              o: [new Material(clr),objBall],
+                              c: []
+                             });
+
+
                 return stuff;
             }
 
-            var stuff = makeStuff(t,
-                                  t+2-(t%2),
-                                  Math.sin(t/20)
-                                 );
+            var stuff = makeStuff(t,0,0);
 
             var ctausta=
                 [.1,.1,.1,1,
@@ -234,7 +257,7 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
                  2,1,0.4,0];
 
             var tausta = {
-                f:[translate(-10,-10,-16),rotZ(t*.02),rotY(t*.01),rotX(t*.11)],
+                f:[rotZ_wi(t*.02)],
                 o:[new Material(ctausta),objBackground],
                 c:[]
             };
@@ -244,11 +267,7 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
                               c:[
                                   {f:stufftrans,
                                    o:[],
-                                   c:[{f:[translate(0,-3,-tt),rotY(t*.02)],
-                                       o:[],
-                                       c:[stuff]
-                                      },
-                                     ]},
+                                   c:[stuff]},
                                   {f:[],
                                    o:[],
                                    c:[tausta]
@@ -258,7 +277,7 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
                             );
 
             // Then we display it
-            traverse(sceneroot,rotX(0));
+            traverse_wi(sceneroot,rotX_wi(0));
 
         }                                                    //DEBUG
         catch (err)                                          //DEBUG
@@ -328,7 +347,7 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
 
         // Reuse the variable name "s"
         s = gl.createShader(gl.VERTEX_SHADER);
-        gl.shaderSource(s, v);
+        gl.shaderSource(s, v_wi);
         gl.compileShader(s);
         if (!gl.getShaderParameter(s, gl.COMPILE_STATUS))                 //DEBUG
             alert("Vertex shader: "+ gl.getShaderInfoLog(s));             //DEBUG

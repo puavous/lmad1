@@ -183,6 +183,41 @@
                                                                  1 ];
     };
 
+    // "Matrices with inverses" ------------------------------
+    function translate_wi(tx,ty,tz){
+        var res=translate(tx,ty,tz);
+        res.n=translate(-tx,-ty,-tz);
+        return res;
+    };
+    /** Returns a scale matrix. */
+    function scaleXYZ_wi(sx,sy,sz){
+        var res=scaleXYZ(sx,sy,sz);
+        res.n=scaleXYZ(1/sx,1/sy,1/sz);
+        return res;
+    };
+    /** Returns an isotropic scale matrix. */
+    function scale_wi(s){
+        return scaleXYZ_wi(s,s,s);
+    };
+    function rotZ_wi(theta){
+        var res=rotZ(theta);
+        res.n=rotZ(-theta);
+        return res;
+    }
+    function rotY_wi(theta){
+        var res=rotY(theta);
+        res.n=rotY(-theta);
+        return res;
+    }
+    function rotX_wi(theta){
+        var res=rotX(theta);
+        res.n=rotX(-theta);
+        return res;
+    }
+
+
+
+
 
     /** 4x4 Matrix multiplication */
     function matmul(a,b){
@@ -229,6 +264,25 @@
         return m;
     }
 
+    /**
+     * For 4x4 matrices, multiplies both a*b and b^{-1} * a^{-1}. 
+     */
+    function matmul_wi(a,b){
+        var res = matmul4(a,b);
+        res.n = matmul4(b.n,a.n);
+        return res;
+    }
+
+    /**
+     * Transpose the upper 3x3 part and zero the rest. For building
+     * the normal matrix from the inverse of model matrix.
+     */
+    function transposed3x3(a){
+        return [a[0],a[4],a[8], 0,
+                a[1],a[5],a[9], 0,
+                a[2],a[6],a[10],0,
+                0,   0,   0,   1];
+    }
 
     /** Cross product for homogeneous directions. "[(axb)^t,0]^t" */
     function cross(a,b){
