@@ -1,7 +1,7 @@
 /* -*- mode: javascript; tab-width: 4; indent-tabs-mode: nil; -*- */
 
 /**
- * Rezykled
+ * Example thingy
  *
  * Now using the dirty small library.
  *
@@ -31,15 +31,14 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
 // A redundant block to cheat automatic code formatting:
 { //DEBUG
 
-    // Vertex shader: Just interpolate color (g) and position (v)
-    // projected by perspective (p) and modelview (mv) transforms. We
-    // transform normals by the modelview (not its inverse transpose)
-    // so free scale / skew cannot be done with correct normals, Note:
-    // Could use animation parameters such as time for some weird
-    // geometry stuff here?.. but perhaps not necessary for basic
-    // impact?
+    /** A very basic vertex shader: Just interpolate color (g) and
+     * position (v) projected by perspective (p) and modelview (mv)
+     * transforms. We transform normals by the modelview (not its
+     * inverse transpose) so free scale / skew cannot be done with
+     * correct normals. Orthonormal transformations should be OK.
+     */
 
-    var v =
+    var vertex_shader_basic =
         //"precision mediump float;"+ //Vertex shader has default prec.
         "uniform mat4 mv,p;" +
         "attribute vec4 g,v,N;" +
@@ -47,13 +46,14 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
         "void main(){" +
             "gl_Position=p*mv*v;" +
             "n=mv*N;" +     // Normal (assuming mv is orthonormal)
-            "c=g;" +        // Color (in this case, graph coloring:))
+            "c=g;" +        // "Color" (whatever in the fragment shader)
             "r=-mv*v;" +    // View diRection
         "}";
 
-    // Vertex shader that uses normal matrix. It should be the inverse
-    // transpose of modelview. Otherwise simple as the previous one.
-
+    /** A vertex shader that uses normal matrix. It should be a 4x4 matrix
+     * whose upper left 3x3 part contains the inverse transpose of modelview.
+     * Otherwise as simple as the previous one.
+     */
     var v_wi =
         //"precision mediump float;"+ //Vertex shader has default prec.
         "uniform mat4 mv,nm,p;" +
@@ -62,14 +62,14 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
         "void main(){" +
             "gl_Position=p*mv*v;" +
             "n=nm*N;" +     // Normal
-            "c=g;" +        // Color (in this case, graph coloring:))
+            "c=g;" +        // "Color" (whatever in the fragment shader)
             "r=-mv*v;" +    // View diRection
         "}";
 
 
     // Fragment shader: Only one unidirectional light is used.
 
-    var f =
+    var fragment_shader_camspace_directed =
         //"precision mediump float;"+ // one-by-one definitions are shorter
         // Inputs:
         // a: ambient color  - now coming in as i[0]
@@ -103,6 +103,43 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
                      ')' +
 	            ';' +
         '}';
+
+    /** Phong model with one point light given in camera space. */
+    var fragment_shader_pointlight_cameraspace =
+        //"precision mediump float;"+ // one-by-one definitions are shorter
+        // Inputs:
+        // a: ambient color  - now coming in as i[0]
+        // d: diffuse color  - now coming in as i[1]
+        // s: specular color - now coming in as i[2]
+        // q: additional params [shininess, "par2", mesh_brightn]
+        //     - now coming in as i[3]
+        // l: point light position in camera space
+        // r: view direction, assume already normalized
+        //
+        // u: [time, window w, window h] - not used in this production
+        'uniform highp mat4 i;' +
+        'uniform highp vec4 l;' +
+	    'varying highp vec4 c,n,r;' +
+        'void main(){' +
+            // win 10 bytes in packed space by re-normalizing n twice.
+            // As always, time we can spend, but space not so much.
+    	    'gl_FragColor=' +
+                 // Locate triangle boundaries from "vertex coloring":
+                'i[3].bbbb*max(0.,1.-4.*min(c.b,min(c.g,c.r)))' +
+                 // Clamp output at ambient color (incl. alpha):
+                '+max(i[0],'+
+                     // Diffuse reflection
+                     'i[1]*max(0.,dot(normalize(l),normalize(n)))' +
+                     // Specular reflection
+                     '+i[2]*pow(max(0.,dot(normalize(r),'+
+                                          'reflect(-l,normalize(n))' +
+                                  ')),' +
+                               'i[3].r' +
+                               ')' +
+                     ')' +
+	            ';' +
+        '}';
+
 
     // Tentative material object..
     // colors==[a,d,s,q] could be a 4x4 matrix?
@@ -214,7 +251,7 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
             // Set light direction (quite naive as of yet):
             // Hmm... correct normalization not so important here?
             gl.uniform4fv(gl.getUniformLocation(prg, "l"),
-                          nmld([1,1,1,0]));
+                          nmld([-1,1,1,0]));
 
             function makeStuff(t,ydist,disperse){
                 var stuff = {
@@ -225,7 +262,7 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
 
                 var clr=
                     [.1,0,0,1,
-                     1,.1,.1,1,
+                     1,.1,.7,1,
                      .8,.8,.8,2,
                      12,1,0,0];
 
@@ -239,7 +276,7 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
                               c: []
                              });
 
-                stuff.c.push({f: [translate_wi(-2,0,0),scaleXYZ_wi(4,.2,1+.1*Math.sin(PI*t))],
+                stuff.c.push({f: [translate_wi(-2,0,0),scaleXYZ_wi(1.1,.2,1+.1*Math.sin(PI*t))],
                               o: [new Material(clr),objBall],
                               c: []
                              });
@@ -354,7 +391,7 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
         gl.attachShader(prg = gl.createProgram(), s);
 
         s = gl.createShader(gl.FRAGMENT_SHADER);
-        gl.shaderSource(s, f);
+        gl.shaderSource(s, fragment_shader_pointlight_cameraspace);
         gl.compileShader(s);
         if (!gl.getShaderParameter(s, gl.COMPILE_STATUS))                 //DEBUG
             alert("Fragment shader: "+ gl.getShaderInfoLog(s));           //DEBUG
