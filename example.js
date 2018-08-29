@@ -32,9 +32,14 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
 // (btw.. why do I indent?)
 { //DEBUG
 
+    // -------------------------------------------------------------------------
+    // TODO: These functions to library. gl as parameter? What about prg?
+
     // Tentative material object..
     // colors==[a,d,s,q] could be a 4x4 matrix?
-    // Yep, quite short code when colors are in a matrix:
+    // Yep, quite short code when colors are in a matrix.
+    // TODO: I think need to learn the object model of javascript, to know
+    // if this is proper.
     function Material(colors){
         var myc=colors.slice();
         this.c = function(gl){
@@ -42,6 +47,25 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
                 gl.getUniformLocation(prg,"i"), false, myc);
         }
     }
+
+    function traverse(node,ms){
+        ms=node.f.reduce(matmul4,ms);
+        gl.uniformMatrix4fv(
+            gl.getUniformLocation(prg,"mv"), false, ms);
+        node.o.map(function(o){o.c(gl);}); // map < forEach :)
+        node.c.map(function(c){traverse(c,ms);});
+    }
+
+    function traverse_wi(node,ms){
+        ms=node.f.reduce(matmul_wi,ms);
+        gl.uniformMatrix4fv(
+            gl.getUniformLocation(prg,"mv"), false, ms);
+        gl.uniformMatrix4fv(
+            gl.getUniformLocation(prg,"nm"), false, transposed3x3(ms.n));
+        node.o.map(function(o){o.c(gl);}); // map < forEach :)
+        node.c.map(function(c){traverse_wi(c,ms);});
+    }
+
 
     // --------------------------------------------------------------------------------
 
@@ -73,47 +97,16 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
 
             persmat = perspectiveFhc(5,w/h);
 
-            function traverse(node,ms){
-                ms=node.f.reduce(matmul4,ms);
-                gl.uniformMatrix4fv(
-                    gl.getUniformLocation(prg,"mv"), false, ms);
-                node.o.map(function(o){o.c(gl);}); // map < forEach :)
-                node.c.map(function(c){traverse(c,ms);});
-            }
-
-            function traverse_wi(node,ms){
-                ms=node.f.reduce(matmul_wi,ms);
-                gl.uniformMatrix4fv(
-                    gl.getUniformLocation(prg,"mv"), false, ms);
-                gl.uniformMatrix4fv(
-                    gl.getUniformLocation(prg,"nm"), false, transposed3x3(ms.n));
-                node.o.map(function(o){o.c(gl);}); // map < forEach :)
-                node.c.map(function(c){traverse_wi(c,ms);});
-            }
-
-
 		    // Could switch the shader based on time / object properties:
             gl.useProgram(prg);
 
-            // "Camera":
+            // Initialize empty scenegraph. Root node with nothing inside:
             var sceneroot={f:[],o:[],c:[]};
 
             // Re-build the scenegraph for every frame (can animate):
             // Animation parameters
             var camtrans=[translate_wi(0,0,-10)];
             var stufftrans=[translate_wi(0,0,0),rotY_wi(-t*.2),rotX_wi(t*.02)];
-
-            // Clear buffer
-            gl.clearColor(.3, .3, .3, 1);
-            gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
-
-            // Transfer perspective matrix to shader:
-            gl.uniformMatrix4fv(gl.getUniformLocation(prg,"p"), false, persmat);
-
-            // Set light direction (quite naive as of yet):
-            // Hmm... correct normalization not so important here?
-            gl.uniform4fv(gl.getUniformLocation(prg, "l"),
-                          nmld([-1,1,1,0]));
 
             function makeStuff(t,ydist,disperse){
                 var stuff = {
@@ -175,7 +168,20 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
                              }
                             );
 
-            // Then we display it
+            // Scene is built. Then we actually draw it.
+            // Clear buffer
+            gl.clearColor(.3, .3, .3, 1);
+            gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
+
+            // Transfer perspective matrix to shader:
+            gl.uniformMatrix4fv(gl.getUniformLocation(prg,"p"), false, persmat);
+
+            // Set light direction (quite naive as of yet):
+            // Hmm... correct normalization not so important here?
+            gl.uniform4fv(gl.getUniformLocation(prg, "l"),
+                          nmld([-1,1,1,0]));
+
+            // Then we display the scenegraph
             traverse_wi(sceneroot,rotX_wi(0));
 
         }                                                    //DEBUG
@@ -264,6 +270,7 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
             alert("Link program: "+ gl.getProgramInfoLog(prg));          //DEBUG
 
 
+
         // Create primitive building blocks by different profile sweeps:
 /*
         var prof=cptsHuge;
@@ -287,15 +294,15 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
                                    new funCircle(0,32));
 
 
+        /* Initialize song. */
         var audio,player=new CPlayer();
         player.init(song);
         while (player.generate() < 1){};
         audio = _document.createElement("audio");
         audio.src = URL.createObjectURL(new Blob([player.createWave()],
                                                  {type: "audio/wav"}));
+        /* Start audio and graphics */
         audio.play();
-
-        // Start the main loop
         setInterval(loopfunc, 20);
 
     }                                                    //DEBUG
