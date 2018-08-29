@@ -24,9 +24,13 @@ GZTHERM=/home/nieminen/files/hacking/gzthermal_04c/gzthermal
 $(PRODNAME_FULL)_by_$(PRODAUTHOR).zip: $(PRODNAME).compo.html $(PRODNAME).debug.html $(PRODNAME).nfo
 	zip $@ $^
 
+# Order matters because of catenation etc:
+COMMONSRC=library.js shaders_simple.js player-small.js
+COMPOSRC=glconstants.js $(COMMONSRC)
+DEBUGSRC=$(COMMONSRC)
 
 # Compo target: Remove all debugging code, minify and pack everything.
-$(PRODNAME).compo.html: glconstants.js library.js player-small.js $(PRODNAME)_song.js $(PRODNAME).js
+$(PRODNAME).compo.html: $(COMPOSRC) $(PRODNAME)_song.js $(PRODNAME).js
 	echo "(function (){" > tmp.bulk.js
 	cat $^ >> tmp.bulk.js
 	echo "})();" >> tmp.bulk.js
@@ -40,7 +44,7 @@ $(PRODNAME).compo.html: glconstants.js library.js player-small.js $(PRODNAME)_so
 
 
 # Debug target: just catenate stuff to an HTML file:
-$(PRODNAME).debug.html: library.js player-small.js $(PRODNAME)_song.js $(PRODNAME).js
+$(PRODNAME).debug.html: $(DEBUGSRC) $(PRODNAME)_song.js $(PRODNAME).js
 	echo "<html><head /><body><script>" > $@
 	echo "(function (){" >> $@
 	cat $^ >> $@

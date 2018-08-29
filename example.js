@@ -31,115 +31,6 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
 // A redundant block to cheat automatic code formatting:
 { //DEBUG
 
-    /** A very basic vertex shader: Just interpolate color (g) and
-     * position (v) projected by perspective (p) and modelview (mv)
-     * transforms. We transform normals by the modelview (not its
-     * inverse transpose) so free scale / skew cannot be done with
-     * correct normals. Orthonormal transformations should be OK.
-     */
-
-    var vertex_shader_basic =
-        //"precision mediump float;"+ //Vertex shader has default prec.
-        "uniform mat4 mv,p;" +
-        "attribute vec4 g,v,N;" +
-        "varying vec4 c,n,r;" +
-        "void main(){" +
-            "gl_Position=p*mv*v;" +
-            "n=mv*N;" +     // Normal (assuming mv is orthonormal)
-            "c=g;" +        // "Color" (whatever in the fragment shader)
-            "r=-mv*v;" +    // View diRection
-        "}";
-
-    /** A vertex shader that uses normal matrix. It should be a 4x4 matrix
-     * whose upper left 3x3 part contains the inverse transpose of modelview.
-     * Otherwise as simple as the previous one.
-     */
-    var v_wi =
-        //"precision mediump float;"+ //Vertex shader has default prec.
-        "uniform mat4 mv,nm,p;" +
-        "attribute vec4 g,v,N;" +
-        "varying vec4 c,n,r;" +
-        "void main(){" +
-            "gl_Position=p*mv*v;" +
-            "n=nm*N;" +     // Normal
-            "c=g;" +        // "Color" (whatever in the fragment shader)
-            "r=-mv*v;" +    // View diRection
-        "}";
-
-
-    // Fragment shader: Only one unidirectional light is used.
-
-    var fragment_shader_camspace_directed =
-        //"precision mediump float;"+ // one-by-one definitions are shorter
-        // Inputs:
-        // a: ambient color  - now coming in as i[0]
-        // d: diffuse color  - now coming in as i[1]
-        // s: specular color - now coming in as i[2]
-        // q: additional params [shininess, "par2", mesh_brightn]
-        //     - now coming in as i[3]
-        // l: light direction in camera space, pre-normalized
-        // r: view direction, assume already normalized
-        //
-        // u: [time, window w, window h] - not used in this production
-        'uniform highp mat4 i;' +
-        'uniform highp vec4 l;' +
-	    'varying highp vec4 c,n,r;' +
-        'void main(){' +
-            // win 10 bytes in packed space by re-normalizing n twice.
-            // As always, time we can spend, but space not so much.
-    	    'gl_FragColor=' +
-                 // Locate triangle boundaries from "vertex coloring":
-                'i[3].bbbb*max(0.,1.-4.*min(c.b,min(c.g,c.r)))' +
-                 // Clamp output at ambient color (incl. alpha):
-                '+max(i[0],'+
-                     // Diffuse reflection
-                     'i[1]*max(0.,dot(l,normalize(n)))' +
-                     // Specular reflection
-                     '+i[2]*pow(max(0.,dot(normalize(r),'+
-                                          'reflect(-l,normalize(n))' +
-                                  ')),' +
-                               'i[3].r' +
-                               ')' +
-                     ')' +
-	            ';' +
-        '}';
-
-    /** Phong model with one point light given in camera space. */
-    var fragment_shader_pointlight_cameraspace =
-        //"precision mediump float;"+ // one-by-one definitions are shorter
-        // Inputs:
-        // a: ambient color  - now coming in as i[0]
-        // d: diffuse color  - now coming in as i[1]
-        // s: specular color - now coming in as i[2]
-        // q: additional params [shininess, "par2", mesh_brightn]
-        //     - now coming in as i[3]
-        // l: point light position in camera space
-        // r: view direction, assume already normalized
-        //
-        // u: [time, window w, window h] - not used in this production
-        'uniform highp mat4 i;' +
-        'uniform highp vec4 l;' +
-	    'varying highp vec4 c,n,r;' +
-        'void main(){' +
-            // win 10 bytes in packed space by re-normalizing n twice.
-            // As always, time we can spend, but space not so much.
-    	    'gl_FragColor=' +
-                 // Locate triangle boundaries from "vertex coloring":
-                'i[3].bbbb*max(0.,1.-4.*min(c.b,min(c.g,c.r)))' +
-                 // Clamp output at ambient color (incl. alpha):
-                '+max(i[0],'+
-                     // Diffuse reflection
-                     'i[1]*max(0.,dot(normalize(l),normalize(n)))' +
-                     // Specular reflection
-                     '+i[2]*pow(max(0.,dot(normalize(r),'+
-                                          'reflect(-l,normalize(n))' +
-                                  ')),' +
-                               'i[3].r' +
-                               ')' +
-                     ')' +
-	            ';' +
-        '}';
-
 
     // Tentative material object..
     // colors==[a,d,s,q] could be a 4x4 matrix?
@@ -384,7 +275,7 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
 
         // Reuse the variable name "s"
         s = gl.createShader(gl.VERTEX_SHADER);
-        gl.shaderSource(s, v_wi);
+        gl.shaderSource(s, vertex_shader_minimal_with_normalmatrix);
         gl.compileShader(s);
         if (!gl.getShaderParameter(s, gl.COMPILE_STATUS))                 //DEBUG
             alert("Vertex shader: "+ gl.getShaderInfoLog(s));             //DEBUG
