@@ -29,8 +29,8 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
 */
 
 // A redundant block to cheat automatic code formatting:
+// (btw.. why do I indent?)
 { //DEBUG
-
 
     // Tentative material object..
     // colors==[a,d,s,q] could be a 4x4 matrix?
@@ -42,35 +42,6 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
                 gl.getUniformLocation(prg,"i"), false, myc);
         }
     }
-
-    // --------------------------------------------------------------------------------
-    // Could have like a "library of nice preset curves"
-    // 0: A roundish, squarish, symmetrical profile curve:
-    var cptsProfile = [
-                  1, -1,0,1,
-                  1, .0,0,1,
-                  1,  1,0,1,
-                  0,  1,0,1,
-                 -1,  1,0,1,
-                 -1, .0,0,1,
-                 -1, -1,0,1,
-                  0, -1,0,1,
-                  1, -1,0,1,
-                  1, .0,0,1,
-                  1,  1,0,1,
-    ];
-    // 1: Rim of "E", like a sharp-angled C
-    var cptsC = [
-                3,4-.4,0,1,
-                1,4-.4,0,1,
-               -1,4-.4,0,1,
-               -1,4-.4,0,1,
-               -1, 0.4,0,1,
-               -1, 0.4,0,1,
-                1, 0.4,0,1,
-                3, 0.4,0,1,
-    ];
-    // ... and so on.. some examples in the early "courselogo.js"
 
     // --------------------------------------------------------------------------------
 
