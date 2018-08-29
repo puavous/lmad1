@@ -1,8 +1,8 @@
-Rezykled
-========
+4k Workshop Example
+====================
 
-Entry to the "One effect compo" at Assembly Summer 2018. Recycled
-stuff from Instanssi 2018 :).
+A very small example that you can examine and modify to build your
+very first browser 4k intro.
 
 Author:     qma
 
@@ -12,14 +12,12 @@ Author:     qma
 Techniques: Javascript, WebGL, SoundBox, Closure Compiler, Pnginator,
             GNU toolchain, Emacs
 
-Files:      rezykled.compo.html  - Compo version under 4096 bytes,
-                                   tested on some recent versions
-                                   of Firefox, Chrome, MS Edge.
+Files:      example.compo.html  - "Compo version" under 4096 bytes,
                                        
-            rezykled.debug.html  - Debug version with some tests for
-                                   most common error conditions.
+            example.debug.html  - Debug version with some checks for
+                                  most common error conditions.
 
-            rezykled.nfo         - this file
+            example.nfo         - this file
 
 This production uses the SoundBox synthesizer tracker:
 (http://sb.bitsnbites.eu/). The playback library is not reproduced in
@@ -30,14 +28,9 @@ my source code repository, but must be downloaded separately.
 Greets
 -----------------------
 
-Thanks to everyone at our "Let's make a demo" programming workshop! I
-had fun arranging it - I really hope that the participants enjoyed it,
-too!!
-
-The greatest thanks to Waffle, BJAKKE and sooda from Graffathon for
-co-organizing the workshop with me!
-
-THANK YOU, ASSEMBLY SUMMER 2018! THANK YOU, SCENE LOUNGE!
+Thanks to ppl at "Let's make a demo" programming workshop in Instanssi
+2018, Assembly Summer 2018. Thanks to Waffle, BJAKKE and sooda from
+Graffathon for co-organizing the Assembly workshop.
 
 See you at Instanssi 2019! There *might* be a 4k intro workshop there,
-we'll see :)
+we'll see :). At least I'm making preparations already in 2018...
