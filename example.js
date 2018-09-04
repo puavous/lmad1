@@ -5,9 +5,11 @@
  *
  * Now using the dirty small library.
  *
- * How-to: catenate the library, the soft-synth, and this file.
- * Surround with function{...} and feed into a JavaScript minifier
- * like Closure.
+ * How-to: Inside one "function{...}", catenate the library, the
+ * soft-synth, and this file. Remove debugging code and other
+ * redundancies. Feed into a JavaScript minifier like Closure. Then
+ * pack with Pnginator or JSExe or similar. All this is automated in
+ * my GNU Makefile. TODO: Write some batch file for Windows users.
  *
  **/
 
@@ -74,17 +76,18 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
     // as document object properties for rude size optimization.
     var gl, C, Cw, Ch;
     var audio, prg, persmat;
-
-    var objTile, objBackground, objBall;
-
     var s;
+
+    // Variables used in this production, specifically:
+    var objTile, objBackground, objBall;
+    var songBeatsPerMinute = 130;
 
     var loopfunc = function()
     {
         try                                                  //DEBUG
         {                                                    //DEBUG
 		    // Time from the audio object. Interpret as beat.
-            var t = audio.currentTime * (130/60);
+            var t = audio.currentTime * (songBeatsPerMinute/60);
             // Update canvas size
             //var w = window.innerWidth, h = window.innerHeight;
             var w = innerWidth, h = innerHeight;  //window object is implicit
@@ -222,7 +225,8 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
                 e.pageX/C.width*audio.duration;          //DEBUG
             if (e.pageY<(C.height/2))audio.pause();      //DEBUG
             else audio.play();                           //DEBUG
-            for(var t=(audio.currentTime*(130/60))|0;t>=0;t--){  //DEBUG
+            for(var t=(audio.currentTime*(               //DEBUG
+                songBeatsPerMinute/60))|0;t>=0;t--){     //DEBUG
             }                                            //DEBUG
         });                                              //DEBUG
 
