@@ -47,6 +47,11 @@
  *
  **/
 
+// Variables used all over the library. Must have as globals:
+var gl, prg;
+
+// TODO: Should these gl and prg be included as method parameters or
+// object properties?
 
 // Constants
     var PI=Math.PI;
@@ -297,6 +302,46 @@
         var length3d=Math.sqrt(v[0]*v[0]+v[1]*v[1]+v[2]*v[2]);
         return [v[0]/length3d,v[1]/length3d,v[2]/length3d,v[3]];
     }
+
+
+
+// "Prelude to re-inventions" ------------------------------
+
+// Tentative material object..
+// colors==[a,d,s,q] could be a 4x4 matrix?
+// Yep, quite short code when colors are in a matrix.
+// TODO: I think need to learn the object model of javascript, to know
+// if this is proper.
+function Material(colors){
+    var myc=colors.slice();
+    this.c = function(gl){
+        gl.uniformMatrix4fv(
+            gl.getUniformLocation(prg,"i"), false, myc);
+    }
+}
+
+function traverse(node,ms){
+    ms=node.f.reduce(matmul4,ms);
+    gl.uniformMatrix4fv(
+        gl.getUniformLocation(prg,"mv"), false, ms);
+    node.o.map(function(o){o.c(gl);}); // map < forEach :)
+    node.c.map(function(c){traverse(c,ms);});
+}
+
+function traverse_wi(node,ms){
+    ms=node.f.reduce(matmul_wi,ms);
+    gl.uniformMatrix4fv(
+        gl.getUniformLocation(prg,"mv"), false, ms);
+    gl.uniformMatrix4fv(
+        gl.getUniformLocation(prg,"nm"), false, transposed3x3(ms.n));
+    node.o.map(function(o){o.c(gl);}); // map < forEach :)
+    node.c.map(function(c){traverse_wi(c,ms);});
+}
+
+
+
+
+
 
 
     // "Re-inventing the cylinder" ------------------------------

@@ -16,6 +16,7 @@ PNGIN=ruby /home/nieminen/files/hacking/pnginator/pnginator.rb
 # Optional:
 DEFDB=/home/nieminen/files/hacking/defdb_04b/defdb
 GZTHERM=/home/nieminen/files/hacking/gzthermal_04c/gzthermal
+SHMIN=mono /home/nieminen/files/hacking/shader_minifier/shader_minifier.exe
 
 #DEFDB=echo "You may optionally download the defdb program and use it here with args:"
 #GZTHERM=echo "You may optionally download the gzthermal program and use it here with args:"
@@ -25,7 +26,7 @@ $(PRODNAME_FULL)_by_$(PRODAUTHOR).zip: $(PRODNAME).compo.html $(PRODNAME).debug.
 	zip $@ $^
 
 # Order matters because of catenation etc:
-COMMONSRC=library.js shaders_simple.js player-small.js
+COMMONSRC=library.js shaders_simple.js minified_shaders.js player-small.js
 COMPOSRC=glconstants.js $(COMMONSRC)
 DEBUGSRC=$(COMMONSRC)
 
@@ -50,6 +51,13 @@ $(PRODNAME).debug.html: $(DEBUGSRC) $(PRODNAME)_song.js $(PRODNAME).js
 	cat $^ >> $@
 	echo "})();" >> $@
 	echo "</script></body></html>" >> $@
+
+minified_shaders.js: test.frag test.vert
+	$(SHMIN) --format js --field-names rgba \
+		--preserve-externals -o test_frag.js test.frag
+	$(SHMIN) --format js --field-names rgba \
+		--preserve-externals -o test_vert.js test.vert
+	cat test_frag.js test_vert.js > minified_shaders.js
 
 clean:
 	-rm *~ tmp.* *.closured.js

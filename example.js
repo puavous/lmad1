@@ -9,18 +9,10 @@
  * soft-synth, and this file. Remove debugging code and other
  * redundancies. Feed into a JavaScript minifier like Closure. Then
  * pack with Pnginator or JSExe or similar. All this is automated in
- * my GNU Makefile. TODO: Write some batch file for Windows users.
+ * my GNU Makefile. TODO: Write some "batch file" for Windows users
+ * without MinGW or similar.
  *
  **/
-
-// TODOs inherited from last year:
-// TODO: Separate shaders for easier modification, and include source
-// after GLSL minification (... in some later production,
-// perhaps.. the shaders in this one are so limited that they can be
-// managed as inline strings).
-
-// TODO: In debug mode, should probably adhere to this:
-// https://www.khronos.org/webgl/wiki/FAQ
 
 /*
 The visuals of this production are synced to the following song
@@ -30,291 +22,253 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
 
 */
 
-// A redundant block to cheat automatic code formatting:
-// (btw.. why do I indent?)
-{ //DEBUG
+// TODO: In debug mode, should probably adhere to https://www.khronos.org/webgl/wiki/FAQ
 
-    // -------------------------------------------------------------------------
-    // TODO: These functions to library. gl as parameter? What about prg?
+// --------------------------------------------------------------------------------
 
-    // Tentative material object..
-    // colors==[a,d,s,q] could be a 4x4 matrix?
-    // Yep, quite short code when colors are in a matrix.
-    // TODO: I think need to learn the object model of javascript, to know
-    // if this is proper.
-    function Material(colors){
-        var myc=colors.slice();
-        this.c = function(gl){
-            gl.uniformMatrix4fv(
-                gl.getUniformLocation(prg,"i"), false, myc);
-        }
-    }
+// "Globals needed in many routines":
+// Note that in unstrict mode some of these could be left
+// as document object properties for rude size optimization.
+var C, Cw, Ch;
+var audio, persmat;
+var s;
 
-    function traverse(node,ms){
-        ms=node.f.reduce(matmul4,ms);
-        gl.uniformMatrix4fv(
-            gl.getUniformLocation(prg,"mv"), false, ms);
-        node.o.map(function(o){o.c(gl);}); // map < forEach :)
-        node.c.map(function(c){traverse(c,ms);});
-    }
+// Variables used in this production, specifically:
+var objTile, objBackground, objBall;
+var songBeatsPerMinute = 130;
 
-    function traverse_wi(node,ms){
-        ms=node.f.reduce(matmul_wi,ms);
-        gl.uniformMatrix4fv(
-            gl.getUniformLocation(prg,"mv"), false, ms);
-        gl.uniformMatrix4fv(
-            gl.getUniformLocation(prg,"nm"), false, transposed3x3(ms.n));
-        node.o.map(function(o){o.c(gl);}); // map < forEach :)
-        node.c.map(function(c){traverse_wi(c,ms);});
-    }
-
-
-    // --------------------------------------------------------------------------------
-
-    // "Globals needed in many routines":
-    // Note that in unstrict mode some of these could be left
-    // as document object properties for rude size optimization.
-    var gl, C, Cw, Ch;
-    var audio, prg, persmat;
-    var s;
-
-    // Variables used in this production, specifically:
-    var objTile, objBackground, objBall;
-    var songBeatsPerMinute = 130;
-
-    var loopfunc = function()
-    {
-        try                                                  //DEBUG
-        {                                                    //DEBUG
-		    // Time from the audio object. Interpret as beat.
-            var t = audio.currentTime * (songBeatsPerMinute/60);
-            // Update canvas size
-            //var w = window.innerWidth, h = window.innerHeight;
-            var w = innerWidth, h = innerHeight;  //window object is implicit
-            if (w != Cw || h != Ch) {
-                gl.viewport(0, 0, Cw=C.width=w, Ch=C.height=h);
-                dbg_show_aspect.nodeValue="Size: "+w+"x"+h+" "+w/h;  //DEBUG
-            }
-            dbg_show_time.nodeValue=" time=" + (audio.currentTime|0) //DEBUG
-                                             + "(beat " +(t|0)+ ")"; //DEBUG
-
-            persmat = perspectiveFhc(5,w/h);
-
-		    // Could switch the shader based on time / object properties:
-            gl.useProgram(prg);
-
-            // Initialize empty scenegraph. Root node with nothing inside:
-            var sceneroot={f:[],o:[],c:[]};
-
-            // Re-build the scenegraph for every frame (can animate):
-            // Animation parameters
-            var camtrans=[translate_wi(0,0,-10)];
-            var stufftrans=[translate_wi(0,0,0),rotY_wi(-t*.2),rotX_wi(t*.02)];
-
-            function makeStuff(t,ydist,disperse){
-                var stuff = {
-                    f: [],
-                    o: [],
-                    c: []
-                };
-
-                var clr=
-                    [.1,0,0,1,
-                     1,.1,.7,1,
-                     .8,.8,.8,2,
-                     12,1,0,0];
-
-                stuff.c.push({f: [translate_wi(0,0,0)],
-                              o: [new Material(clr),objTile],
-                              c: []
-                             });
-
-                stuff.c.push({f: [translate_wi(2,0,0)],
-                              o: [new Material(clr),objBall],
-                              c: []
-                             });
-
-                stuff.c.push({f: [translate_wi(-2,0,0),scaleXYZ_wi(1.1,.2,1+.1*Math.sin(PI*t))],
-                              o: [new Material(clr),objBall],
-                              c: []
-                             });
-
-
-                return stuff;
-            }
-
-            var stuff = makeStuff(t,0,0);
-
-            var ctausta=
-                [.1,.1,.1,1,
-                 .6,.6,.6,1,
-                 .8,.8,.6,2,
-                 2,1,0.4,0];
-
-            var tausta = {
-                f:[rotZ_wi(t*.02)],
-                o:[new Material(ctausta),objBackground],
-                c:[]
-            };
-
-            sceneroot.c.push({f:camtrans,
-                              o:[],
-                              c:[
-                                  {f:stufftrans,
-                                   o:[],
-                                   c:[stuff]},
-                                  {f:[],
-                                   o:[],
-                                   c:[tausta]
-                                  }
-                              ]
-                             }
-                            );
-
-            // Scene is built. Then we actually draw it.
-            // Clear buffer
-            gl.clearColor(.3, .3, .3, 1);
-            gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
-
-            // Transfer perspective matrix to shader:
-            gl.uniformMatrix4fv(gl.getUniformLocation(prg,"p"), false, persmat);
-
-            // Set light direction (quite naive as of yet):
-            // Hmm... correct normalization not so important here?
-            gl.uniform4fv(gl.getUniformLocation(prg, "l"),
-                          nmld([-1,1,1,0]));
-
-            // Then we display the scenegraph
-            traverse_wi(sceneroot,rotX_wi(0));
-
-        }                                                    //DEBUG
-        catch (err)                                          //DEBUG
-        {                                                    //DEBUG
-            alert("Error: " + err.message);                  //DEBUG
-        }                                                    //DEBUG
-    };
-
-    // Start here
+var loopfunc = function()
+{
     try                                                  //DEBUG
     {                                                    //DEBUG
-        var _document=document; // minify "document" name too
-        _document.body.appendChild(C = _document.createElement("canvas"));
-        s = C.style; s.position = "fixed"; s.left = s.top = 0;
-        gl = C.getContext('experimental-webgl');
-        //gl = C.getContext('webgl');
-        if (!gl){                                        //DEBUG
-            alert("This demo requires WebGL");           //DEBUG
-            return;                                      //DEBUG
-        }                                                //DEBUG
+        // Time from the audio object. Interpret as beat.
+        var t = audio.currentTime * (songBeatsPerMinute/60);
+        // Update canvas size
+        //var w = window.innerWidth, h = window.innerHeight;
+        var w = innerWidth, h = innerHeight;  //window object is implicit
+        if (w != Cw || h != Ch) {
+            gl.viewport(0, 0, Cw=C.width=w, Ch=C.height=h);
+            dbg_show_aspect.nodeValue="Size: "+w+"x"+h+" "+w/h;  //DEBUG
+        }
+        dbg_show_time.nodeValue=" time=" + (audio.currentTime|0) //DEBUG
+                                         + "(beat " +(t|0)+ ")"; //DEBUG
 
-        // Debug print of location and aspect
-        var dbg_show_aspect=document.createTextNode(""); //DEBUG
-        var dbgInfoDiv=document.createElement("div");    //DEBUG
-        document.body.appendChild(dbgInfoDiv);           //DEBUG
-        dbgInfoDiv.style.position = "fixed";             //DEBUG
-        dbgInfoDiv.style.right = 10;                     //DEBUG
-        dbgInfoDiv.style.bottom = 10;                    //DEBUG
-        dbgInfoDiv.style.color = "#fff";                 //DEBUG
-        dbgInfoDiv.appendChild(dbg_show_aspect);         //DEBUG
-        var dbg_show_time=document.createTextNode("");   //DEBUG
-        dbgInfoDiv.appendChild(dbg_show_time);           //DEBUG
+        persmat = perspectiveFhc(5,w/h);
 
-        // Debug version seek, play and pause
-        C.addEventListener("click", function(e){         //DEBUG
-            audio.currentTime =                          //DEBUG
-                e.pageX/C.width*audio.duration;          //DEBUG
-            if (e.pageY<(C.height/2))audio.pause();      //DEBUG
-            else audio.play();                           //DEBUG
-            for(var t=(audio.currentTime*(               //DEBUG
-                songBeatsPerMinute/60))|0;t>=0;t--){     //DEBUG
-            }                                            //DEBUG
-        });                                              //DEBUG
+        // Could switch the shader based on time / object properties:
+        gl.useProgram(prg);
+
+        // Initialize empty scenegraph. Root node with nothing inside:
+        var sceneroot={f:[],o:[],c:[]};
+
+        // Re-build the scenegraph for every frame (can animate):
+        // Animation parameters
+        var camtrans=[translate_wi(0,0,-10)];
+        var stufftrans=[translate_wi(0,0,0),rotY_wi(-t*.2),rotX_wi(t*.02)];
+
+        function makeStuff(t,ydist,disperse){
+            var stuff = {
+                f: [],
+                o: [],
+                c: []
+            };
+
+            var clr=
+                [.1,0,0,1,
+                 1,.1,.7,1,
+                 .8,.8,.8,2,
+                 12,1,0,0];
+
+            stuff.c.push({f: [translate_wi(0,0,0)],
+                          o: [new Material(clr),objTile],
+                          c: []
+                         });
+
+            stuff.c.push({f: [translate_wi(2,0,0)],
+                          o: [new Material(clr),objBall],
+                          c: []
+                         });
+
+            stuff.c.push({f: [translate_wi(-2,0,0),scaleXYZ_wi(1.1,.2,1+.1*Math.sin(PI*t))],
+                          o: [new Material(clr),objBall],
+                          c: []
+                         });
 
 
-        // Apply p01's trick for grabbing short names from GL obj
-        // (http://slides.com/pdesch/js-demoscene-techniques#/5/6)
-        // This didn't help me earlier when trying to make a 1k..
-        // is OK now for 4k. saves something like 30 bytes / 4kb.
-        // Not much.. The trick itself costs some 45 bytes compressed.
-
-        for(s in gl){
-            //For creating a sed script to change original names:
-            //var shortname = k.match(/^..|[A-Z]|\d\D+$/g).join('');
-            //console.log("s/gl\\."+k+"(/gl."+shortname+"(/g");
-            gl[s.match(/^..|[A-Z]|\d\D+$/g).join('')]=gl[s];
-
-            //The following is bloaty, but works with "use strict":
-            //gl[k.match(/^[a-z].|[A-Z](?=[a-z])|\d\D+$/g).join('')]=gl[k];
+            return stuff;
         }
 
-        gl.enable(gl.DEPTH_TEST);
-        gl.enable(gl.CULL_FACE); // Performance opt., costs 6 bytes.
+        var stuff = makeStuff(t,0,0);
 
-        // Initializations seem to pack a bit better inlined.
-        // prg = gl.createProgram();
-        // TODO: Multiple, switchable shaders!
+        var ctausta=
+            [.1,.1,.1,1,
+             .6,.6,.6,1,
+             .8,.8,.6,2,
+             2,1,0.4,0];
 
-        // Reuse the variable name "s"
-        s = gl.createShader(gl.VERTEX_SHADER);
-        gl.shaderSource(s, vertex_shader_minimal_with_normalmatrix);
-        gl.compileShader(s);
-        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS))                 //DEBUG
-            alert("Vertex shader: "+ gl.getShaderInfoLog(s));             //DEBUG
-        gl.attachShader(prg = gl.createProgram(), s);
+        var tausta = {
+            f:[rotZ_wi(t*.02)],
+            o:[new Material(ctausta),objBackground],
+            c:[]
+        };
 
-        s = gl.createShader(gl.FRAGMENT_SHADER);
-        gl.shaderSource(s, fragment_shader_pointlight_cameraspace);
-        gl.compileShader(s);
-        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS))                 //DEBUG
-            alert("Fragment shader: "+ gl.getShaderInfoLog(s));           //DEBUG
-        gl.attachShader(prg, s);
+        sceneroot.c.push({f:camtrans,
+                          o:[],
+                          c:[
+                              {f:stufftrans,
+                               o:[],
+                               c:[stuff]},
+                              {f:[],
+                               o:[],
+                               c:[tausta]
+                              }
+                          ]
+                         }
+                        );
 
-        gl.linkProgram(prg);
-        if (!gl.getProgramParameter(prg, gl.LINK_STATUS))                //DEBUG
-            alert("Link program: "+ gl.getProgramInfoLog(prg));          //DEBUG
+        // Scene is built. Then we actually draw it.
+        // Clear buffer
+        gl.clearColor(.3, .3, .3, 1);
+        gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
 
+        // Transfer perspective matrix to shader:
+        gl.uniformMatrix4fv(gl.getUniformLocation(prg,"p"), false, persmat);
 
+        // Set light direction (quite naive as of yet):
+        // Hmm... correct normalization not so important here?
+        gl.uniform4fv(gl.getUniformLocation(prg, "l"),
+                      nmld([-1,1,1,0]));
 
-        // Create primitive building blocks by different profile sweeps:
-/*
-        var prof=cptsHuge;
-        objTile = new GenCyl(new funBSplineTransformed(prof,scaleXYZ(.04,.45,0)),13,
-                             new funBSplineTransformed(prof,scaleXYZ(.45,.001,0)));
-
-        // Now we can make a ball by half-a-ball and zero-radius-ball
-        objTile = new GenCyl(new funCircle(1,12,.5), 12,
-                             new funCircle(0,12));
-*/
-
-        // And now we can even make a box..
-        objTile = new Box(1);
-
-        // Can make the radius negative to make an interior of a ball:
-        objBackground = new GenCyl(new funCircle(-30,10,.5), 32,
-                                   new funCircle(0,32));
-
-        // Normal ball:
-        objBall = new GenCyl(new funCircle(1,10,.5), 32,
-                                   new funCircle(0,32));
-
-
-        /* Initialize song. */
-        var audio,player=new CPlayer();
-        player.init(song);
-        while (player.generate() < 1){};
-        audio = _document.createElement("audio");
-        audio.src = URL.createObjectURL(new Blob([player.createWave()],
-                                                 {type: "audio/wav"}));
-        /* Start audio and graphics */
-        audio.play();
-        setInterval(loopfunc, 20);
+        // Then we display the scenegraph
+        traverse_wi(sceneroot,rotX_wi(0));
 
     }                                                    //DEBUG
     catch (err)                                          //DEBUG
     {                                                    //DEBUG
-        alert("Error initializing: " + err.message);     //DEBUG
+        alert("Error: " + err.message);                  //DEBUG
     }                                                    //DEBUG
+};
 
-} //DEBUG
+// Start here
+try                                                  //DEBUG
+{                                                    //DEBUG
+    var _document=document; // minify "document" name too
+    _document.body.appendChild(C = _document.createElement("canvas"));
+    s = C.style; s.position = "fixed"; s.left = s.top = 0;
+    gl = C.getContext('experimental-webgl');
+    //gl = C.getContext('webgl');
+    if (!gl){                                        //DEBUG
+        alert("This demo requires WebGL");           //DEBUG
+        return;                                      //DEBUG
+    }                                                //DEBUG
 
-//})();
+    // Debug print of location and aspect
+    var dbg_show_aspect=document.createTextNode(""); //DEBUG
+    var dbgInfoDiv=document.createElement("div");    //DEBUG
+    document.body.appendChild(dbgInfoDiv);           //DEBUG
+    dbgInfoDiv.style.position = "fixed";             //DEBUG
+    dbgInfoDiv.style.right = 10;                     //DEBUG
+    dbgInfoDiv.style.bottom = 10;                    //DEBUG
+    dbgInfoDiv.style.color = "#fff";                 //DEBUG
+    dbgInfoDiv.appendChild(dbg_show_aspect);         //DEBUG
+    var dbg_show_time=document.createTextNode("");   //DEBUG
+    dbgInfoDiv.appendChild(dbg_show_time);           //DEBUG
+
+    // Debug version seek, play and pause
+    C.addEventListener("click", function(e){         //DEBUG
+        audio.currentTime =                          //DEBUG
+            e.pageX/C.width*audio.duration;          //DEBUG
+        if (e.pageY<(C.height/2))audio.pause();      //DEBUG
+        else audio.play();                           //DEBUG
+        for(var t=(audio.currentTime*(               //DEBUG
+            songBeatsPerMinute/60))|0;t>=0;t--){     //DEBUG
+        }                                            //DEBUG
+    });                                              //DEBUG
+
+
+    // Apply p01's trick for grabbing short names from GL obj
+    // (http://slides.com/pdesch/js-demoscene-techniques#/5/6)
+    // This didn't help me earlier when trying to make a 1k..
+    // is OK now for 4k. saves something like 30 bytes / 4kb.
+    // Not much.. The trick itself costs some 45 bytes compressed.
+
+    for(s in gl){
+        //For creating a sed script to change original names:
+        //var shortname = k.match(/^..|[A-Z]|\d\D+$/g).join('');
+        //console.log("s/gl\\."+k+"(/gl."+shortname+"(/g");
+        gl[s.match(/^..|[A-Z]|\d\D+$/g).join('')]=gl[s];
+
+        //The following is bloaty, but works with "use strict":
+        //gl[k.match(/^[a-z].|[A-Z](?=[a-z])|\d\D+$/g).join('')]=gl[k];
+    }
+
+    gl.enable(gl.DEPTH_TEST);
+    gl.enable(gl.CULL_FACE); // Performance opt., costs 6 bytes.
+
+    // Initializations seem to pack a bit better inlined.
+    // prg = gl.createProgram();
+    // TODO: Multiple, switchable shaders!
+
+    // Reuse the variable name "s"
+    s = gl.createShader(gl.VERTEX_SHADER);
+    //gl.shaderSource(s, vertex_shader_minimal_with_normalmatrix);
+    gl.shaderSource(s, test_vert);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS))                 //DEBUG
+        alert("Vertex shader: "+ gl.getShaderInfoLog(s));             //DEBUG
+    gl.attachShader(prg = gl.createProgram(), s);
+
+    s = gl.createShader(gl.FRAGMENT_SHADER);
+    //gl.shaderSource(s, fragment_shader_pointlight_cameraspace);
+    gl.shaderSource(s, test_frag);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS))                 //DEBUG
+        alert("Fragment shader: "+ gl.getShaderInfoLog(s));           //DEBUG
+    gl.attachShader(prg, s);
+
+    gl.linkProgram(prg);
+    if (!gl.getProgramParameter(prg, gl.LINK_STATUS))                //DEBUG
+        alert("Link program: "+ gl.getProgramInfoLog(prg));          //DEBUG
+
+
+
+    // Create primitive building blocks by different profile sweeps:
+/*
+    var prof=cptsHuge;
+    objTile = new GenCyl(new funBSplineTransformed(prof,scaleXYZ(.04,.45,0)),13,
+                         new funBSplineTransformed(prof,scaleXYZ(.45,.001,0)));
+
+    // Now we can make a ball by half-a-ball and zero-radius-ball
+    objTile = new GenCyl(new funCircle(1,12,.5), 12,
+                         new funCircle(0,12));
+*/
+
+    // And now we can even make a box..
+    objTile = new Box(1);
+
+    // Can make the radius negative to make an interior of a ball:
+    objBackground = new GenCyl(new funCircle(-30,10,.5), 32,
+                               new funCircle(0,32));
+
+    // Normal ball:
+    objBall = new GenCyl(new funCircle(1,10,.5), 32,
+                               new funCircle(0,32));
+
+
+    /* Initialize song. */
+    var audio,player=new CPlayer();
+    player.init(song);
+    while (player.generate() < 1){};
+    audio = _document.createElement("audio");
+    audio.src = URL.createObjectURL(new Blob([player.createWave()],
+                                             {type: "audio/wav"}));
+    /* Start audio and graphics */
+    audio.play();
+    setInterval(loopfunc, 20);
+
+}                                                    //DEBUG
+catch (err)                                          //DEBUG
+{                                                    //DEBUG
+    alert("Error initializing: " + err.message);     //DEBUG
+}                                                    //DEBUG
+
