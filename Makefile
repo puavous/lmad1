@@ -58,6 +58,7 @@ minified_shaders.js: test.frag test.vert
 	$(SHMIN) --format js --field-names rgba \
 		--preserve-externals -o test_vert.js test.vert
 	cat test_frag.js test_vert.js > minified_shaders.js
+	-rm test_frag.js test_vert.js
 
 clean:
 	-rm *~ tmp.* *.closured.js
@@ -65,7 +66,7 @@ clean:
 veryclean: clean
 	-rm $(PRODNAME).compo.html $(PRODNAME).debug.html
 	-rm gzthermal-result.png
-	-rm $(PRODNAME)_by_qma.zip
+	-rm $(PRODNAME_FULL)_by_$(PRODAUTHOR).zip
 	-rm *.gz
 
 externals: player-small.js
