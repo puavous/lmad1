@@ -5,12 +5,26 @@
  *
  * Now using the dirty small library.
  *
- * How-to: Inside one "(function(){...}", catenate the library, the
- * soft-synth, and this file. Remove debugging code and other
- * redundancies. Feed into a JavaScript minifier like Closure. Then
- * pack with PNGinator or JSExe or similar. All this is automated in
- * my GNU Makefile. TODO: Write some "batch file" for Windows users
- * who don't want to install MinGW or similar GNU toolset.
+ * How-to:
+ *
+ * 1. Create a JavaScript file containing "(function(){BULK})();"
+ *    where BULK is a catenation of the library, the soft-synth, and this
+ *    file.
+ *
+ * 2. <!-- To run in "debug mode", create an HTML file containing
+ *    "<html><head /><body><script>JS</script></body></html>" where JS
+ *    is the JavaScript produced in step 1. Open in a browser that
+ *    happens to accept the beast. -->
+ *
+ * 3. To produce a minified "intro competition" version, use the
+ *    provided GNU Makefile or other means (automatic, to keep sane)
+ *    to do the following: Remove debugging code and other redundant
+ *    functionality (lines that end with "DEBUG". Feed into a
+ *    JavaScript minifier like Closure. Then pack with PNGinator or
+ *    JSExe or similar.
+ *
+ *    TODO: Write some "batch file" for Windows users who don't want
+ *    to install MinGW or similar GNU toolset.
  *
  **/
 
@@ -29,22 +43,32 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
 // "Globals needed in many routines":
 // Note that in unstrict mode some of these could be left
 // as document object properties for rude size optimization.
-var C, Cw, Ch;
-var audio, persmat;
-var s;
+var C, Cw, Ch;      // Canvas object and previous width and height
+var audio;          // Audio object needed for song playback
+var persmat;        // Perspective matrix TODO: No need to be global!?
+var s;              // Temporary variable for "style" but also other things
 
 // Variables used in this production, specifically:
-var objTile, objBackground, objBall;
 var songBeatsPerMinute = 130;
+var objTile, objBackground, objBall;
 
+/**
+ * This is the event loop that happens on every frame. 
+ *
+ * Assumes prior initialization of C (canvas), audio.
+ *
+ * Assumes prior initialization of gl and prg.
+ *
+ * Debug mode needs initialization of dbg_xxx
+ *
+ */
 var loopfunc = function()
 {
-    try                                                  //DEBUG
-    {                                                    //DEBUG
+    try                                                          //DEBUG
+    {                                                            //DEBUG
         // Time from the audio object. Interpret as beat.
         var t = audio.currentTime * (songBeatsPerMinute/60);
         // Update canvas size
-        //var w = window.innerWidth, h = window.innerHeight;
         var w = innerWidth, h = innerHeight;  //window object is implicit
         if (w != Cw || h != Ch) {
             gl.viewport(0, 0, Cw=C.width=w, Ch=C.height=h);
@@ -67,6 +91,7 @@ var loopfunc = function()
         var camtrans=[translate_wi(0,0,-10)];
         var stufftrans=[translate_wi(0,0,0),rotY_wi(-t*.8),rotX_wi(t*.02)];
 
+        // TODO: Neater place for these.. perhaps call createScene(t) here;
         function makeStuff(t,ydist,disperse){
             var stuff = {
                 f: [],
@@ -146,7 +171,7 @@ var loopfunc = function()
 
         // Set light position (very naive as of yet):
         // TODO: Multiple lights, included in the scenegraph as "Light objects".
-        // As of now, we have to hardoce light position separately from the scene transforms:
+        // As of now, we have to hardcode light position separately from the scene transforms:
         gl.uniform4fv(gl.getUniformLocation(prg, "l"),
                       [-3,2,-9,1]);
 
@@ -160,14 +185,13 @@ var loopfunc = function()
     }                                                    //DEBUG
 };
 
-// Start here
+// Execution starts here.
 try                                                  //DEBUG
 {                                                    //DEBUG
     var _document=document; // minify "document" name too
     _document.body.appendChild(C = _document.createElement("canvas"));
     s = C.style; s.position = "fixed"; s.left = s.top = 0;
     gl = C.getContext('experimental-webgl');
-    //gl = C.getContext('webgl');
     if (!gl){                                        //DEBUG
         alert("This demo requires WebGL");           //DEBUG
         return;                                      //DEBUG
@@ -238,12 +262,12 @@ try                                                  //DEBUG
     gl.attachShader(prg, s);
 
     gl.linkProgram(prg);
-    if (!gl.getProgramParameter(prg, gl.LINK_STATUS))                //DEBUG
-        alert("Link program: "+ gl.getProgramInfoLog(prg));          //DEBUG
-
+    if (!gl.getProgramParameter(prg, gl.LINK_STATUS))                 //DEBUG
+        alert("Link program: "+ gl.getProgramInfoLog(prg));           //DEBUG
 
 
     // Create primitive building blocks by different profile sweeps:
+    // TODO: Neater place for these? Call some init_primitives() here?
 /*
     var prof=cptsHuge;
     objTile = new GenCyl(new funBSplineTransformed(prof,scaleXYZ(.04,.45,0)),13,
@@ -254,20 +278,20 @@ try                                                  //DEBUG
                          new funCircle(0,12));
 */
 
-    // And now we can even make a box..
+    // Now I have a box in the library.
     objTile = new Box(1);
+
+    // Ball can be built from circle curves:
+    objBall = new GenCyl(new funCircle(1,10,.5), 32,
+                               new funCircle(0,32));
 
     // Can make the radius negative to make an interior of a ball:
     objBackground = new GenCyl(new funCircle(-30,10,.5), 32,
                                new funCircle(0,32));
 
-    // Normal ball:
-    objBall = new GenCyl(new funCircle(1,10,.5), 32,
-                               new funCircle(0,32));
-
 
     /* Initialize song. */
-    var audio,player=new CPlayer();
+    var audio,player = new CPlayer();
     player.init(song);
     while (player.generate() < 1){};
     audio = _document.createElement("audio");
