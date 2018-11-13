@@ -5,12 +5,12 @@
  *
  * Now using the dirty small library.
  *
- * How-to: Inside one "function{...}", catenate the library, the
+ * How-to: Inside one "(function(){...}", catenate the library, the
  * soft-synth, and this file. Remove debugging code and other
  * redundancies. Feed into a JavaScript minifier like Closure. Then
- * pack with Pnginator or JSExe or similar. All this is automated in
+ * pack with PNGinator or JSExe or similar. All this is automated in
  * my GNU Makefile. TODO: Write some "batch file" for Windows users
- * without MinGW or similar.
+ * who don't want to install MinGW or similar GNU toolset.
  *
  **/
 
@@ -58,13 +58,14 @@ var loopfunc = function()
         // Could switch the shader based on time / object properties:
         gl.useProgram(prg);
 
+        // Re-build the scenegraph for every frame (can animate):
+
         // Initialize empty scenegraph. Root node with nothing inside:
         var sceneroot={f:[],o:[],c:[]};
 
-        // Re-build the scenegraph for every frame (can animate):
         // Animation parameters
         var camtrans=[translate_wi(0,0,-10)];
-        var stufftrans=[translate_wi(0,0,0),rotY_wi(-t*.2),rotX_wi(t*.02)];
+        var stufftrans=[translate_wi(0,0,0),rotY_wi(-t*.8),rotX_wi(t*.02)];
 
         function makeStuff(t,ydist,disperse){
             var stuff = {
@@ -76,8 +77,8 @@ var loopfunc = function()
             var clr=
                 [.1,0,0,1,
                  1,.1,.7,1,
-                 .8,.8,.8,2,
-                 12,1,0,0];
+                 .0,.0,.0,2, // specular
+                 100,1,0,0];
 
             stuff.c.push({f: [translate_wi(0,0,0)],
                           o: [new Material(clr),objTile],
@@ -98,16 +99,22 @@ var loopfunc = function()
             return stuff;
         }
 
-        var stuff = makeStuff(t,0,0);
+        var stuff = makeStuff(2*t,0,0);
+
+        var cpohja=
+            [.3,.2,.1,1,
+             .9,.4,.2,1,
+             1, 1, 1,2,
+             2,1, 0,0];
 
         var ctausta=
-            [.1,.1,.1,1,
-             .6,.6,.6,1,
-             .8,.8,.6,2,
+            [.1,.1,.2,1,
+             .3,.3,.8,1,
+              1, 1, 1,2,
              2,1,0.4,0];
 
         var tausta = {
-            f:[rotZ_wi(t*.02)],
+            f:[rotZ_wi(t*.16)],
             o:[new Material(ctausta),objBackground],
             c:[]
         };
@@ -115,6 +122,9 @@ var loopfunc = function()
         sceneroot.c.push({f:camtrans,
                           o:[],
                           c:[
+                              {f:[translate_wi(0,-2,0),scaleXYZ_wi(30,.1,30)],
+                               o:[new Material(cpohja),objTile],
+                               c:[]},
                               {f:stufftrans,
                                o:[],
                                c:[stuff]},
@@ -134,10 +144,11 @@ var loopfunc = function()
         // Transfer perspective matrix to shader:
         gl.uniformMatrix4fv(gl.getUniformLocation(prg,"p"), false, persmat);
 
-        // Set light direction (quite naive as of yet):
-        // Hmm... correct normalization not so important here?
+        // Set light position (very naive as of yet):
+        // TODO: Multiple lights, included in the scenegraph as "Light objects".
+        // As of now, we have to hardoce light position separately from the scene transforms:
         gl.uniform4fv(gl.getUniformLocation(prg, "l"),
-                      nmld([-1,1,1,0]));
+                      [-3,2,-9,1]);
 
         // Then we display the scenegraph
         traverse_wi(sceneroot,rotX_wi(0));

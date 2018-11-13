@@ -9,10 +9,12 @@
  */
 uniform mat4 mv,nm,p;
 attribute vec4 g,v,N;
-varying vec4 c,n,r;
+varying vec4 c,n,r,a;
 void main(){
-    gl_Position=p*mv*v;
-    n=nm*N;     // Normal
-    c=g;        // "Color" (whatever in the fragment shader)
-    r=-mv*v;    // View diRection
+    a = mv*v;          // Point after modelview transform
+    gl_Position = p*a; // Point after perspective projection
+    n = nm*N;          // Normal
+    c = g;             // "Color" (whatever in the fragment shader)
+    r = -mv*v;         // View diRection
+    r.w = 0.; // Make it really a direction
 }
