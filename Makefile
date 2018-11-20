@@ -52,16 +52,28 @@ $(PRODNAME).debug.html: $(DEBUGSRC) $(PRODNAME)_song.js $(PRODNAME).js
 	echo "})();" >> $@
 	echo "</script></body></html>" >> $@
 
-minified_shaders.js: test.frag test.vert
+# Minify shaders:
+SHADER_JS_NAMES=test_frag.js test_vert.js noisy_frag.js
+
+%_frag.js : %.frag
 	$(SHMIN) --format js --field-names rgba \
-		--preserve-externals -o test_frag.js test.frag
+		--preserve-externals -o $@ $<
+
+%_vert.js : %.vert
 	$(SHMIN) --format js --field-names rgba \
-		--preserve-externals -o test_vert.js test.vert
-	cat test_frag.js test_vert.js > minified_shaders.js
-	-rm test_frag.js test_vert.js
+		--preserve-externals -o $@ $<
+
+
+minified_shaders.js: $(SHADER_JS_NAMES)
+#	$(SHMIN) --format js --field-names rgba \
+#		--preserve-externals -o test_frag.js test.frag
+#	$(SHMIN) --format js --field-names rgba \
+#		--preserve-externals -o test_vert.js test.vert
+	cat  $(SHADER_JS_NAMES) > $@
 
 clean:
 	-rm *~ tmp.* *.closured.js
+	-rm $(SHADER_JS_NAMES)
 
 veryclean: clean
 	-rm $(PRODNAME).compo.html $(PRODNAME).debug.html

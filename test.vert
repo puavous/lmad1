@@ -9,8 +9,9 @@
  */
 uniform mat4 mv,nm,p;
 attribute vec4 g,v,N;
-varying vec4 c,n,r,a;
+varying vec4 c,n,r,a,m;
 void main(){
+    m = v;             // Original point in modeling coordinaates
     a = mv*v;          // Point after modelview transform
     gl_Position = p*a; // Point after perspective projection
     n = nm*N;          // Normal

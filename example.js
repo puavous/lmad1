@@ -255,7 +255,7 @@ try                                                  //DEBUG
 
     s = gl.createShader(gl.FRAGMENT_SHADER);
     //gl.shaderSource(s, fragment_shader_pointlight_cameraspace);
-    gl.shaderSource(s, test_frag);
+    gl.shaderSource(s, noisy_frag);
     gl.compileShader(s);
     if (!gl.getShaderParameter(s, gl.COMPILE_STATUS))                 //DEBUG
         alert("Fragment shader: "+ gl.getShaderInfoLog(s));           //DEBUG
