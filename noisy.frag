@@ -43,7 +43,7 @@ mediump vec3 random3(mediump vec3 a){
     highp vec3 j = vec3(.25) + .25*sin(a*b);    // hash to [0,.5] with sine
     j -= vec3(0.0009765625);                    // subtract 1/1024
     highp vec3 r = fract(16.*j);                // discard 4 bits
-    return vec3(-.1)+2.*r; // Return in range [-1,-1]
+    return vec3(-1.)+2.*r; // Return in range [-1,-1]
 }
 
 
@@ -94,13 +94,29 @@ mediump float noise3(mediump vec3 v){
     mediump float ngg=dot(dgg,normalize(random3(gg)));
     mediump float nhh=dot(dhh,normalize(random3(hh)));
 
+    /*
+    // As of now, just linear interpolation; don't know about scaling..
     mediump vec3 s=vec3(1)-daa;
     mediump vec3 t=daa;
-
-    // As of now, just linear interpolation
     return
         s.z * (s.y*(s.x*naa + t.x*nee) + t.y*(s.x*ncc + t.x*ngg)) +
-        t.z * (s.y*(s.x*nbb + t.x*nff) + t.y*(s.x*ndd + t.x*nhh));
+        t.z * (s.y*(s.x*nbb + t.x*nff) + t.y*(s.x*ndd + t.x*nhh)) ;
+    */
+
+    //Interpolate with Hermite, like most people seem to do. Much nicer..
+    mediump vec3 t=daa;
+    mediump float stp1=(naa + smoothstep(0.,1.,t.x)*(nee-naa));
+    mediump float stp2=(ncc + smoothstep(0.,1.,t.x)*(ngg-ncc));
+
+    mediump float stp3=(nbb + smoothstep(0.,1.,t.x)*(nff-nbb));
+    mediump float stp4=(ndd + smoothstep(0.,1.,t.x)*(nhh-ndd));
+
+    mediump float stp5=(stp1 + smoothstep(0.,1.,t.y)*(stp2-stp1));
+    mediump float stp6=(stp3 + smoothstep(0.,1.,t.y)*(stp4-stp3));
+
+    mediump float stp7=(stp5 + smoothstep(0.,1.,t.z)*(stp6-stp5));
+
+    return stp7;
 
     // For debugging (would be vec3):
 	//return random3(aa);
@@ -116,23 +132,24 @@ void main(){
 
     mediump vec3 p = m.xyz;
     mediump float noispat=.5
-        + noise3(p)
+        + noise3(2.*p+vec3(10))
         + noise3(4.*p+vec3(.1))/2.
         + noise3(8.*p+vec3(.3))/3.
-        + noise3(16.*p+vec3(.4))/4.;
+        + noise3(16.*p+vec3(.4))/4.
+        ;
 
     //gl_FragColor=vec4(noispat,noispat,noispat,1.);
 
-    gl_FragColor=vec4(0,0,0,1)+
+    gl_FragColor=vec4(0,0,0,1) +
         // Locate triangle boundaries from "vertex coloring":
         i[3].bbbb*max(0.,1.-4.*min(c.b,min(c.g,c.r)))
         // Clamp output at ambient color (incl. alpha):
-        + 1.*max(  i[0] * 3.*noispat,
+        + 1.*max(  i[0] * noispat,
                 // Diffuse reflection
-                (  i[1] * 3.*noispat * max(0.,dot(ldir,normal))
+                (  i[1] * 2. * noispat * max(0.,dot(ldir,normal))
                 // Specular reflection
-                 + i[2] * pow(max(0.,dot(viewdir,reflect(-ldir,normal))),
-                             i[3].r)
+                 + i[2] * noispat * pow(max(0.,dot(viewdir,reflect(-ldir,normal))),
+                                        i[3].r)
                 ) / distAttenuationDivisor
              )
         ;

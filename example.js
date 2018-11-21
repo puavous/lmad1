@@ -100,10 +100,10 @@ var loopfunc = function()
             };
 
             var clr=
-                [.1,0,0,1,
-                 1,.1,.7,1,
-                 .0,.0,.0,2, // specular
-                 100,1,0,0];
+                [.1,.12,.05,1,
+                 .2,.4,.5,1,
+                 .6,.3,.1,2, // specular
+                 10,1,0,0];
 
             stuff.c.push({f: [translate_wi(0,0,0)],
                           o: [new Material(clr),objTile],
@@ -173,7 +173,7 @@ var loopfunc = function()
         // TODO: Multiple lights, included in the scenegraph as "Light objects".
         // As of now, we have to hardcode light position separately from the scene transforms:
         gl.uniform4fv(gl.getUniformLocation(prg, "l"),
-                      [-3,2,-9,1]);
+                      [-3,2,-6,1]);
 
         // Then we display the scenegraph
         traverse_wi(sceneroot,rotX_wi(0));
