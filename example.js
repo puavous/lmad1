@@ -115,11 +115,20 @@ var loopfunc = function()
                           c: []
                          });
 
-            stuff.c.push({f: [translate_wi(-2,0,0),scaleXYZ_wi(1.1,.2,1+.1*Math.sin(PI*t))],
+            stuff.c.push({f: [translate_wi(-2,0,0),rotX_wi(t),scaleXYZ_wi(1.1,.2,3+.1*Math.sin(PI*t))],
                           o: [new Material(clr),objBall],
                           c: []
                          });
 
+            stuff.c.push({f: [translate_wi(-3,0,0),rotX_wi(t*1.05),scaleXYZ_wi(1.1,.2,3+.1*Math.sin(PI*t))],
+                          o: [new Material(clr),objBall],
+                          c: []
+                         });
+
+            stuff.c.push({f: [translate_wi(-4,0,0),rotX_wi(t*1.1),scaleXYZ_wi(1.1,.2,3+.1*Math.sin(PI*t))],
+                          o: [new Material(clr),objBall],
+                          c: []
+                         });
 
             return stuff;
         }

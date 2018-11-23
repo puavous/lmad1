@@ -23,7 +23,7 @@ varying mediump vec4 c,n,r,a,m;
  *
  * Assumed input is small-ish integers like those needed for Perlin
  * noise gradients at indexed hypercube corners; output is vec3
- * vector that could be (0,0,0) in an unlikely situation.
+ * vector.
  *
  * I looked at https://www.shadertoy.com/view/XsX3zB for inspiration.
  * That one seemed a bit funny about accuracy accross hardware,
@@ -40,16 +40,27 @@ mediump vec3 random3(mediump vec3 a){
     const highp mat3 b=mat3(3,  17, 13,
                             19, 5,  23,
                             11, 29, 7);
-    highp vec3 j = vec3(.25) + .25*sin(a*b);    // hash to [0,.5] with sine
-    j -= vec3(0.0009765625);                    // subtract 1/1024
-    highp vec3 r = fract(16.*j);                // discard 4 bits
-    return vec3(-1.)+2.*r; // Return in range [-1,-1]
+
+    // hash to [0,.5] with sine
+    highp vec3 j = vec3(.25) + .25*sin(a*b);
+
+    // subtract 1/1024 to stabilise fract() in bit patterns 0.111 vs 1.000
+    j -= vec3(0.0009765625);
+
+    // discard 4 front bits
+    highp vec3 r = fract(16.*j);
+
+    // Return in range [-1,-1]
+    return vec3(-1.)+2.*r;
 }
 
 
+
+
 /**
- * 3D noise-like function. My first; not very nice or "correct". But I
- * like it... first ones are nice.
+ * 3D noise-like function. If I understand correctly, this is the
+ * classic Perlin noise in cubic 3D lattice. My first noise function;
+ * probably could improve a lot.
  */
 mediump float noise3(mediump vec3 v){
 
@@ -122,35 +133,48 @@ mediump float noise3(mediump vec3 v){
 	//return random3(aa);
 }
 
-void main(){
-    mediump  vec4 toLight = l-a; // light position - fragment position
-    mediump  vec4 ldir    = normalize(toLight);
-    mediump  vec4 viewdir = normalize(r);
-    mediump  vec4 normal  = normalize(n);
+
+mediump vec3 pointlight(mediump vec3 a,
+                        mediump vec3 l,
+                        mediump vec3 viewdir,
+                        mediump vec3 normal,
+                        mediump vec3 lightEmission,
+                        mediump vec3 diffuseReflectance,
+                        mediump vec3 specularReflectance,
+                        mediump float shininess)
+{
+    mediump  vec3 toLight = l-a; // light position - fragment position
+    mediump  vec3 ldir    = normalize(toLight);
     mediump float ldist   = length(toLight);
     mediump float distAttenuationDivisor = 1. + .1*ldist + .01*ldist*ldist;
+
+    mediump vec3 diffuse = diffuseReflectance *  max(0.,dot(ldir,normal));
+    mediump vec3 specular = specularReflectance * pow(max(0.,dot(viewdir,reflect(-ldir,normal))),shininess);
+    return (lightEmission / distAttenuationDivisor) * (diffuse + specular);
+}
+
+void main(){
+    mediump  vec3 viewdir = normalize(r.xyz);
+    mediump  vec3 normal  = normalize(n.xyz);
 
     mediump vec3 p = m.xyz;
     mediump float noispat=.5
         + noise3(2.*p+vec3(10))
         + noise3(4.*p+vec3(.1))/2.
-        + noise3(8.*p+vec3(.3))/3.
-        + noise3(16.*p+vec3(.4))/4.
+        + noise3(8.*p+vec3(.3))/4.
+        + noise3(16.*p+vec3(.4))/6.
         ;
 
-    //gl_FragColor=vec4(noispat,noispat,noispat,1.);
-
-    gl_FragColor=vec4(0,0,0,1) +
-        // Locate triangle boundaries from "vertex coloring":
-        i[3].bbbb*max(0.,1.-4.*min(c.b,min(c.g,c.r)))
-        // Clamp output at ambient color (incl. alpha):
-        + 1.*max(  i[0] * noispat,
-                // Diffuse reflection
-                (  i[1] * 2. * noispat * max(0.,dot(ldir,normal))
-                // Specular reflection
-                 + i[2] * noispat * pow(max(0.,dot(viewdir,reflect(-ldir,normal))),
-                                        i[3].r)
-                ) / distAttenuationDivisor
-             )
-        ;
+    gl_FragColor=vec4(
+                      // Locate triangle boundaries from "vertex coloring":
+                      //i[3].bbb*max(0.,1.-4.*min(c.b,min(c.g,c.r))) +
+                      // Clamp output at ambient color (incl. alpha):
+                      1.*max(  i[0].rgb * noispat,
+                               pointlight(a.xyz, l.xyz, viewdir, normal,
+                                          vec3(1),
+                                          noispat * i[1].rgb,
+                                          i[2].rgb,
+                                          16.*(1.+noispat) /*i[3].r*/)
+                               )
+                      , 1); // alpha==1
 }
