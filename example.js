@@ -194,6 +194,11 @@ var loopfunc = function()
     }                                                    //DEBUG
 };
 
+// For the scrolling text, i.e., texti 
+var message = "Hmm. Taaann tekstiä tulee sitten tosi paljon? Vortex III!!!! ja tuota ja tuota ja tuota ja tuota ja tuota ja tuota ja tuota ja tuota ja tuota ja tuotaja tuota ";
+var scrolltextnode;
+var scrolltextdiv;
+
 // Execution starts here.
 try                                                  //DEBUG
 {                                                    //DEBUG
@@ -229,6 +234,17 @@ try                                                  //DEBUG
         }                                            //DEBUG
     });                                              //DEBUG
 
+
+    //--------------------------------------------------------------
+    // NEW: scrolltext.. just to find out possibilities..
+    /* If I want some text.. */
+    // Using the variable 's' for multiple purposes here, too.
+    _document.body.appendChild(s=_document.createElement("div"));
+    s.appendChild(scrolltextnode = _document.createTextNode(message));
+    s = s.style; s.position = "fixed"; s.left = s.top = 10;
+    s.color="#fff"; s.fontSize="10vh";
+    s.whiteSpace="nowrap";
+    s.fontFamily="monospace";
 
     // Apply p01's trick for grabbing short names from GL obj
     // (http://slides.com/pdesch/js-demoscene-techniques#/5/6)
