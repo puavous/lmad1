@@ -77,6 +77,10 @@ var loopfunc = function()
         dbg_show_time.nodeValue=" time=" + (audio.currentTime|0) //DEBUG
                                          + "(beat " +(t|0)+ ")"; //DEBUG
 
+
+        scrolltextdiv.style.left=-t*200.0 +10.*Math.sin(t); //huhhuh
+
+
         persmat = perspectiveFhc(5,w/h);
 
         // Could switch the shader based on time / object properties:
@@ -239,7 +243,7 @@ try                                                  //DEBUG
     // NEW: scrolltext.. just to find out possibilities..
     /* If I want some text.. */
     // Using the variable 's' for multiple purposes here, too.
-    _document.body.appendChild(s=_document.createElement("div"));
+    _document.body.appendChild(s=scrolltextdiv=_document.createElement("div"));
     s.appendChild(scrolltextnode = _document.createTextNode(message));
     s = s.style; s.position = "fixed"; s.left = s.top = 10;
     s.color="#fff"; s.fontSize="10vh";
