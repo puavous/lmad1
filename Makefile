@@ -5,9 +5,9 @@
 #  - basic GNU tools (make, bash, sed, ...)
 
 # Name of this production and its author:
-PRODNAME=example
-PRODNAME_FULL=Example_4k
-PRODAUTHOR=The_Old_Dude
+PRODNAME=scrolltext
+PRODNAME_FULL=Scrolling_text
+PRODAUTHOR=qma
 
 # Commands to find your installations (change paths to suit your setup):
 CLOS=java -jar /home/nieminen/files/hacking/closure-compiler/closure-compiler-v20170218.jar

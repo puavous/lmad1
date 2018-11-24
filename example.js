@@ -124,17 +124,7 @@ var loopfunc = function()
                           c: []
                          });
 
-            stuff.c.push({f: [translate_wi(-2,0,0),rotX_wi(t),scaleXYZ_wi(1.1,.2,3+.1*Math.sin(PI*t))],
-                          o: [new Material(clr),objBall],
-                          c: []
-                         });
-
-            stuff.c.push({f: [translate_wi(-3,0,0),rotX_wi(t*1.05),scaleXYZ_wi(1.1,.2,3+.1*Math.sin(PI*t))],
-                          o: [new Material(clr),objBall],
-                          c: []
-                         });
-
-            stuff.c.push({f: [translate_wi(-4,0,0),rotX_wi(t*1.1),scaleXYZ_wi(1.1,.2,3+.1*Math.sin(PI*t))],
+            stuff.c.push({f: [translate_wi(-2,0,0),rotX_wi(.5*t)],
                           o: [new Material(clr),objBall],
                           c: []
                          });
@@ -226,7 +216,7 @@ var messageHTML = ". . . "
     + "Today my first noise function, like Perlin (1985), but with a crappy hash. "
     + "Anyway, I'm making this beginner-friendly javascript library for 4k intros with the hope of getting youngsters interested in demoscene. . . I hope to organize a 4k intro coding workshop in <a href='https://instanssi.org/2019/'> Instanssi 2019</a>. The organizers don't know about my cunning plan yet, but I hope they'll accept. . . Veterans of demoscene want to help? Please do! :)"
     + spaces
-    + "and that's about all I wanted to say here at Vortex III. . . Party on!!!"
+    + "and that's about all I wanted to say here at Vortex III. . . Party on!!! See you in the sauna soon!"
     + spaces
     + spaces
     + spaces
