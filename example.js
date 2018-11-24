@@ -32,6 +32,8 @@
 The visuals of this production are synced to the following song
 created using the great SoundBox minisynth:
 
+http://sb.bitsnbites.eu/?data=U0JveAwC7d2xahRRFADQ-2bWjQQkRYQlCBoQkZBCsRashTRpxMJyqyGNqOuChowrKDZTWQQrK4t8QX4hlegPaOMf2K8zO7vGDWLt6DnDfXPv400zTPeY-76uR6zF5kpMDyNuHq5EbF0ZxEw2jVi_kT_oxRmjmMSbeB2vYj-exXg2VwYAAAAAAAB01PRxiuk40kGvf7WdyVZfrG7OspRSpGZsRFRVHfFLVMs5AAAAAAAAdMr7MtUR6XPv3HZd3u5F_uhh7GznGylisU-Wmmy2fDJ_bOk-Oa0BAAAAAACgK9KwjHRSNhthlzbqYZhHduv46ffd_oUUWbbYK2uyKOZXRDEqflajGI_3Ym_ek_FvVvyxLnwMAAAAAAAA_52yjf3I77YT6duXuHY93V-cV9b-VxZn-i_-JgAAAAAAAKBL8mEZ-UmZ1elgUA9Hayld_vjp5YfzR_20fF5ZeldF9dYrAwAAAAAA4B_R9GDM2h6Md7ai6cGYsnvHF2O3_ySdLmrT0TwW2vp5PR54kQAAAAAAAHTODw
+
 http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSArLq440op4HGrKeoNhcZRGsrCzyC_IXUon-AW38B_bn3u1xZ5rUnn7f7pudN8w0w3YDb36sR3Riay0mxxF3j9citm90Y6aYRKzfKR-3YmkQo3gf7-JtHMbLGM7GqgAAAAAAAIAVNXmWMRlGHrXaN5uRovO6szXtZGbktM0YjyPqdxnj830AAAAAAABYKZ-qrCPyW-vSTp3eb0X59Ens7pQbOTsom5nNHM1XnPuOljkAAAAAAACsiuxVkWfV9CBsc6NuemUU905f_NprX8miWByT9edPRH_QX2SDGA4P4mBehPFv1r8w7_sPAAAAAAAA_jtVE4dRPmwG8uf3uHU79-d3kzVFFyMuDAAAAAAAAFglZa-K8qwq6m63WzcnVzOvf_n65vPlk_bybrL8OI7xB7sFAAAAAADAP2JadLFoii4-2I5p0cUsHp1ei73281zMyRjUn8Efy5r8Vd0e2UMAAAAAAABWzm8
 
 */
@@ -78,7 +80,10 @@ var loopfunc = function()
                                          + "(beat " +(t|0)+ ")"; //DEBUG
 
 
-        scrolltextdiv.style.left=-t*200.0 +10.*Math.sin(t); //huhhuh
+        // Scrolltext.. loop through all contents during the show:
+        var sw=scrolltextdiv.offsetWidth;
+        var endbeat=128;
+        scrolltextdiv.style.left=w - (t/endbeat)*sw;
 
 
         persmat = perspectiveFhc(5,w/h);
@@ -198,8 +203,37 @@ var loopfunc = function()
     }                                                    //DEBUG
 };
 
-// For the scrolling text, i.e., texti 
-var message = "Hmm. Taaann tekstiä tulee sitten tosi paljon? Vortex III!!!! ja tuota ja tuota ja tuota ja tuota ja tuota ja tuota ja tuota ja tuota ja tuota ja tuotaja tuota ";
+var spaces="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+// Variables for the scrolling text
+var messageHTML = ". . . "
+    +spaces
+    +". . . "
+    +spaces
+    +"Hi, Vortex!" + spaces
+    +spaces
+    + "qma here (and there, with you, too)" + spaces
+    + "Welcome to a compo-filler... short one, don't worry!" + spaces
+    + spaces
+    + "My first scolltext!" + spaces
+    + "I always wanted to make a scrolltext. . . It took some 25 years, but here it is now."
+    + spaces
+    + spaces
+    + "Fuckings to all... (not really, but a scrolltext has to have this?) "
+    + "In fact, I just love being here. Thank you, spiikki and other organizers of Vortex III! You keep the scene alive! Beautiful!"
+    + spaces
+    + "Nothing special in this entry.. one more &quot;snapshot&quot; of the work-in-progress of a wannabe demo coder. . . "
+    + spaces
+    + "Today my first noise function, like Perlin (1985), but with a crappy hash. "
+    + "Anyway, I'm making this beginner-friendly javascript library for 4k intros with the hope of getting youngsters interested in demoscene. . . I hope to organize a 4k intro coding workshop in <a href='https://instanssi.org/2019/'> Instanssi 2019</a>. The organizers don't know about my cunning plan yet, but I hope they'll accept. . . Veterans of demoscene want to help? Please do! :)"
+    + spaces
+    + "and that's about all I wanted to say here at Vortex III. . . Party on!!!"
+    + spaces
+    + spaces
+    + spaces
+/*
+*/
+;
+
 var scrolltextnode;
 var scrolltextdiv;
 
@@ -244,7 +278,8 @@ try                                                  //DEBUG
     /* If I want some text.. */
     // Using the variable 's' for multiple purposes here, too.
     _document.body.appendChild(s=scrolltextdiv=_document.createElement("div"));
-    s.appendChild(scrolltextnode = _document.createTextNode(message));
+    //s.appendChild(scrolltextnode = _document.createTextNode(message));
+    s.innerHTML=messageHTML;
     s = s.style; s.position = "fixed"; s.left = s.top = 10;
     s.color="#fff"; s.fontSize="10vh";
     s.whiteSpace="nowrap";
