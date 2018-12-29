@@ -1,2 +1,6 @@
-# Ignore the downloaded Soundbox player:
-player-small.js
+# Could have some Git ignores here..
+
+# Let us ignore any "hmm" things which I use as a synonym for
+#"hmm.. just trying out something.. should be deleted afterwards"
+hmm
+
