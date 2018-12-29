@@ -1,0 +1,20 @@
+Scrolling text
+====================
+
+I was going to prepare something in good time.. well, then there was
+no time. Then I was going to prepare this in in the train to Tampere
+well before the party. Well, it sort of didn't happen. Code at the
+partyplace? Not so easy.. but remotely possible, it seems. So here it
+is: an entry for the sake of having an entry. Once again.
+
+Author:     qma
+
+            ("The Old Dude" for Instanssi folk, Paavo Nieminen
+            <paavo.j.nieminen@jyu.fi> in the daily life)
+
+Techniques: Javascript, WebGL, SoundBox, Closure Compiler, Pnginator,
+            GNU toolchain, Emacs
+
+This production uses the SoundBox synthesizer tracker:
+(http://sb.bitsnbites.eu/). The playback library is not reproduced in
+my source code repository, but must be downloaded separately.

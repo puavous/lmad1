@@ -32,6 +32,8 @@
 The visuals of this production are synced to the following song
 created using the great SoundBox minisynth:
 
+http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSArLq440op4HGrKeoNhcZRGsrCzyC_IXUon-AW38B_bn3u1xZ5rUnn7f7pudN8w0w3YDb36sR3Riay0mxxF3j9citm90Y6aYRKzfKR-3YmkQo3gf7-JtHMbLGM7GqgAAAAAAAIAVNXmWMRlGHrXaN5uRovO6szXtZGbktM0YjyPqdxnj830AAAAAAABYKZ-qrCPyW-vSTp3eb0X59Ens7pQbOTsom5nNHM1XnPuOljkAAAAAAACsiuxVkWfV9CBsc6NuemUU905f_NprX8miWByT9edPRH_QX2SDGA4P4mBehPFv1r8w7_sPAAAAAAAA_jtVE4dRPmwG8uf3uHU79-d3kzVFFyMuDAAAAAAAAFglZa-K8qwq6m63WzcnVzOvf_n65vPlk_bybrL8OI7xB7sFAAAAAADAP2JadLFoii4-2I5p0cUsHp1ei73281zMyRjUn8Efy5r8Vd0e2UMAAAAAAABWzm8
+
 http://sb.bitsnbites.eu/?data=U0JveAwC7d2xahRRFADQ-2bWjQQkRYQlCBoQkZBCsRashTRpxMJyqyGNqOuChowrKDZTWQQrK4t8QX4hlegPaOMf2K8zO7vGDWLt6DnDfXPv400zTPeY-76uR6zF5kpMDyNuHq5EbF0ZxEw2jVi_kT_oxRmjmMSbeB2vYj-exXg2VwYAAAAAAAB01PRxiuk40kGvf7WdyVZfrG7OspRSpGZsRFRVHfFLVMs5AAAAAAAAdMr7MtUR6XPv3HZd3u5F_uhh7GznGylisU-Wmmy2fDJ_bOk-Oa0BAAAAAACgK9KwjHRSNhthlzbqYZhHduv46ffd_oUUWbbYK2uyKOZXRDEqflajGI_3Ym_ek_FvVvyxLnwMAAAAAAAA_52yjf3I77YT6duXuHY93V-cV9b-VxZn-i_-JgAAAAAAAKBL8mEZ-UmZ1elgUA9Hayld_vjp5YfzR_20fF5ZeldF9dYrAwAAAAAA4B_R9GDM2h6Md7ai6cGYsnvHF2O3_ySdLmrT0TwW2vp5PR54kQAAAAAAAHTODw
 
 http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSArLq440op4HGrKeoNhcZRGsrCzyC_IXUon-AW38B_bn3u1xZ5rUnn7f7pudN8w0w3YDb36sR3Riay0mxxF3j9citm90Y6aYRKzfKR-3YmkQo3gf7-JtHMbLGM7GqgAAAAAAAIAVNXmWMRlGHrXaN5uRovO6szXtZGbktM0YjyPqdxnj830AAAAAAABYKZ-qrCPyW-vSTp3eb0X59Ens7pQbOTsom5nNHM1XnPuOljkAAAAAAACsiuxVkWfV9CBsc6NuemUU905f_NprX8miWByT9edPRH_QX2SDGA4P4mBehPFv1r8w7_sPAAAAAAAA_jtVE4dRPmwG8uf3uHU79-d3kzVFFyMuDAAAAAAAAFglZa-K8qwq6m63WzcnVzOvf_n65vPlk_bybrL8OI7xB7sFAAAAAADAP2JadLFoii4-2I5p0cUsHp1ei73281zMyRjUn8Efy5r8Vd0e2UMAAAAAAABWzm8
@@ -97,7 +99,7 @@ var loopfunc = function()
         var sceneroot={f:[],o:[],c:[]};
 
         // Animation parameters
-        var camtrans=[translate_wi(0,0,-10)];
+        var camtrans=[rotZ_wi(Math.sin(.1*t)), translate_wi(0,-1+Math.sin(.2*t),-10+3.*Math.sin(.12*t)),rotY_wi(.1*t)];
         var stufftrans=[translate_wi(0,0,0),rotY_wi(-t*.8),rotX_wi(t*.02)];
 
         // TODO: Neater place for these.. perhaps call createScene(t) here;
@@ -129,6 +131,18 @@ var loopfunc = function()
                           c: []
                          });
 
+            stuff.c.push({f: [translate_wi(0,2,0), rotY_wi(.4*t + Math.sin(t))],
+                          o: [new Material(clr),objBall],
+                          c: []
+                         });
+
+            stuff.c.push({f: [translate_wi(0,-2,0), rotY_wi(-.4*t + Math.sin(t))],
+                          o: [new Material(clr),objBall],
+                          c: []
+                         });
+
+
+
             return stuff;
         }
 
@@ -147,7 +161,7 @@ var loopfunc = function()
              2,1,0.4,0];
 
         var tausta = {
-            f:[rotZ_wi(t*.16)],
+            f:[], //[rotZ_wi(t*.16)],
             o:[new Material(ctausta),objBackground],
             c:[]
         };
@@ -209,14 +223,16 @@ var messageHTML = ". . . "
     + spaces
     + spaces
     + "Fuckings to all... (not really, but a scrolltext has to have this?) "
-    + "In fact, I just love being here. Thank you, spiikki, Freon, Terwiz,  and other organizers of Vortex III! You keep the scene alive! Beautiful!"
+    + "In fact, I just love being here. Thank you, spiikki, Freon, Terwiz, visy, and other organizers of Vortex III! You keep the scene alive! Beautiful!"
     + spaces
     + "Nothing special in this entry.. one more &quot;snapshot&quot; of the work-in-progress of a wannabe demo coder. . . "
     + spaces
     + "Today my first noise function, like Perlin (1985), but with a crappy hash. "
-    + "Anyway, I'm making this beginner-friendly javascript library for 4k intros with the hope of getting youngsters interested in demoscene. . . I hope to organize a 4k intro coding workshop in <a href='https://instanssi.org/2019/'> Instanssi 2019</a>. The organizers don't know about my cunning plan yet, but I hope they'll accept. . . Veterans of demoscene want to help? Please do! :)"
+    + "Anyway, I'm making this beginner-friendly javascript library for 4k intros with the hope of getting youngsters interested in demoscene. . . I really want to organize a 4k intro coding workshop in <a href='https://instanssi.org/2019/'> Instanssi 2019</a>. The organizers don't know about my cunning plan yet, but I hope they'll accept. . . Veterans of demoscene want to help? Please do! :)"
     + spaces
-    + "and that's about all I wanted to say here at Vortex III. . . Party on!!! See you in the sauna soon!"
+    + "and that's about all I wanted to say here at Vortex III. . . Party on!!!"
+    + spaces
+    + "See you in the sauna soon!"
     + spaces
     + spaces
     + spaces
