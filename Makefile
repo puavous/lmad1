@@ -79,7 +79,6 @@ lib/minified_shaders.js: $(SHADER_JS_NAMES)
 
 clean:
 	-rm *~ tmp.* *.closured.js
-	-rm $(SHADER_JS_NAMES)
 
 cleaner: clean
 	-rm *.compo.html
@@ -88,6 +87,7 @@ cleaner: clean
 	-rm *.gz
 
 veryclean: cleaner
+	-rm $(SHADER_JS_NAMES)
 	-rm *_by_*.zip
 
 # Download stuff. Needs Internet connection, obviously.
