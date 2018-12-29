@@ -4,16 +4,26 @@
 #  - ruby interpreter, and the PNGinator program for Deflate compression
 #  - basic GNU tools (make, bash, sed, ...)
 
-# Name of this production and its author:
-PRODNAME=scrolltext
-PRODNAME_FULL=Scrolling_text
-PRODAUTHOR=qma
+## Name of this production and its author:
+# Filename stub for source and target files; requires
+PROD_NAME=scrolltext
+# A "full" name of the production, used in zip package name
+PROD_NAME_FULL=Scrolling_text
+# Handle of the author, also included in the zip package name
+PROD_AUTHOR=qma
+# Path to source files of this production.
+# Must-have files: $(PROD_SRC_PATH)/($PROD_NAME){.js,_song.js,.nfo}
+PROD_SRC_PATH=./prods
 
-# Commands to find your installations (change paths to suit your setup):
+# When the above is set, and required sources are there, you can
+# command "make $(PROD_NAME_FULL)_by_$(PROD_AUTHOR).zip" and upload
+# the resulting file to the local compo system.
+
+## Commands to find your installations (change paths to suit your setup):
 CLOS=java -jar /home/nieminen/files/hacking/closure-compiler/closure-compiler-v20170218.jar
 PNGIN=ruby /home/nieminen/files/hacking/pnginator/pnginator.rb
 
-# Optional:
+## Optional:
 DEFDB=/home/nieminen/files/hacking/defdb_04b/defdb
 GZTHERM=/home/nieminen/files/hacking/gzthermal_04c/gzthermal
 SHMIN=mono /home/nieminen/files/hacking/shader_minifier/shader_minifier.exe
@@ -22,8 +32,8 @@ SHMIN=mono /home/nieminen/files/hacking/shader_minifier/shader_minifier.exe
 #GZTHERM=echo "You may optionally download the gzthermal program and use it here with args:"
 
 # Compo entry package:
-$(PRODNAME_FULL)_by_$(PRODAUTHOR).zip: $(PRODNAME).compo.html $(PRODNAME).debug.html $(PRODNAME).nfo
-	zip $@ $^
+$(PROD_NAME_FULL)_by_$(PROD_AUTHOR).zip: $(PROD_NAME).compo.html $(PROD_NAME).debug.html $(PROD_SRC_PATH)/$(PROD_NAME).nfo
+	zip -j $@ $^
 
 # Order matters because of catenation etc:
 COMMONSRC=library.js shaders_simple.js minified_shaders.js player-small.js
@@ -31,21 +41,21 @@ COMPOSRC=glconstants.js $(COMMONSRC)
 DEBUGSRC=$(COMMONSRC)
 
 # Compo target: Remove all debugging code, minify and pack everything.
-$(PRODNAME).compo.html: $(COMPOSRC) $(PRODNAME)_song.js $(PRODNAME).js
+$(PROD_NAME).compo.html: $(COMPOSRC) $(PROD_SRC_PATH)/$(PROD_NAME)_song.js $(PROD_SRC_PATH)/$(PROD_NAME).js
 	echo "(function (){" > tmp.bulk.js
 	cat $^ >> tmp.bulk.js
 	echo "})();" >> tmp.bulk.js
 	cat tmp.bulk.js | sed -f prep.sed | sed -f shortengl.sed | sed -f shortenplayer.sed | $(CLOS) > tmp.closured.js
 	$(PNGIN) tmp.closured.js $@
 
-#Some compression profiling for fun - if you wanna you canna..
+#Some compression profiling for fun - if you wanna you canna.. results are approximate, not same as Pnginator output.
 	gzip -c tmp.closured.js > $@.gz
 	$(DEFDB) $@.gz
 	$(GZTHERM) -n $@.gz
 
 
 # Debug target: just catenate stuff to an HTML file:
-$(PRODNAME).debug.html: $(DEBUGSRC) $(PRODNAME)_song.js $(PRODNAME).js
+$(PROD_NAME).debug.html: $(DEBUGSRC) $(PROD_SRC_PATH)/$(PROD_NAME)_song.js $(PROD_SRC_PATH)/$(PROD_NAME).js
 	echo "<html><head /><body><script>" > $@
 	echo "(function (){" >> $@
 	cat $^ >> $@
@@ -63,12 +73,7 @@ SHADER_JS_NAMES=test_frag.js test_vert.js noisy_frag.js
 	$(SHMIN) --format js --field-names rgba \
 		--preserve-externals -o $@ $<
 
-
 minified_shaders.js: $(SHADER_JS_NAMES)
-#	$(SHMIN) --format js --field-names rgba \
-#		--preserve-externals -o test_frag.js test.frag
-#	$(SHMIN) --format js --field-names rgba \
-#		--preserve-externals -o test_vert.js test.vert
 	cat  $(SHADER_JS_NAMES) > $@
 
 clean:
@@ -76,9 +81,9 @@ clean:
 	-rm $(SHADER_JS_NAMES)
 
 veryclean: clean
-	-rm $(PRODNAME).compo.html $(PRODNAME).debug.html
+	-rm $(PROD_NAME).compo.html $(PROD_NAME).debug.html
 	-rm gzthermal-result.png
-	-rm $(PRODNAME_FULL)_by_$(PRODAUTHOR).zip
+	-rm $(PROD_NAME_FULL)_by_$(PROD_AUTHOR).zip
 	-rm *.gz
 
 externals: player-small.js
