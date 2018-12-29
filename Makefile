@@ -1,4 +1,4 @@
-.PHONY: externals clean veryclean
+.PHONY: clean cleaner veryclean
 # To use this makefile, you need to install:
 #  - the Closure compiler for Javascript minification
 #  - ruby interpreter, and the PNGinator program for Deflate compression
@@ -36,8 +36,8 @@ $(PROD_NAME_FULL)_by_$(PROD_AUTHOR).zip: $(PROD_NAME).compo.html $(PROD_NAME).de
 	zip -j $@ $^
 
 # Order matters because of catenation etc:
-COMMONSRC=library.js shaders_simple.js minified_shaders.js external/player-small.js
-COMPOSRC=glconstants.js $(COMMONSRC)
+COMMONSRC=lib/library.js lib/shaders_simple.js lib/minified_shaders.js external/player-small.js
+COMPOSRC=lib/glconstants.js $(COMMONSRC)
 DEBUGSRC=$(COMMONSRC)
 
 # Compo target: Remove all debugging code, minify and pack everything.
@@ -73,7 +73,7 @@ SHADER_JS_NAMES=test_frag.js test_vert.js noisy_frag.js
 	$(SHMIN) --format js --field-names rgba \
 		--preserve-externals -o $@ $<
 
-minified_shaders.js: $(SHADER_JS_NAMES)
+lib/minified_shaders.js: $(SHADER_JS_NAMES)
 	cat  $(SHADER_JS_NAMES) > $@
 
 clean:
@@ -89,10 +89,6 @@ cleaner: clean
 veryclean: cleaner
 	-rm *_by_*.zip
 
-externals: external/player-small.js
-
 # Download stuff. Needs Internet connection, obviously.
-# Removes "use strict", btw.
 external/player-small.js:
-#	curl http://sb.bitsnbites.eu/player-small.js | sed "s/\"use strict\";/\/\/(original by Geelnard was strict) \"use strict\"/g" > external/player-small.js
 	curl http://sb.bitsnbites.eu/player-small.js > external/player-small.js
