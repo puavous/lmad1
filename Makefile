@@ -4,20 +4,21 @@
 #  - ruby interpreter, and the PNGinator program for Deflate compression
 #  - basic GNU tools (make, bash, sed, ...)
 
-## Name of this production and its author:
-# Filename stub for source and target files; requires
-PROD_NAME=scrolltext
+## Short and long name of this production and the name of its author:
+# Filename stub for source and target files
+PROD_NAME=example
 # A "full" name of the production, used in zip package name
-PROD_NAME_FULL=Scrolling_text
+PROD_NAME_FULL=Example_4k
 # Handle of the author, also included in the zip package name
-PROD_AUTHOR=qma
+PROD_AUTHOR=The_Old_Dude
 # Path to source files of this production.
 # Must-have files: $(PROD_SRC_PATH)/($PROD_NAME){.js,_song.js,.nfo}
 PROD_SRC_PATH=./prods
 
-# When the above is set, and required sources are there, you can
-# command "make $(PROD_NAME_FULL)_by_$(PROD_AUTHOR).zip" and upload
-# the resulting file to the local compo system.
+# When the above is set, and required sources are there (and tool
+# programs installed), Linux users can just "make
+# $(PROD_NAME_FULL)_by_$(PROD_AUTHOR).zip" and upload the resulting
+# zip file to the compo system at a party place.
 
 ## Commands to find your installations (change paths to suit your setup):
 CLOS=java -jar /home/nieminen/files/hacking/closure-compiler/closure-compiler-v20170218.jar
