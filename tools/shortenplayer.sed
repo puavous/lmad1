@@ -1,10 +1,15 @@
 # Short-hand names for SoundBox player.
-# Use directly as a sed script. Works for player-small.js as
-# downloaded in Nov 2017. Subject to changes in original.
-# Observe that depending on the production, getData() method
-# or some synth functionality may be additionally omitted,
-# wave header can be precomputed when song length is fixed and so on..
+# Use directly as a sed script. This is subject to changes in original.
+# This script works for player-small.js as downloaded in November 2017. 
 #
+# Observe that depending on the production, getData() method
+# or some synth functionality could be additionally omitted,
+# wave header could be precomputed when song length is fixed and so on..
+
+# First of all, my graphics library is not compatible with the strict mode:
+s/\"use strict\";//g
+
+# Then, redefine one-letter names for the methods:
 s/this\.init/this.i/g
 s/player\.init(/player.i(/g
 s/this\.generate/this.g/g
@@ -17,7 +22,7 @@ s/patternLen/pl/g
 s/endPattern/ep/g
 s/numChannels/nc/g
 
-# Other size-optimizations which may affect output quality.
+## Other size-optimizations which may affect output quality.
 
 # Tuning frequency (exact value) of F3. Our karaoke version will be sharp.
 s/0\.003959503758/0.004/g

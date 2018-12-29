@@ -36,7 +36,7 @@ $(PROD_NAME_FULL)_by_$(PROD_AUTHOR).zip: $(PROD_NAME).compo.html $(PROD_NAME).de
 	zip -j $@ $^
 
 # Order matters because of catenation etc:
-COMMONSRC=library.js shaders_simple.js minified_shaders.js player-small.js
+COMMONSRC=library.js shaders_simple.js minified_shaders.js external/player-small.js
 COMPOSRC=glconstants.js $(COMMONSRC)
 DEBUGSRC=$(COMMONSRC)
 
@@ -45,7 +45,7 @@ $(PROD_NAME).compo.html: $(COMPOSRC) $(PROD_SRC_PATH)/$(PROD_NAME)_song.js $(PRO
 	echo "(function (){" > tmp.bulk.js
 	cat $^ >> tmp.bulk.js
 	echo "})();" >> tmp.bulk.js
-	cat tmp.bulk.js | sed -f prep.sed | sed -f shortengl.sed | sed -f shortenplayer.sed | $(CLOS) > tmp.closured.js
+	cat tmp.bulk.js | sed -f tools/prep.sed | sed -f tools/shortengl.sed | sed -f tools/shortenplayer.sed | $(CLOS) > tmp.closured.js
 	$(PNGIN) tmp.closured.js $@
 
 #Some compression profiling for fun - if you wanna you canna.. results are approximate, not same as Pnginator output.
@@ -65,11 +65,11 @@ $(PROD_NAME).debug.html: $(DEBUGSRC) $(PROD_SRC_PATH)/$(PROD_NAME)_song.js $(PRO
 # Minify shaders:
 SHADER_JS_NAMES=test_frag.js test_vert.js noisy_frag.js
 
-%_frag.js : %.frag
+%_frag.js : shaders/%.frag
 	$(SHMIN) --format js --field-names rgba \
 		--preserve-externals -o $@ $<
 
-%_vert.js : %.vert
+%_vert.js : shaders/%.vert
 	$(SHMIN) --format js --field-names rgba \
 		--preserve-externals -o $@ $<
 
@@ -89,9 +89,10 @@ cleaner: clean
 veryclean: cleaner
 	-rm *_by_*.zip
 
-externals: player-small.js
+externals: external/player-small.js
 
 # Download stuff. Needs Internet connection, obviously.
 # Removes "use strict", btw.
-player-small.js:
-	curl http://sb.bitsnbites.eu/player-small.js | sed "s/\"use strict\";//g" > player-small.js
+external/player-small.js:
+#	curl http://sb.bitsnbites.eu/player-small.js | sed "s/\"use strict\";/\/\/(original by Geelnard was strict) \"use strict\"/g" > external/player-small.js
+	curl http://sb.bitsnbites.eu/player-small.js > external/player-small.js
