@@ -80,11 +80,14 @@ clean:
 	-rm *~ tmp.* *.closured.js
 	-rm $(SHADER_JS_NAMES)
 
-veryclean: clean
-	-rm $(PROD_NAME).compo.html $(PROD_NAME).debug.html
+cleaner: clean
+	-rm *.compo.html
+	-rm *.debug.html
 	-rm gzthermal-result.png
-	-rm $(PROD_NAME_FULL)_by_$(PROD_AUTHOR).zip
 	-rm *.gz
+
+veryclean: cleaner
+	-rm *_by_*.zip
 
 externals: player-small.js
 
