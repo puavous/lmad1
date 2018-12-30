@@ -1,6 +1,5 @@
 # Could have some Git ignores here..
 
-# Let us ignore any "hmm" things which I use as a synonym for
-#"hmm.. just trying out something.. should be deleted afterwards"
-hmm
+# Ignore the 'current build' which is a symbolic link or a copy of some other .mk:
+Current_build.mk
 

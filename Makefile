@@ -4,19 +4,11 @@
 #  - ruby interpreter, and the PNGinator program for Deflate compression
 #  - basic GNU tools (make, bash, sed, ...)
 
-## Short and long name of this production and the name of its author:
-# Filename stub for source and target files
-PROD_NAME=example
-# A "full" name of the production, used in zip package name
-PROD_NAME_FULL=Example_4k
-# Handle of the author, also included in the zip package name
-PROD_AUTHOR=The_Old_Dude
-# Path to source files of this production.
-# Must-have files: $(PROD_SRC_PATH)/($PROD_NAME){.js,_song.js,.nfo}
-PROD_SRC_PATH=./prods
+include Current_build.mk
 
-# When the above is set, and required sources are there (and tool
-# programs installed), Linux users can just "make
+# The above included file should set a couple of things (see the
+# examples). When the included file and referenced sources are OK (and
+# the tool programs installed), Linux users can just "make
 # $(PROD_NAME_FULL)_by_$(PROD_AUTHOR).zip" and upload the resulting
 # zip file to the compo system at a party place.
 
