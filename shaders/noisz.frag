@@ -84,24 +84,24 @@ mediump float noise3(mediump vec3 v){
 
     // difference vectors and their dot products with random grid gradients:
     // Redo modulo before noise computation to combine window edges.
-    for (int i=0;i<8;i++){
-        n[i]=dot(d[i]=vv-gp[i], normalize(random3(mod(gp[i],W))));
+    for (int i=0; i<8; i++){
+        n[i] = dot(d[i] = vv-gp[i], normalize(random3(mod(gp[i],W))));
     }
 
     // Interpolate with Hermite, like most people seem to do.
     // Compute "in place" into array members not used after each step:
     // Use repetitive code pattern with hopes about compression.
 
-    for (int i=0;i<4;i++){
+    for (int i=0; i<4; i++){
         n[i] = n[i] + smoothstep(0.,1.,d[0].x)*(n[4+i]-n[i]);
     }
     d[0]=d[0].yzx;
-    for (int i=0;i<2;i++){
+    for (int i=0; i<2; i++){
         n[i] = n[i] + smoothstep(0.,1.,d[0].x)*(n[2+i]-n[i]);
     }
     d[0]=d[0].yzx;
-    for (int i=0;i<2;i++){ // Funny stuff; compression better with return in loop..
-        return n[i] + smoothstep(0.,1.,d[0].x)*(n[1+i]-n[i]);
+    for (int i=0; i<2; i++){ // Funny stuff; compression better with return amidst loop..
+        return n[i] = n[i] + smoothstep(0.,1.,d[0].x)*(n[1+i]-n[i]);
     }
 }
 
