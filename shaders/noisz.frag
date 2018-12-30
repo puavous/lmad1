@@ -34,6 +34,8 @@ varying mediump vec4 c,n,r,a,m;
  * stability comes with the cost of not so random hash.. Precomputed
  * look-up table would solve all these problems, I guess.
  */
+/*
+
 mediump vec3 random3(mediump vec3 a){
     // matrix of small primes (larger ones start to make differences
     // between Intel and AMD sine function results).
@@ -53,9 +55,24 @@ mediump vec3 random3(mediump vec3 a){
     // Return in range [-1,-1]
     return vec3(-1.)+2.*r;
 }
+*/
 
+// This version is based on spherical coordinates. My Intel and AMD
+// agree on the pattern to produce from this. Not super sure if this
+// is mathematically OK.
+mediump vec3 random3b(mediump vec3 a){
+    // matrix of small primes
+    mediump mat3 b=mat3(3, 17, 11,
+                        7, 5, 13,
+                        0, 0, 0);
 
-
+    // hash to approx [0,20pi] with sine
+    //mediump vec2 j = vec2(32.) + 32.*vec2(sin(a*b));
+    mediump vec2 j = 64.*sin(vec2(a*b));
+    mediump vec2 s = sin(j);
+    mediump vec2 c = cos(j);
+    return vec3(s.x*c.y, s.x*s.y, c.x);
+}
 
 /**
  * 3D noise-like function. If I understand correctly, this is the
@@ -83,10 +100,47 @@ mediump float noise3(mediump vec3 v){
     }
 
     // difference vectors and their dot products with random grid gradients:
-    // Redo modulo before noise computation to combine window edges.
-    for (int i=0; i<8; i++){
-        n[i] = dot(d[i] = vv-gp[i], normalize(random3(mod(gp[i],W))));
+    for (int ii=0; ii<8; ii++){
+        d[ii] = vv-gp[ii];
     }
+
+    // Redo modulo before noise computation to combine window edges.
+    for (int ii=0; ii<8; ii++){
+        gp[ii] = mod(gp[ii],W);
+    }
+
+    // My current Radeon driver (on Fedora 29) coughs blood and dies if I
+    // try to call my random() inside a loop. So I won't... a bit strange,
+    // because it looks quite all right to me.. but it isn't..
+    // for (int ii=0; ii<8; ii++) {gp[ii] = random3b(gp[ii]);}
+
+    // The same thing unrolled is no problem for the same
+    // system.. looks like a driver problem, should see if the problem
+    // exists on the Windows driver, too.
+
+    gp[0]=random3b(gp[0]);
+    gp[1]=random3b(gp[1]);
+    gp[2]=random3b(gp[2]);
+    gp[3]=random3b(gp[3]);
+    gp[4]=random3b(gp[4]);
+    gp[5]=random3b(gp[5]);
+    gp[6]=random3b(gp[6]);
+    gp[7]=random3b(gp[7]);
+
+    for (int ii=0; ii<8; ii++){
+        n[ii] = dot(d[ii],gp[ii]);
+    }
+
+    /*
+    n[0] = dot(d[0] = vv-gp[0], normalize(random3(mod(gp[0],W))));
+    n[1] = dot(d[1] = vv-gp[1], normalize(random3(mod(gp[1],W))));
+    n[2] = dot(d[2] = vv-gp[2], normalize(random3(mod(gp[2],W))));
+    n[3] = dot(d[3] = vv-gp[3], normalize(random3(mod(gp[3],W))));
+    n[4] = dot(d[4] = vv-gp[4], normalize(random3(mod(gp[4],W))));
+    n[5] = dot(d[5] = vv-gp[5], normalize(random3(mod(gp[5],W))));
+    n[6] = dot(d[6] = vv-gp[6], normalize(random3(mod(gp[6],W))));
+    n[7] = dot(d[7] = vv-gp[7], normalize(random3(mod(gp[7],W))));
+    */
 
     // Interpolate with Hermite, like most people seem to do.
     // Compute "in place" into array members not used after each step:
@@ -103,6 +157,7 @@ mediump float noise3(mediump vec3 v){
     for (int i=0; i<2; i++){ // Funny stuff; compression better with return amidst loop..
         return n[i] = n[i] + smoothstep(0.,1.,d[0].x)*(n[1+i]-n[i]);
     }
+    //return n[0];
 }
 
 
