@@ -1,11 +1,11 @@
 /* -*- mode: javascript; tab-width: 4; indent-tabs-mode: nil; -*- */
 
 /**
- * "Scrolling text" as presented in Vortex III, but with updated source.
- *
- * This will be re-cycled into the library examples.
+ * "Scrolling text" as presented in Vortex III, but with cleaned-up source.
  *
  * Now using the dirty small library.
+ *
+ * This will be re-cycled into the library examples.
  *
  * How-to:
  *
@@ -38,8 +38,6 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d2xahRRFADQ-2bWjQQkRYQlCBoQkZBCsRashTRpxM
 
 */
 
-// TODO: In debug mode, should probably adhere to https://www.khronos.org/webgl/wiki/FAQ
-
 // --------------------------------------------------------------------------------
 
 // "Globals needed in many routines":
@@ -47,12 +45,12 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d2xahRRFADQ-2bWjQQkRYQlCBoQkZBCsRashTRpxM
 // as document object properties for rude size optimization.
 var C, Cw, Ch;      // Canvas object and previous width and height
 var audio;          // Audio object needed for song playback
-var persmat;        // Perspective matrix TODO: No need to be global!?
 var s;              // Temporary variable for "style" but also other things
 
 var _document=document; // minify "document" name too
 
 
+// --------------------------------------------------------------------------------
 // Variables used in this production, specifically:
 var songBeatsPerMinute = 130;
 // You can change/add whatever you want here:
@@ -60,7 +58,8 @@ var objTile, objBackground, objBall;
 
 
 
-// Variables for a scrolling text using plain HTML..
+// --------------------------------------------------------------------------------
+// Variables and functions for a scrolling text using plain HTML..
 var scrolltextnode, scrolltextdiv;
 var spaces="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 var messageHTML = ". . . "    +spaces    +". . . "    +spaces
@@ -83,25 +82,53 @@ var messageHTML = ". . . "    +spaces    +". . . "    +spaces
     + "See you in the sauna soon!"
     + spaces    + spaces    + spaces  ;
 
+/**
+ * (Optionally) initialize additional HTML and CSS parts of the
+ * document. This can be used, for example, for scrolling or flashing
+ * text shown as usual HTML or hypertext. Not often used in actual
+ * demoscene productions.
+ */
+function initDocument(){
+    // A crude scrolltext: one HTML element containing an unwrapped line
+    _document.body.appendChild(s = scrolltextdiv = _document.createElement("div"));
+    s.innerHTML = messageHTML;
+    s = s.style;
+    s.position = "fixed"; s.left = s.top = 10;
+    s.color = "#fff";
+    s.fontSize = "10vh";
+    s.whiteSpace = "nowrap";
+    s.fontFamily = "monospace";
+}
 
 /**
- * Initialize the constant and pre-computed assets used in this
+ * (Optionally) update the HTML and CSS parts of the document. This
+ * can be used for scrolling or flashing text shown as usual HTML. Not
+ * often used in actual demoscene productions.
+ */
+function updateDocument(t){
+        // Scrolltext.. loop through all contents during the show:
+        var sw = scrolltextdiv.offsetWidth;
+        var endbeat = 128;
+        scrolltextdiv.style.left = innerWidth - (t/endbeat)*sw;
+}
+
+// --------------------------------------------------------------------------------
+
+
+/**
+ * Initialize the constant and pre-computed "assets" used in this
  * production; this function is called once before entering the main
  * loop.
  *
  * Things like graphics primitives / building blocks can be generated
  * here.
  */
-function init_gfx(){
+function initAssets(){
     // Create primitive building blocks by different profile sweeps:
 /*
     var prof=cptsHuge;
     objTile = new GenCyl(new funBSplineTransformed(prof,scaleXYZ(.04,.45,0)),13,
                          new funBSplineTransformed(prof,scaleXYZ(.45,.001,0)));
-
-    // Now we can make a ball by half-a-ball and zero-radius-ball
-    objTile = new GenCyl(new funCircle(1,12,.5), 12,
-                         new funCircle(0,12));
 */
 
     // Now I have a box in the library.
@@ -115,19 +142,9 @@ function init_gfx(){
     objBackground = new GenCyl(new funCircle(-30,10,.5), 32,
                                new funCircle(0,32));
 
+    // In this one, I make a scrolltext, too.
+    initDocument();
 
-
-    //--------------------------------------------------------------
-    // NEW: scrolltext.. just to find out possibilities..
-    /* If I want some text.. */
-    // Using the variable 's' for multiple purposes here, too.
-    _document.body.appendChild(s=scrolltextdiv=_document.createElement("div"));
-    //s.appendChild(scrolltextnode = _document.createTextNode(message));
-    s.innerHTML=messageHTML;
-    s = s.style; s.position = "fixed"; s.left = s.top = 10;
-    s.color="#fff"; s.fontSize="10vh";
-    s.whiteSpace="nowrap";
-    s.fontFamily="monospace";
 }
 
 
@@ -229,19 +246,6 @@ function buildSceneAtTime(t){
 }
 
 
-/**
- * (Optionally) update the HTML and CSS parts of the document. This
- * can be used for scrolling or flashing text shown as usual HTML. Not
- * often used in actual demoscene productions.
- */
-function updateDocument(t){
-        // Scrolltext.. loop through all contents during the show:
-        var sw = scrolltextdiv.offsetWidth;
-        var endbeat = 128;
-        scrolltextdiv.style.left = innerWidth - (t/endbeat)*sw;
-}
-
-
 
 /**
  * This is the event loop that happens on every frame.
@@ -281,7 +285,7 @@ var loopfunc = function()
         gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
 
         // Transfer perspective matrix to shader:
-        persmat = perspectiveFhc(5,w/h);
+        var persmat = perspectiveFhc(5,w/h);
         gl.uniformMatrix4fv(gl.getUniformLocation(prg,"p"), false, persmat);
 
         // Set light position (very naive as of yet):
@@ -306,6 +310,8 @@ var loopfunc = function()
 // Execution starts here.
 try                                                  //DEBUG
 {                                                    //DEBUG
+    // NOTE: In debug mode, should probably adhere to
+    // https://www.khronos.org/webgl/wiki/FAQ ...
     _document.body.appendChild(C = _document.createElement("canvas"));
     s = C.style; s.position = "fixed"; s.left = s.top = 0;
     gl = C.getContext('experimental-webgl');
@@ -383,7 +389,7 @@ try                                                  //DEBUG
         alert("Link program: "+ gl.getProgramInfoLog(prg));           //DEBUG
 
     // Initialization code is now localized above. Easier to find for editing.
-    init_gfx();
+    initAssets();
 
     /* Initialize song. */
     var audio,player = new CPlayer();
