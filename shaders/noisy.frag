@@ -87,23 +87,15 @@ mediump float noise3(mediump vec3 v){
     mediump vec3 dgg=vv-gg;
     mediump vec3 dhh=vv-hh;
 
-    aa=mod(aa,W); // Redo modulo before noise computation
-    bb=mod(bb,W);
-    cc=mod(cc,W);
-    dd=mod(dd,W);
-    ee=mod(ee,W);
-    ff=mod(ff,W);
-    gg=mod(gg,W);
-    hh=mod(hh,W);
-
-    mediump float naa=dot(daa,normalize(random3(aa)));
-    mediump float nbb=dot(dbb,normalize(random3(bb)));
-    mediump float ncc=dot(dcc,normalize(random3(cc)));
-    mediump float ndd=dot(ddd,normalize(random3(dd)));
-    mediump float nee=dot(dee,normalize(random3(ee)));
-    mediump float nff=dot(dff,normalize(random3(ff)));
-    mediump float ngg=dot(dgg,normalize(random3(gg)));
-    mediump float nhh=dot(dhh,normalize(random3(hh)));
+    // Redo modulo before noise computation
+    mediump float naa=dot(daa,normalize(random3(mod(aa,W))));
+    mediump float nbb=dot(dbb,normalize(random3(mod(bb,W))));
+    mediump float ncc=dot(dcc,normalize(random3(mod(cc,W))));
+    mediump float ndd=dot(ddd,normalize(random3(mod(dd,W))));
+    mediump float nee=dot(dee,normalize(random3(mod(ee,W))));
+    mediump float nff=dot(dff,normalize(random3(mod(ff,W))));
+    mediump float ngg=dot(dgg,normalize(random3(mod(gg,W))));
+    mediump float nhh=dot(dhh,normalize(random3(mod(hh,W))));
 
     /*
     // As of now, just linear interpolation; don't know about scaling..
