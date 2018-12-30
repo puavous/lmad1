@@ -56,7 +56,7 @@ $(PROD_NAME).debug.html: $(DEBUGSRC) $(PROD_SRC_PATH)/$(PROD_NAME)_song.js $(PRO
 	echo "</script></body></html>" >> $@
 
 # Minify shaders:
-SHADER_JS_NAMES=test_frag.js test_vert.js noisy_frag.js
+SHADER_JS_NAMES=test_frag.js test_vert.js noisy_frag.js noisz_frag.js
 
 %_frag.js : shaders/%.frag
 	$(SHMIN) --format js --field-names rgba \
