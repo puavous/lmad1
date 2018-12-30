@@ -37,18 +37,18 @@ varying mediump vec4 c,n,r,a,m;
 mediump vec3 random3(mediump vec3 a){
     // matrix of small primes (larger ones start to make differences
     // between Intel and AMD sine function results).
-    const highp mat3 b=mat3(3,  17, 13,
-                            19, 5,  23,
-                            11, 29, 7);
+    mediump mat3 b=mat3(3,  17, 13,
+                        19, 5,  23,
+                        11, 29, 7);
 
     // hash to [0,.5] with sine
-    highp vec3 j = vec3(.25) + .25*sin(a*b);
+    mediump vec3 j = vec3(.25) + .25*sin(a*b);
 
     // subtract 1/1024 to stabilise fract() in bit patterns 0.111 vs 1.000
     j -= vec3(0.0009765625);
 
     // discard 4 front bits
-    highp vec3 r = fract(16.*j);
+    mediump vec3 r = fract(16.*j);
 
     // Return in range [-1,-1]
     return vec3(-1.)+2.*r;
@@ -64,7 +64,7 @@ mediump vec3 random3(mediump vec3 a){
  */
 mediump float noise3(mediump vec3 v){
 
-    const mediump float W=64.; // Window size
+    mediump float W=64.; // Window size
 
     mediump vec3 vv=mod(v,W);  // Operate modulo a W-by-W-by-W grid
 
