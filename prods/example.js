@@ -34,11 +34,7 @@ created using the great SoundBox minisynth:
 
 http://sb.bitsnbites.eu/?data=U0JveAwC7d2xahRRFADQ-2bWjQQkRYQlCBoQkZBCsRashTRpxMJyqyGNqOuChowrKDZTWQQrK4t8QX4hlegPaOMf2K8zO7vGDWLt6DnDfXPv400zTPeY-76uR6zF5kpMDyNuHq5EbF0ZxEw2jVi_kT_oxRmjmMSbeB2vYj-exXg2VwYAAAAAAAB01PRxiuk40kGvf7WdyVZfrG7OspRSpGZsRFRVHfFLVMs5AAAAAAAAdMr7MtUR6XPv3HZd3u5F_uhh7GznGylisU-Wmmy2fDJ_bOk-Oa0BAAAAAACgK9KwjHRSNhthlzbqYZhHduv46ffd_oUUWbbYK2uyKOZXRDEqflajGI_3Ym_ek_FvVvyxLnwMAAAAAAAA_52yjf3I77YT6duXuHY93V-cV9b-VxZn-i_-JgAAAAAAAKBL8mEZ-UmZ1elgUA9Hayld_vjp5YfzR_20fF5ZeldF9dYrAwAAAAAA4B_R9GDM2h6Md7ai6cGYsnvHF2O3_ySdLmrT0TwW2vp5PR54kQAAAAAAAHTODw
 
-http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSArLq440op4HGrKeoNhcZRGsrCzyC_IXUon-AW38B_bn3u1xZ5rUnn7f7pudN8w0w3YDb36sR3Riay0mxxF3j9citm90Y6aYRKzfKR-3YmkQo3gf7-JtHMbLGM7GqgAAAAAAAIAVNXmWMRlGHrXaN5uRovO6szXtZGbktM0YjyPqdxnj830AAAAAAABYKZ-qrCPyW-vSTp3eb0X59Ens7pQbOTsom5nNHM1XnPuOljkAAAAAAACsiuxVkWfV9CBsc6NuemUU905f_NprX8miWByT9edPRH_QX2SDGA4P4mBehPFv1r8w7_sPAAAAAAAA_jtVE4dRPmwG8uf3uHU79-d3kzVFFyMuDAAAAAAAAFglZa-K8qwq6m63WzcnVzOvf_n65vPlk_bybrL8OI7xB7sFAAAAAADAP2JadLFoii4-2I5p0cUsHp1ei73281zMyRjUn8Efy5r8Vd0e2UMAAAAAAABWzm8
-
 */
-
-// TODO: In debug mode, should probably adhere to https://www.khronos.org/webgl/wiki/FAQ
 
 // --------------------------------------------------------------------------------
 
@@ -47,57 +43,111 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d0xaxRBFADg93bPixyIRYQjBDQgIiGFYi1YC2nSSA
 // as document object properties for rude size optimization.
 var C, Cw, Ch;      // Canvas object and previous width and height
 var audio;          // Audio object needed for song playback
-var persmat;        // Perspective matrix TODO: No need to be global!?
 var s;              // Temporary variable for "style" but also other things
 
+var _document=document; // minify "document" name too
+
+
+// --------------------------------------------------------------------------------
 // Variables used in this production, specifically:
 var songBeatsPerMinute = 130;
+// You can change/add whatever you want here:
 var objTile, objBackground, objBall;
 
+
+
+// --------------------------------------------------------------------------------
+// Variables and functions for a scrolling text using plain HTML..
+var scrolltextnode, scrolltextdiv;
+var spaces="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+var messageHTML = ""
+    +"Example stuff" + spaces    +spaces
+    + "towards Instanssi 2019" + spaces
+    +"Example stuff" + spaces    +spaces
+    + "towards Instanssi 2019" + spaces
+    +"Example stuff" + spaces    +spaces
+    + "towards Instanssi 2019" + spaces
+    + spaces    + spaces    + spaces  ;
+
 /**
- * This is the event loop that happens on every frame. 
+ * (Optionally) initialize additional HTML and CSS parts of the
+ * document. This can be used, for example, for scrolling or flashing
+ * text shown as usual HTML or hypertext. Not often used in actual
+ * demoscene productions.
+ */
+function initDocument(){
+    // A crude scrolltext: one HTML element containing an unwrapped line
+    _document.body.appendChild(s = scrolltextdiv = _document.createElement("div"));
+    s.innerHTML = messageHTML;
+    s = s.style;
+    s.position = "fixed"; s.left = s.top = 10;
+    s.color = "#fff";
+    s.fontSize = "10vh";
+    s.whiteSpace = "nowrap";
+    s.fontFamily = "monospace";
+}
+
+/**
+ * (Optionally) update the HTML and CSS parts of the document. This
+ * can be used for scrolling or flashing text shown as usual HTML. Not
+ * often used in actual demoscene productions.
+ */
+function updateDocument(t){
+        // Scrolltext.. loop through all contents during the show:
+        var sw = scrolltextdiv.offsetWidth;
+        var endbeat = 128;
+        scrolltextdiv.style.left = innerWidth - (t/endbeat)*sw;
+}
+
+// --------------------------------------------------------------------------------
+
+
+/**
+ * Initialize the constant and pre-computed "assets" used in this
+ * production; this function is called once before entering the main
+ * loop.
  *
- * Assumes prior initialization of C (canvas), audio.
+ * Things like graphics primitives / building blocks can be generated
+ * here.
+ */
+function initAssets(){
+    // Create primitive building blocks by different profile sweeps:
+/*
+    var prof=cptsHuge;
+    objTile = new GenCyl(new funBSplineTransformed(prof,scaleXYZ(.04,.45,0)),13,
+                         new funBSplineTransformed(prof,scaleXYZ(.45,.001,0)));
+*/
+
+    // Now I have a box in the library.
+    objTile = new Box(1);
+
+    // Ball can be built from circle curves:
+    objBall = new GenCyl(new funCircle(1,10,.5), 32,
+                               new funCircle(0,32));
+
+    // Can make the radius negative to make an interior of a ball:
+    objBackground = new GenCyl(new funCircle(-30,10,.5), 32,
+                               new funCircle(0,32));
+
+    // In this one, I make a scrolltext, too.
+    initDocument();
+
+}
+
+
+/**
+ * Return a scene graph for a specific time. Time given as 'beats' according to song tempo.
  *
- * Assumes prior initialization of gl and prg.
- *
- * Debug mode needs initialization of dbg_xxx
+ * This is an important function to re-write creatively to make your own entry.
  *
  */
-var loopfunc = function()
-{
-    try                                                          //DEBUG
-    {                                                            //DEBUG
-        // Time from the audio object. Interpret as beat.
-        var t = audio.currentTime * (songBeatsPerMinute/60);
-        // Update canvas size
-        var w = innerWidth, h = innerHeight;  //window object is implicit
-        if (w != Cw || h != Ch) {
-            gl.viewport(0, 0, Cw=C.width=w, Ch=C.height=h);
-            dbg_show_aspect.nodeValue="Size: "+w+"x"+h+" "+w/h;  //DEBUG
-        }
-        dbg_show_time.nodeValue=" time=" + (audio.currentTime|0) //DEBUG
-                                         + "(beat " +(t|0)+ ")"; //DEBUG
-
-
-        // Scrolltext.. loop through all contents during the show:
-        var sw=scrolltextdiv.offsetWidth;
-        var endbeat=128;
-        scrolltextdiv.style.left=w - (t/endbeat)*sw;
-
-
-        persmat = perspectiveFhc(5,w/h);
-
-        // Could switch the shader based on time / object properties:
-        gl.useProgram(prg);
-
-        // Re-build the scenegraph for every frame (can animate):
+function buildSceneAtTime(t){
 
         // Initialize empty scenegraph. Root node with nothing inside:
         var sceneroot={f:[],o:[],c:[]};
 
         // Animation parameters
-        var camtrans=[translate_wi(0,0,-10)];
+        var camtrans=[rotZ_wi(Math.sin(.1*t)), translate_wi(0,-1+Math.sin(.2*t),-10+3.*Math.sin(.12*t)),rotY_wi(.1*t)];
         var stufftrans=[translate_wi(0,0,0),rotY_wi(-t*.8),rotX_wi(t*.02)];
 
         // TODO: Neater place for these.. perhaps call createScene(t) here;
@@ -129,6 +179,16 @@ var loopfunc = function()
                           c: []
                          });
 
+            stuff.c.push({f: [translate_wi(0,2,0), rotY_wi(.4*t + Math.sin(t))],
+                          o: [new Material(clr),objBall],
+                          c: []
+                         });
+
+            stuff.c.push({f: [translate_wi(0,-2,0), rotY_wi(-.4*t + Math.sin(t))],
+                          o: [new Material(clr),objBall],
+                          c: []
+                         });
+
             return stuff;
         }
 
@@ -147,7 +207,7 @@ var loopfunc = function()
              2,1,0.4,0];
 
         var tausta = {
-            f:[rotZ_wi(t*.16)],
+            f:[], //[rotZ_wi(t*.16)],
             o:[new Material(ctausta),objBackground],
             c:[]
         };
@@ -169,12 +229,50 @@ var loopfunc = function()
                          }
                         );
 
+    return sceneroot;
+}
+
+
+
+/**
+ * This is the event loop that happens on every frame.
+ *
+ * Assumes prior initialization of C (canvas), audio.
+ *
+ * Assumes prior initialization of gl and prg.
+ *
+ * Debug mode needs initialization of dbg_xxx
+ *
+ */
+var loopfunc = function()
+{
+    try                                                          //DEBUG
+    {                                                            //DEBUG
+        // Time from the audio object. Interpret as beat.
+        var t = audio.currentTime * (songBeatsPerMinute/60);
+        // Update canvas size (window object is implicit; need no "window.X")
+        var w = innerWidth, h = innerHeight;
+        if (w != Cw || h != Ch) {
+            gl.viewport(0, 0, Cw=C.width=w, Ch=C.height=h);
+        }
+
+        dbg_show_aspect.nodeValue="Size: "+w+"x"+h+" "+w/h;      //DEBUG
+        dbg_show_time.nodeValue=" time=" + (audio.currentTime|0) //DEBUG
+                                         + "(beat " +(t|0)+ ")"; //DEBUG
+
+        // Update the HTML and CSS parts, if you wanna have something like text..
+        updateDocument(t);
+
+        // Re-build the scenegraph for every frame (can animate):
+        var sceneroot = buildSceneAtTime(t);
+
         // Scene is built. Then we actually draw it.
         // Clear buffer
         gl.clearColor(.3, .3, .3, 1);
         gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
 
         // Transfer perspective matrix to shader:
+        var persmat = perspectiveFhc(5,w/h);
         gl.uniformMatrix4fv(gl.getUniformLocation(prg,"p"), false, persmat);
 
         // Set light position (very naive as of yet):
@@ -182,6 +280,9 @@ var loopfunc = function()
         // As of now, we have to hardcode light position separately from the scene transforms:
         gl.uniform4fv(gl.getUniformLocation(prg, "l"),
                       [-3,2,-6,1]);
+
+        // TODO: Could switch the shader based on time / object properties:
+        gl.useProgram(prg);
 
         // Then we display the scenegraph
         traverse_wi(sceneroot,rotX_wi(0));
@@ -193,44 +294,11 @@ var loopfunc = function()
     }                                                    //DEBUG
 };
 
-var spaces="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-// Variables for the scrolling text
-var messageHTML = ". . . "
-    +spaces
-    +". . . "
-    +spaces
-    +"Hi, Vortex!" + spaces
-    +spaces
-    + "qma here (and there, with you, too)" + spaces
-    + "Welcome to a compo-filler... short one, don't worry!" + spaces
-    + spaces
-    + "My first scolltext!" + spaces
-    + "I always wanted to make a scrolltext. . . It took some 25 years, but here it is now."
-    + spaces
-    + spaces
-    + "Fuckings to all... (not really, but a scrolltext has to have this?) "
-    + "In fact, I just love being here. Thank you, spiikki, Freon, Terwiz,  and other organizers of Vortex III! You keep the scene alive! Beautiful!"
-    + spaces
-    + "Nothing special in this entry.. one more &quot;snapshot&quot; of the work-in-progress of a wannabe demo coder. . . "
-    + spaces
-    + "Today my first noise function, like Perlin (1985), but with a crappy hash. "
-    + "Anyway, I'm making this beginner-friendly javascript library for 4k intros with the hope of getting youngsters interested in demoscene. . . I hope to organize a 4k intro coding workshop in <a href='https://instanssi.org/2019/'> Instanssi 2019</a>. The organizers don't know about my cunning plan yet, but I hope they'll accept. . . Veterans of demoscene want to help? Please do! :)"
-    + spaces
-    + "and that's about all I wanted to say here at Vortex III. . . Party on!!! See you in the sauna soon!"
-    + spaces
-    + spaces
-    + spaces
-/*
-*/
-;
-
-var scrolltextnode;
-var scrolltextdiv;
-
 // Execution starts here.
 try                                                  //DEBUG
 {                                                    //DEBUG
-    var _document=document; // minify "document" name too
+    // NOTE: In debug mode, should probably adhere to
+    // https://www.khronos.org/webgl/wiki/FAQ ...
     _document.body.appendChild(C = _document.createElement("canvas"));
     s = C.style; s.position = "fixed"; s.left = s.top = 0;
     gl = C.getContext('experimental-webgl');
@@ -238,8 +306,8 @@ try                                                  //DEBUG
         alert("This demo requires WebGL");           //DEBUG
         return;                                      //DEBUG
     }                                                //DEBUG
-
-    // Debug print of location and aspect
+                                                     //DEBUG
+    // Debug print of location and aspect            //DEBUG
     var dbg_show_aspect=document.createTextNode(""); //DEBUG
     var dbgInfoDiv=document.createElement("div");    //DEBUG
     document.body.appendChild(dbgInfoDiv);           //DEBUG
@@ -250,8 +318,8 @@ try                                                  //DEBUG
     dbgInfoDiv.appendChild(dbg_show_aspect);         //DEBUG
     var dbg_show_time=document.createTextNode("");   //DEBUG
     dbgInfoDiv.appendChild(dbg_show_time);           //DEBUG
-
-    // Debug version seek, play and pause
+                                                     //DEBUG
+    // Debug version seek, play and pause            //DEBUG
     C.addEventListener("click", function(e){         //DEBUG
         audio.currentTime =                          //DEBUG
             e.pageX/C.width*audio.duration;          //DEBUG
@@ -262,18 +330,6 @@ try                                                  //DEBUG
         }                                            //DEBUG
     });                                              //DEBUG
 
-
-    //--------------------------------------------------------------
-    // NEW: scrolltext.. just to find out possibilities..
-    /* If I want some text.. */
-    // Using the variable 's' for multiple purposes here, too.
-    _document.body.appendChild(s=scrolltextdiv=_document.createElement("div"));
-    //s.appendChild(scrolltextnode = _document.createTextNode(message));
-    s.innerHTML=messageHTML;
-    s = s.style; s.position = "fixed"; s.left = s.top = 10;
-    s.color="#fff"; s.fontSize="10vh";
-    s.whiteSpace="nowrap";
-    s.fontFamily="monospace";
 
     // Apply p01's trick for grabbing short names from GL obj
     // (http://slides.com/pdesch/js-demoscene-techniques#/5/6)
@@ -319,30 +375,8 @@ try                                                  //DEBUG
     if (!gl.getProgramParameter(prg, gl.LINK_STATUS))                 //DEBUG
         alert("Link program: "+ gl.getProgramInfoLog(prg));           //DEBUG
 
-
-    // Create primitive building blocks by different profile sweeps:
-    // TODO: Neater place for these? Call some init_primitives() here?
-/*
-    var prof=cptsHuge;
-    objTile = new GenCyl(new funBSplineTransformed(prof,scaleXYZ(.04,.45,0)),13,
-                         new funBSplineTransformed(prof,scaleXYZ(.45,.001,0)));
-
-    // Now we can make a ball by half-a-ball and zero-radius-ball
-    objTile = new GenCyl(new funCircle(1,12,.5), 12,
-                         new funCircle(0,12));
-*/
-
-    // Now I have a box in the library.
-    objTile = new Box(1);
-
-    // Ball can be built from circle curves:
-    objBall = new GenCyl(new funCircle(1,10,.5), 32,
-                               new funCircle(0,32));
-
-    // Can make the radius negative to make an interior of a ball:
-    objBackground = new GenCyl(new funCircle(-30,10,.5), 32,
-                               new funCircle(0,32));
-
+    // Initialization code is now localized above. Easier to find for editing.
+    initAssets();
 
     /* Initialize song. */
     var audio,player = new CPlayer();
