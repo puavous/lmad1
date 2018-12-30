@@ -39,36 +39,22 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d2xahRRFADQ-2bWjQQkRYQlCBoQkZBCsRashTRpxM
 // --------------------------------------------------------------------------------
 
 // "Globals needed in many routines":
-// Note that in unstrict mode some of these could be left
-// as document object properties for rude size optimization.
-var C, Cw, Ch;      // Canvas object and previous width and height
-var audio;          // Audio object needed for song playback
-var s;              // Temporary variable for "style" but also other things
-
-var _document=document; // minify "document" name too
+var C, Cw, Ch;          // Canvas object and previous width and height
+var audio;              // Audio object needed for song playback
+var s;                  // Temporary variable for "style" but also other things
+var _document=document; // automatically minified name for the "document" object
 
 
 // --------------------------------------------------------------------------------
 // Variables used in this production, specifically:
 var songBeatsPerMinute = 130;
+
 // You can change/add whatever you want here:
 var objTile, objBackground, objBall;
 
 
 
 // --------------------------------------------------------------------------------
-// Variables and functions for a scrolling text using plain HTML..
-var scrolltextnode, scrolltextdiv;
-var spaces="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-var messageHTML = ""
-    +"Example stuff" + spaces    +spaces
-    + "towards Instanssi 2019" + spaces
-    +"Example stuff" + spaces    +spaces
-    + "towards Instanssi 2019" + spaces
-    +"Example stuff" + spaces    +spaces
-    + "towards Instanssi 2019" + spaces
-    + spaces    + spaces    + spaces  ;
-
 /**
  * (Optionally) initialize additional HTML and CSS parts of the
  * document. This can be used, for example, for scrolling or flashing
@@ -76,15 +62,6 @@ var messageHTML = ""
  * demoscene productions.
  */
 function initDocument(){
-    // A crude scrolltext: one HTML element containing an unwrapped line
-    _document.body.appendChild(s = scrolltextdiv = _document.createElement("div"));
-    s.innerHTML = messageHTML;
-    s = s.style;
-    s.position = "fixed"; s.left = s.top = 10;
-    s.color = "#fff";
-    s.fontSize = "10vh";
-    s.whiteSpace = "nowrap";
-    s.fontFamily = "monospace";
 }
 
 /**
@@ -93,10 +70,6 @@ function initDocument(){
  * often used in actual demoscene productions.
  */
 function updateDocument(t){
-        // Scrolltext.. loop through all contents during the show:
-        var sw = scrolltextdiv.offsetWidth;
-        var endbeat = 128;
-        scrolltextdiv.style.left = innerWidth - (t/endbeat)*sw;
 }
 
 // --------------------------------------------------------------------------------
@@ -129,7 +102,7 @@ function initAssets(){
     objBackground = new GenCyl(new funCircle(-30,10,.5), 32,
                                new funCircle(0,32));
 
-    // In this one, I make a scrolltext, too.
+    // Things like scolltext be initialized in this call:
     initDocument();
 
 }

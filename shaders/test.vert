@@ -1,11 +1,13 @@
 /**
  * A vertex shader that uses normal matrix. It should be a 4x4 matrix
  * whose upper left 3x3 part contains the inverse transpose of
- * modelview. Otherwise as simple as the previous one. This allows
- * free scale/skew of geometries with the expense of requiring you to
- * compute and transfer the normal matrix. It is some heavy code, so
- * you should really go and scale your sH* to make it look awesome, if
- * you decide to compute inverses.
+ * modelview.
+ *
+ * This allows free scale/skew of geometries with the expense of
+ * requiring you to compute and transfer the normal matrix. It is some
+ * heavy code, so you should really be scaling and skewing your stuff
+ * to make it look incredibly cool, if you decide to compute inverses.
+ *
  */
 uniform mat4 mv,nm,p;
 attribute vec4 g,v,N;
