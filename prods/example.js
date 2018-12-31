@@ -116,12 +116,12 @@ function initAssets(){
  */
 function buildSceneAtTime(t){
 
-        // Initialize empty scenegraph. Root node with nothing inside:
-        var sceneroot={f:[],o:[],c:[]};
+    // Initialize empty scenegraph. Root node with nothing inside:
+    var sceneroot={f:[],o:[],c:[]};
 
-        // Animation parameters
-        var camtrans=[rotZ_wi(Math.sin(.1*t)), translate_wi(0,-1+Math.sin(.2*t),-10+3.*Math.sin(.12*t)),rotY_wi(.1*t)];
-        var stufftrans=[translate_wi(0,0,0),rotY_wi(-t*.8),rotX_wi(t*.02)];
+    // Animation parameters
+    //var stufftrans=[translate_wi(0,0,0),rotY_wi(-t*.8),rotX_wi(t*.02)];
+    var stufftrans=[];
 
         // TODO: Neater place for these.. perhaps call createScene(t) here;
         function makeStuff(t,ydist,disperse){
@@ -185,7 +185,7 @@ function buildSceneAtTime(t){
             c:[]
         };
 
-        sceneroot.c.push({f:camtrans,
+        sceneroot.c.push({f:[],
                           o:[],
                           c:[
                               {f:[translate_wi(0,-2,0),scaleXYZ_wi(30,.1,30)],
@@ -197,6 +197,11 @@ function buildSceneAtTime(t){
                               {f:[],
                                o:[],
                                c:[tausta]
+                              },
+                              {f:[translate_wi(0,3,0), rotY_wi(t*.16), translate_wi(0,0,20-10*Math.sin(t*.01)), rotX_wi(.2)],
+                               o:[],
+                               c:[],
+                               r:[new Camera()]
                               }
                           ]
                          }
@@ -258,7 +263,8 @@ var loopfunc = function()
         gl.useProgram(prg);
 
         // Then we display the scenegraph
-        traverse_wi(sceneroot,rotX_wi(0));
+        findcam_wi(sceneroot,rotX_wi(0));
+        traverse_wi(sceneroot,cameraTransformation);
 
     }                                                    //DEBUG
     catch (err)                                          //DEBUG
