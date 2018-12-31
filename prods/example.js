@@ -99,7 +99,7 @@ function initAssets(){
                                new funCircle(0,32));
 
     // Can make the radius negative to make an interior of a ball:
-    objBackground = new GenCyl(new funCircle(-30,10,.5), 32,
+    objBackground = new GenCyl(new funCircle(-10,10,.5), 32,
                                new funCircle(0,32));
 
     // Things like scolltext be initialized in this call:
@@ -169,14 +169,14 @@ function buildSceneAtTime(t){
 
         var cpohja=
             [.3,.2,.1,1,
-             .9,.4,.2,1,
-             1, 1, 1,2,
+             .9,.6,.4,1,
+             0, 0, 0,1,
              2,1, 0,0];
 
         var ctausta=
             [.1,.1,.2,1,
              .3,.3,.8,1,
-              1, 1, 1,2,
+              .1, .1, .1,2,
              2,1,0.4,0];
 
         var tausta = {
@@ -188,13 +188,13 @@ function buildSceneAtTime(t){
         sceneroot.c.push({f:[],
                           o:[],
                           c:[
-                              {f:[translate_wi(0,-2,0),scaleXYZ_wi(30,.1,30)],
+                              {f:[translate_wi(0,-3,0),scaleXYZ_wi(3,.1,30)],
                                o:[new Material(cpohja),objTile],
                                c:[]},
                               {f:stufftrans,
                                o:[],
                                c:[stuff]},
-                              {f:[],
+                              {f:[scaleXYZ_wi(2,1,3)],
                                o:[],
                                c:[tausta]
                               },
@@ -253,17 +253,18 @@ var loopfunc = function()
         var persmat = perspectiveFhc(5,w/h);
         gl.uniformMatrix4fv(gl.getUniformLocation(prg,"p"), false, persmat);
 
-        // Set light position (very naive as of yet):
-        // TODO: Multiple lights, included in the scenegraph as "Light objects".
-        // As of now, we have to hardcode light position separately from the scene transforms:
-        gl.uniform4fv(gl.getUniformLocation(prg, "l"),
-                      [-3,2,-6,1]);
-
         // TODO: Could switch the shader based on time / object properties:
         gl.useProgram(prg);
 
         // Then we display the scenegraph
         findcam_wi(sceneroot,rotX_wi(0));
+
+        // Set light position (very naive as of yet):
+        // TODO: Multiple lights, included in the scenegraph as "Light objects".
+        // As of now, we have to hardcode light position separately from the scene transforms:
+        gl.uniform4fv(gl.getUniformLocation(prg, "l"),
+                      matmul4(cameraTransformation,[1,.1,1.5,1]));
+
         traverse_wi(sceneroot,cameraTransformation);
 
     }                                                    //DEBUG
