@@ -19,10 +19,13 @@ PNGIN=ruby /home/nieminen/files/hacking/pnginator/pnginator.rb
 ## Optional:
 DEFDB=/home/nieminen/files/hacking/defdb_04b/defdb
 GZTHERM=/home/nieminen/files/hacking/gzthermal_04c/gzthermal
-SHMIN=mono /home/nieminen/files/hacking/shader_minifier/shader_minifier.exe
-
 #DEFDB=echo "You may optionally download the defdb program and use it here with args:"
 #GZTHERM=echo "You may optionally download the gzthermal program and use it here with args:"
+
+## Even more optional (for library development and documentation)
+SHMIN=mono /home/nieminen/files/hacking/shader_minifier/shader_minifier.exe
+JSDOC=/home/nieminen/files/hacking/jsdoc/jsdoc.js
+
 
 # Compo entry package:
 $(PROD_NAME_FULL)_by_$(PROD_AUTHOR).zip: $(PROD_NAME).compo.html $(PROD_NAME).debug.html $(PROD_SRC_PATH)/$(PROD_NAME).nfo
@@ -68,6 +71,11 @@ SHADER_JS_NAMES=test_frag.js test_vert.js noisy_frag.js noisz_frag.js
 
 lib/minified_shaders.js: $(SHADER_JS_NAMES)
 	cat  $(SHADER_JS_NAMES) > $@
+
+# Auto-generate documentation.. I'm totally newbie to JS documentation, so do what I can...
+# imitate javadoc and sorts, using jsdoc.js - something that Google showed me..
+documentation: $(DEBUGSRC)
+	$(JSDOC) -d ./documentation/ -c tools/jsdoc_conf.json -r lib/README.md lib/
 
 clean:
 	-rm *~ tmp.* *.closured.js
