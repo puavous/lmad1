@@ -22,6 +22,10 @@ Documentation is generated with the default settings of JSDoc, and not
 much is written as of yet. My bad. Might improve over time, or might
 not.
 
+WARNING: The interface may change any time, so for productions you
+will want to stick with one snapshot version of the library until
+you've made it to the compo in question!
+
 Author: Paavo Nieminen - known as "The Old Dude" for Instanssi people
 and "qma" for the greater demoscene community. (My identity crisis
 with nicknames still persists after 1990's and "Flex" of The Blues
