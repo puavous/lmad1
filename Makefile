@@ -95,3 +95,4 @@ veryclean: cleaner
 # Download stuff. Needs Internet connection, obviously.
 external/player-small.js:
 	curl http://sb.bitsnbites.eu/player-small.js > external/player-small.js
+
