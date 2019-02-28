@@ -58,16 +58,17 @@ $(PROD_NAME).debug.html: $(DEBUGSRC) $(PROD_SRC_PATH)/$(PROD_NAME)_song.js $(PRO
 	echo "})();" >> $@
 	echo "</script></body></html>" >> $@
 
+#FIXME: Experimental at Instanssi 2019.. not used yet.
 # Minify shaders:
-SHADER_JS_NAMES=test_frag.js test_vert.js noisy_frag.js noisz_frag.js
-
-%_frag.js : shaders/%.frag
-	$(SHMIN) --format js --field-names rgba \
-		--preserve-externals -o $@ $<
-
-%_vert.js : shaders/%.vert
-	$(SHMIN) --format js --field-names rgba \
-		--preserve-externals -o $@ $<
+#SHADER_JS_NAMES=test_frag.js test_vert.js noisy_frag.js noisz_frag.js
+#
+#%_frag.js : shaders/%.frag
+#	$(SHMIN) --format js --field-names rgba \
+#		--preserve-externals -o $@ $<
+#
+#%_vert.js : shaders/%.vert
+#	$(SHMIN) --format js --field-names rgba \
+#		--preserve-externals -o $@ $<
 
 lib/minified_shaders.js: $(SHADER_JS_NAMES)
 	cat  $(SHADER_JS_NAMES) > $@
