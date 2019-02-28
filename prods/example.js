@@ -8,8 +8,8 @@
  * How-to:
  *
  * 1. Create a JavaScript file containing "(function(){BULK})();"
- *    where BULK is a catenation of the library, the soft-synth, and this
- *    file.
+ *    where BULK is a catenation of the library, the soft-synth, this
+ *    file, and *last of all* the main "on-load code".
  *
  * 2. <!-- To run in "debug mode", create an HTML file containing
  *    "<html><head /><body><script>JS</script></body></html>" where JS
@@ -36,16 +36,9 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7dm9SsNQGMbx56RpBoeqizgGexWCuzeiWIoSxBIIRc
 
 http://sb.bitsnbites.eu/?data=U0JveAwC7dk9SgNBGAbgd2MS0MKfSsvFnELwOJZCGhsRJN0SEiQhCCLexMrS03gE3c0aiKLWRp9n-L4ZdqaY2fa9Pky2U3Y7Z6NsPY9SO9qr20m_6DylM1j0L-tVO5JhrlKt9fGHPslvNxx-ff9J3ae5y82n87P3eV7XIgAAAAAAAPw16ynZQVYpWcomJUuK5Uge7nO7ya9s799kXrNlIjabZ5om3RtLwQAAAAAAAP6l14uirhTp9gftl85uUq62i0aqpPqp_EYAAAAAAAA2y7St0-7Ocb167KV4qVKe9_a7zW7RxmTLIOybqoRkAAAAAAAAbJY3
 
+http://sb.bitsnbites.eu/?data=U0JveAwC7dsxSgNBGAXgN0lcBUGbCJYL3kO8iY1HsLFLt4ghiEsgbJPz2NrbeY842WCZ3sD3wT_vzTA3GGZyk0zTTvO0SD7rPJ7NL5L8XJZJl7R989KUaplV3vORt7ymq22V5diHbNLXdbvNaBgOuV4fsu8DAAAAAAAA_8_uudRJyay5O5xMrpJ2X_bvY13NI9N1YwMAAAAAAIAT8r0o-Vqk7GbNfd0-nJfp7jrtPLfj_7H9lb9XsGMJAAAAAAAAp-IX
+
 */
-
-// --------------------------------------------------------------------------------
-
-// "Globals needed in many routines":
-var C, Cw, Ch;          // Canvas object and previous width and height
-var audio;              // Audio object needed for song playback
-var s;                  // Temporary variable for "style" but also other things
-var _document=document; // automatically minified name for the "document" object
-
 
 // --------------------------------------------------------------------------------
 // Variables used in this production, specifically:
@@ -55,27 +48,7 @@ var songBeatsPerMinute = 116;
 var objTile, objBackground, objBall;
 
 
-
 // --------------------------------------------------------------------------------
-/**
- * (Optionally) initialize additional HTML and CSS parts of the
- * document. This can be used, for example, for scrolling or flashing
- * text shown as usual HTML or hypertext. Not often used in actual
- * demoscene productions.
- */
-function initDocument(){
-}
-
-/**
- * (Optionally) update the HTML and CSS parts of the document. This
- * can be used for scrolling or flashing text shown as usual HTML. Not
- * often used in actual demoscene productions.
- */
-function updateDocument(t){
-}
-
-// --------------------------------------------------------------------------------
-
 
 /**
  * Initialize the constant and pre-computed "assets" used in this
@@ -87,25 +60,17 @@ function updateDocument(t){
  */
 function initAssets(){
     // Create primitive building blocks by different profile sweeps:
-/*
-    var prof=cptsHuge;
-    objTile = new GenCyl(new funBSplineTransformed(prof,scaleXYZ(.04,.45,0)),13,
-                         new funBSplineTransformed(prof,scaleXYZ(.45,.001,0)));
-*/
 
     // Now I have a box in the library.
     objTile = new Box(1);
 
     // Ball can be built from circle curves:
     objBall = new GenCyl(new funCircle(1,10,.5), 32,
-                               new funCircle(0,32));
+                         new funCircle(0,32));
 
     // Can make the radius negative to make an interior of a ball:
     objBackground = new GenCyl(new funCircle(-10,10,.5), 32,
                                new funCircle(0,32));
-
-    // Things like scolltext be initialized in this call:
-    initDocument();
 
 }
 
@@ -214,166 +179,22 @@ function buildSceneAtTime(t){
 
 
 
+
+// --------------------------------------------------------------------------------
+
 /**
- * This is the event loop that happens on every frame.
- *
- * Assumes prior initialization of C (canvas), audio.
- *
- * Assumes prior initialization of gl and prg.
- *
- * Debug mode needs initialization of dbg_xxx
- *
+ * (Optionally) initialize additional HTML and CSS parts of the
+ * document. This can be used, for example, for scrolling or flashing
+ * text shown as usual HTML or hypertext. Not often used in actual
+ * demoscene productions.
  */
-var loopfunc = function()
-{
-    try                                                          //DEBUG
-    {                                                            //DEBUG
-        // Time from the audio object. Interpret as beat.
-        var t = audio.currentTime * (songBeatsPerMinute/60);
-        // Update canvas size (window object is implicit; need no "window.X")
-        var w = innerWidth, h = innerHeight;
-        if (w != Cw || h != Ch) {
-            gl.viewport(0, 0, Cw=C.width=w, Ch=C.height=h);
-        }
+function initDocument(){
+}
 
-        dbg_show_aspect.nodeValue="Size: "+w+"x"+h+" "+w/h;      //DEBUG
-        dbg_show_time.nodeValue=" time=" + (audio.currentTime|0) //DEBUG
-                                         + "(beat " +(t|0)+ ")"; //DEBUG
-
-        // Update the HTML and CSS parts, if you wanna have something like text..
-        updateDocument(t);
-
-        // Re-build the scenegraph for every frame (can animate):
-        var sceneroot = buildSceneAtTime(t);
-
-        // Scene is built. Then we actually draw it.
-        // Clear buffer
-        gl.clearColor(.3, .3, .3, 1);
-        gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
-
-        // Transfer perspective matrix to shader:
-        var persmat = perspectiveFhc(5,w/h);
-        gl.uniformMatrix4fv(gl.getUniformLocation(prg,"p"), false, persmat);
-
-        // TODO: Could switch the shader based on time / object properties:
-        gl.useProgram(prg);
-
-        // Then we display the scenegraph
-        findcam_wi(sceneroot,rotX_wi(0));
-
-        // Set light position (very naive as of yet):
-        // TODO: Multiple lights, included in the scenegraph as "Light objects".
-        // As of now, we have to hardcode light position separately from the scene transforms:
-        gl.uniform4fv(gl.getUniformLocation(prg, "l"),
-                      matmul4(cameraTransformation,[1,.1,1.5,1]));
-
-        traverse_wi(sceneroot,cameraTransformation);
-
-    }                                                    //DEBUG
-    catch (err)                                          //DEBUG
-    {                                                    //DEBUG
-        alert("Error: " + err.message);                  //DEBUG
-    }                                                    //DEBUG
-};
-
-// Execution starts here.
-try                                                  //DEBUG
-{                                                    //DEBUG
-    // NOTE: In debug mode, should probably adhere to
-    // https://www.khronos.org/webgl/wiki/FAQ ...
-    _document.body.appendChild(C = _document.createElement("canvas"));
-    s = C.style; s.position = "fixed"; s.left = s.top = 0;
-    gl = C.getContext('experimental-webgl');
-    if (!gl){                                        //DEBUG
-        alert("This demo requires WebGL");           //DEBUG
-        return;                                      //DEBUG
-    }                                                //DEBUG
-                                                     //DEBUG
-    // Debug print of location and aspect            //DEBUG
-    var dbg_show_aspect=document.createTextNode(""); //DEBUG
-    var dbgInfoDiv=document.createElement("div");    //DEBUG
-    document.body.appendChild(dbgInfoDiv);           //DEBUG
-    dbgInfoDiv.style.position = "fixed";             //DEBUG
-    dbgInfoDiv.style.right = 10;                     //DEBUG
-    dbgInfoDiv.style.bottom = 10;                    //DEBUG
-    dbgInfoDiv.style.color = "#fff";                 //DEBUG
-    dbgInfoDiv.appendChild(dbg_show_aspect);         //DEBUG
-    var dbg_show_time=document.createTextNode("");   //DEBUG
-    dbgInfoDiv.appendChild(dbg_show_time);           //DEBUG
-                                                     //DEBUG
-    // Debug version seek, play and pause            //DEBUG
-    C.addEventListener("click", function(e){         //DEBUG
-        audio.currentTime =                          //DEBUG
-            e.pageX/C.width*audio.duration;          //DEBUG
-        if (e.pageY<(C.height/2))audio.pause();      //DEBUG
-        else audio.play();                           //DEBUG
-        for(var t=(audio.currentTime*(               //DEBUG
-            songBeatsPerMinute/60))|0;t>=0;t--){     //DEBUG
-        }                                            //DEBUG
-    });                                              //DEBUG
-
-
-    // Apply p01's trick for grabbing short names from GL obj
-    // (http://slides.com/pdesch/js-demoscene-techniques#/5/6)
-    // This didn't help me earlier when trying to make a 1k..
-    // is OK now for 4k. saves something like 30 bytes / 4kb.
-    // Not much.. The trick itself costs some 45 bytes compressed.
-
-    for(s in gl){
-        //For creating a sed script to change original names:
-        //var shortname = k.match(/^..|[A-Z]|\d\D+$/g).join('');
-        //console.log("s/gl\\."+k+"(/gl."+shortname+"(/g");
-        gl[s.match(/^..|[A-Z]|\d\D+$/g).join('')]=gl[s];
-
-        //The following is bloaty, but works with "use strict":
-        //gl[k.match(/^[a-z].|[A-Z](?=[a-z])|\d\D+$/g).join('')]=gl[k];
-    }
-
-    gl.enable(gl.DEPTH_TEST);
-    gl.enable(gl.CULL_FACE); // Performance opt., costs 6 bytes.
-
-    // Initializations seem to pack a bit better inlined.
-    // prg = gl.createProgram();
-    // TODO: Multiple, switchable shaders!
-
-    // Reuse the variable name "s"
-    s = gl.createShader(gl.VERTEX_SHADER);
-    //gl.shaderSource(s, vertex_shader_minimal_with_normalmatrix);
-    gl.shaderSource(s, test_vert);
-    gl.compileShader(s);
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS))                 //DEBUG
-        alert("Vertex shader: "+ gl.getShaderInfoLog(s));             //DEBUG
-    gl.attachShader(prg = gl.createProgram(), s);
-
-    s = gl.createShader(gl.FRAGMENT_SHADER);
-    //gl.shaderSource(s, fragment_shader_pointlight_cameraspace);
-    gl.shaderSource(s, noisz_frag);
-    gl.compileShader(s);
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS))                 //DEBUG
-        alert("Fragment shader: "+ gl.getShaderInfoLog(s));           //DEBUG
-    gl.attachShader(prg, s);
-
-    gl.linkProgram(prg);
-    if (!gl.getProgramParameter(prg, gl.LINK_STATUS))                 //DEBUG
-        alert("Link program: "+ gl.getProgramInfoLog(prg));           //DEBUG
-
-    // Initialization code is now localized above. Easier to find for editing.
-    initAssets();
-
-    /* Initialize song. */
-    var audio,player = new CPlayer();
-    player.init(song);
-    while (player.generate() < 1){};
-    audio = _document.createElement("audio");
-    audio.src = URL.createObjectURL(new Blob([player.createWave()],
-                                             {type: "audio/wav"}));
-    /* Start audio and graphics */
-    audio.play();
-    setInterval(loopfunc, 20);
-
-}                                                    //DEBUG
-catch (err)                                          //DEBUG
-{                                                    //DEBUG
-    alert("Error initializing: " + err.message);     //DEBUG
-}                                                    //DEBUG
-
+/**
+ * (Optionally) update the HTML and CSS parts of the document. This
+ * can be used for scrolling or flashing text shown as usual HTML. Not
+ * often used in actual demoscene productions.
+ */
+function updateDocument(t){
+}

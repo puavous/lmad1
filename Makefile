@@ -37,7 +37,7 @@ COMPOSRC=lib/glconstants.js $(COMMONSRC)
 DEBUGSRC=$(COMMONSRC)
 
 # Compo target: Remove all debugging code, minify and pack everything.
-$(PROD_NAME).compo.html: $(COMPOSRC) $(PROD_SRC_PATH)/$(PROD_NAME)_song.js $(PROD_SRC_PATH)/$(PROD_NAME).js
+$(PROD_NAME).compo.html: $(COMPOSRC) $(PROD_SRC_PATH)/$(PROD_NAME)_song.js $(PROD_SRC_PATH)/$(PROD_NAME).js lib/main.js
 	echo "(function (){" > tmp.bulk.js
 	cat $^ >> tmp.bulk.js
 	echo "})();" >> tmp.bulk.js
@@ -51,7 +51,7 @@ $(PROD_NAME).compo.html: $(COMPOSRC) $(PROD_SRC_PATH)/$(PROD_NAME)_song.js $(PRO
 
 
 # Debug target: just catenate stuff to an HTML file:
-$(PROD_NAME).debug.html: $(DEBUGSRC) $(PROD_SRC_PATH)/$(PROD_NAME)_song.js $(PROD_SRC_PATH)/$(PROD_NAME).js
+$(PROD_NAME).debug.html: $(DEBUGSRC) $(PROD_SRC_PATH)/$(PROD_NAME)_song.js $(PROD_SRC_PATH)/$(PROD_NAME).js lib/main.js
 	echo "<html><head /><body><script>" > $@
 	echo "(function (){" >> $@
 	cat $^ >> $@

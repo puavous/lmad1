@@ -40,14 +40,6 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7d2xahRRFADQ-2bWjQQkRYQlCBoQkZBCsRashTRpxM
 
 // --------------------------------------------------------------------------------
 
-// "Globals needed in many routines":
-// Note that in unstrict mode some of these could be left
-// as document object properties for rude size optimization.
-var C, Cw, Ch;      // Canvas object and previous width and height
-var audio;          // Audio object needed for song playback
-var s;              // Temporary variable for "style" but also other things
-
-var _document=document; // minify "document" name too
 
 
 // --------------------------------------------------------------------------------
@@ -89,6 +81,7 @@ var messageHTML = ". . . "    +spaces    +". . . "    +spaces
  * demoscene productions.
  */
 function initDocument(){
+
     // A crude scrolltext: one HTML element containing an unwrapped line
     _document.body.appendChild(s = scrolltextdiv = _document.createElement("div"));
     s.innerHTML = messageHTML;
@@ -98,6 +91,7 @@ function initDocument(){
     s.fontSize = "10vh";
     s.whiteSpace = "nowrap";
     s.fontFamily = "monospace";
+
 }
 
 /**
@@ -106,10 +100,12 @@ function initDocument(){
  * often used in actual demoscene productions.
  */
 function updateDocument(t){
+
         // Scrolltext.. loop through all contents during the show:
         var sw = scrolltextdiv.offsetWidth;
         var endbeat = 128;
         scrolltextdiv.style.left = innerWidth - (t/endbeat)*sw;
+
 }
 
 // --------------------------------------------------------------------------------
@@ -124,12 +120,6 @@ function updateDocument(t){
  * here.
  */
 function initAssets(){
-    // Create primitive building blocks by different profile sweeps:
-/*
-    var prof=cptsHuge;
-    objTile = new GenCyl(new funBSplineTransformed(prof,scaleXYZ(.04,.45,0)),13,
-                         new funBSplineTransformed(prof,scaleXYZ(.45,.001,0)));
-*/
 
     // Now I have a box in the library.
     objTile = new Box(1);
@@ -141,9 +131,6 @@ function initAssets(){
     // Can make the radius negative to make an interior of a ball:
     objBackground = new GenCyl(new funCircle(-30,10,.5), 32,
                                new funCircle(0,32));
-
-    // In this one, I make a scrolltext, too.
-    initDocument();
 
 }
 
@@ -237,174 +224,16 @@ function buildSceneAtTime(t){
                               {f:[],
                                o:[],
                                c:[tausta]
-                              }
-                          ]
+                              },
+                          ],
                          }
                         );
+    // Simulate older code without Camera..
+    sceneroot.c.push({f:[],
+                      o:[],
+                      c:[],
+                      r:[new Camera()]});
 
     return sceneroot;
 }
-
-
-
-/**
- * This is the event loop that happens on every frame.
- *
- * Assumes prior initialization of C (canvas), audio.
- *
- * Assumes prior initialization of gl and prg.
- *
- * Debug mode needs initialization of dbg_xxx
- *
- */
-var loopfunc = function()
-{
-    try                                                          //DEBUG
-    {                                                            //DEBUG
-        // Time from the audio object. Interpret as beat.
-        var t = audio.currentTime * (songBeatsPerMinute/60);
-        // Update canvas size (window object is implicit; need no "window.X")
-        var w = innerWidth, h = innerHeight;
-        if (w != Cw || h != Ch) {
-            gl.viewport(0, 0, Cw=C.width=w, Ch=C.height=h);
-        }
-
-        dbg_show_aspect.nodeValue="Size: "+w+"x"+h+" "+w/h;      //DEBUG
-        dbg_show_time.nodeValue=" time=" + (audio.currentTime|0) //DEBUG
-                                         + "(beat " +(t|0)+ ")"; //DEBUG
-
-        // Update the HTML and CSS parts, if you wanna have something like text..
-        updateDocument(t);
-
-        // Re-build the scenegraph for every frame (can animate):
-        var sceneroot = buildSceneAtTime(t);
-
-        // Scene is built. Then we actually draw it.
-        // Clear buffer
-        gl.clearColor(.3, .3, .3, 1);
-        gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
-
-        // Transfer perspective matrix to shader:
-        var persmat = perspectiveFhc(5,w/h);
-        gl.uniformMatrix4fv(gl.getUniformLocation(prg,"p"), false, persmat);
-
-        // Set light position (very naive as of yet):
-        // TODO: Multiple lights, included in the scenegraph as "Light objects".
-        // As of now, we have to hardcode light position separately from the scene transforms:
-        gl.uniform4fv(gl.getUniformLocation(prg, "l"),
-                      [-3,2,-6,1]);
-
-        // TODO: Could switch the shader based on time / object properties:
-        gl.useProgram(prg);
-
-        // Then we display the scenegraph
-        traverse_wi(sceneroot,rotX_wi(0));
-
-    }                                                    //DEBUG
-    catch (err)                                          //DEBUG
-    {                                                    //DEBUG
-        alert("Error: " + err.message);                  //DEBUG
-    }                                                    //DEBUG
-};
-
-// Execution starts here.
-try                                                  //DEBUG
-{                                                    //DEBUG
-    // NOTE: In debug mode, should probably adhere to
-    // https://www.khronos.org/webgl/wiki/FAQ ...
-    _document.body.appendChild(C = _document.createElement("canvas"));
-    s = C.style; s.position = "fixed"; s.left = s.top = 0;
-    gl = C.getContext('experimental-webgl');
-    if (!gl){                                        //DEBUG
-        alert("This demo requires WebGL");           //DEBUG
-        return;                                      //DEBUG
-    }                                                //DEBUG
-                                                     //DEBUG
-    // Debug print of location and aspect            //DEBUG
-    var dbg_show_aspect=document.createTextNode(""); //DEBUG
-    var dbgInfoDiv=document.createElement("div");    //DEBUG
-    document.body.appendChild(dbgInfoDiv);           //DEBUG
-    dbgInfoDiv.style.position = "fixed";             //DEBUG
-    dbgInfoDiv.style.right = 10;                     //DEBUG
-    dbgInfoDiv.style.bottom = 10;                    //DEBUG
-    dbgInfoDiv.style.color = "#fff";                 //DEBUG
-    dbgInfoDiv.appendChild(dbg_show_aspect);         //DEBUG
-    var dbg_show_time=document.createTextNode("");   //DEBUG
-    dbgInfoDiv.appendChild(dbg_show_time);           //DEBUG
-                                                     //DEBUG
-    // Debug version seek, play and pause            //DEBUG
-    C.addEventListener("click", function(e){         //DEBUG
-        audio.currentTime =                          //DEBUG
-            e.pageX/C.width*audio.duration;          //DEBUG
-        if (e.pageY<(C.height/2))audio.pause();      //DEBUG
-        else audio.play();                           //DEBUG
-        for(var t=(audio.currentTime*(               //DEBUG
-            songBeatsPerMinute/60))|0;t>=0;t--){     //DEBUG
-        }                                            //DEBUG
-    });                                              //DEBUG
-
-
-    // Apply p01's trick for grabbing short names from GL obj
-    // (http://slides.com/pdesch/js-demoscene-techniques#/5/6)
-    // This didn't help me earlier when trying to make a 1k..
-    // is OK now for 4k. saves something like 30 bytes / 4kb.
-    // Not much.. The trick itself costs some 45 bytes compressed.
-
-    for(s in gl){
-        //For creating a sed script to change original names:
-        //var shortname = k.match(/^..|[A-Z]|\d\D+$/g).join('');
-        //console.log("s/gl\\."+k+"(/gl."+shortname+"(/g");
-        gl[s.match(/^..|[A-Z]|\d\D+$/g).join('')]=gl[s];
-
-        //The following is bloaty, but works with "use strict":
-        //gl[k.match(/^[a-z].|[A-Z](?=[a-z])|\d\D+$/g).join('')]=gl[k];
-    }
-
-    gl.enable(gl.DEPTH_TEST);
-    gl.enable(gl.CULL_FACE); // Performance opt., costs 6 bytes.
-
-    // Initializations seem to pack a bit better inlined.
-    // prg = gl.createProgram();
-    // TODO: Multiple, switchable shaders!
-
-    // Reuse the variable name "s"
-    s = gl.createShader(gl.VERTEX_SHADER);
-    //gl.shaderSource(s, vertex_shader_minimal_with_normalmatrix);
-    gl.shaderSource(s, test_vert);
-    gl.compileShader(s);
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS))                 //DEBUG
-        alert("Vertex shader: "+ gl.getShaderInfoLog(s));             //DEBUG
-    gl.attachShader(prg = gl.createProgram(), s);
-
-    s = gl.createShader(gl.FRAGMENT_SHADER);
-    //gl.shaderSource(s, fragment_shader_pointlight_cameraspace);
-    gl.shaderSource(s, noisy_frag);
-    gl.compileShader(s);
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS))                 //DEBUG
-        alert("Fragment shader: "+ gl.getShaderInfoLog(s));           //DEBUG
-    gl.attachShader(prg, s);
-
-    gl.linkProgram(prg);
-    if (!gl.getProgramParameter(prg, gl.LINK_STATUS))                 //DEBUG
-        alert("Link program: "+ gl.getProgramInfoLog(prg));           //DEBUG
-
-    // Initialization code is now localized above. Easier to find for editing.
-    initAssets();
-
-    /* Initialize song. */
-    var audio,player = new CPlayer();
-    player.init(song);
-    while (player.generate() < 1){};
-    audio = _document.createElement("audio");
-    audio.src = URL.createObjectURL(new Blob([player.createWave()],
-                                             {type: "audio/wav"}));
-    /* Start audio and graphics */
-    audio.play();
-    setInterval(loopfunc, 20);
-
-}                                                    //DEBUG
-catch (err)                                          //DEBUG
-{                                                    //DEBUG
-    alert("Error initializing: " + err.message);     //DEBUG
-}                                                    //DEBUG
 
