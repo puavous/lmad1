@@ -15,6 +15,7 @@ include Current_build.mk
 ## Commands to find your installations (change paths to suit your setup):
 # FIXME: These were put in Current_build.mk as a quick fix in Instanssi 2019
 #CLOS=java -jar /home/nieminen/files/hacking/closure-compiler/closure-compiler-v20170218.jar
+PNGIN=ruby tools/pnginator_modified.rb
 #PNGIN=ruby /home/nieminen/files/hacking/pnginator/pnginator.rb
 
 ## Optional:

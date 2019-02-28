@@ -11,4 +11,3 @@ PROD_SRC_PATH=./prods
 
 # These work for Paavo only, sry.. will fix later:
 CLOS=java -jar /home/nieminen/files/hacking/closure-compiler/closure-compiler-v20170218.jar
-PNGIN=ruby /home/nieminen/files/hacking/pnginator/pnginator.rb
