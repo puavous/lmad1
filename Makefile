@@ -13,8 +13,9 @@ include Current_build.mk
 # zip file to the compo system at a party place.
 
 ## Commands to find your installations (change paths to suit your setup):
-CLOS=java -jar /home/nieminen/files/hacking/closure-compiler/closure-compiler-v20170218.jar
-PNGIN=ruby /home/nieminen/files/hacking/pnginator/pnginator.rb
+# FIXME: These were put in Current_build.mk as a quick fix in Instanssi 2019
+#CLOS=java -jar /home/nieminen/files/hacking/closure-compiler/closure-compiler-v20170218.jar
+#PNGIN=ruby /home/nieminen/files/hacking/pnginator/pnginator.rb
 
 ## Optional:
 DEFDB=/home/nieminen/files/hacking/defdb_04b/defdb
