@@ -19,10 +19,10 @@ PNGIN=ruby tools/pnginator_modified.rb
 #PNGIN=ruby /home/nieminen/files/hacking/pnginator/pnginator.rb
 
 ## Optional (not used at Instanssi 2019):
-#DEFDB=/home/nieminen/files/hacking/defdb_04b/defdb
-#GZTHERM=/home/nieminen/files/hacking/gzthermal_04c/gzthermal
-DEFDB=echo "You may optionally download the defdb program and use it here with args:"
-GZTHERM=echo "You may optionally download the gzthermal program and use it here with args:"
+DEFDB=/home/nieminen/files/hacking/defdb_04b/defdb
+GZTHERM=/home/nieminen/files/hacking/gzthermal_04c/gzthermal
+#DEFDB=echo "You may optionally download the defdb program and use it here with args:"
+#GZTHERM=echo "You may optionally download the gzthermal program and use it here with args:"
 
 ## Even more optional (for library development and documentation)
 SHMIN=mono /home/nieminen/files/hacking/shader_minifier/shader_minifier.exe
@@ -62,15 +62,15 @@ $(PROD_NAME).debug.html: $(DEBUGSRC) $(PROD_SRC_PATH)/$(PROD_NAME)_song.js $(PRO
 
 #FIXME: Experimental at Instanssi 2019.. not used yet.
 # Minify shaders:
-#SHADER_JS_NAMES=test_frag.js test_vert.js noisy_frag.js noisz_frag.js
-#
-#%_frag.js : shaders/%.frag
-#	$(SHMIN) --format js --field-names rgba \
-#		--preserve-externals -o $@ $<
-#
-#%_vert.js : shaders/%.vert
-#	$(SHMIN) --format js --field-names rgba \
-#		--preserve-externals -o $@ $<
+SHADER_JS_NAMES=test_frag.js test_vert.js noisy_frag.js noisz_frag.js
+
+%_frag.js : shaders/%.frag
+	$(SHMIN) --format js --field-names rgba \
+		--preserve-externals -o $@ $<
+
+%_vert.js : shaders/%.vert
+	$(SHMIN) --format js --field-names rgba \
+		--preserve-externals -o $@ $<
 
 lib/minified_shaders.js: $(SHADER_JS_NAMES)
 	cat  $(SHADER_JS_NAMES) > $@
