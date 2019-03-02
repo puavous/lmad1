@@ -9,6 +9,10 @@
 The visuals of this production are synced to the following song
 created using the great SoundBox minisynth:
 
+http://sb.bitsnbites.eu/?data=U0JveAwC7d2xSsNAHMfx3921tWKpiIKLQxeHDr6G-AiCg6uDggVHi8ElhgSRCuJW8BU6uvoMzr5JvCZpCaIWQWki3w-53P0vN_wuZLshkw2pq15T6YXxTUaNdl8Z25V6KjFT1oZ--F0DAAAAAAAAAAAA6sSMA7n0rCGtNHfyKZtK230nkz2fkQYaDgb-yvvh1bz2LQiC62VvZZFl57cLnp_UPP-45vlf_joAAAAAAAAAAACoHDdKZN8CJ7U3V3w5ccZehmu9B7vnZmuKo7JkKlYcKYqiUGFY1HHkZxSFd8Xy26JPij5e9h4BAAAAAAAAAACAzxwF0nHQkTo6yGdsqv2bc_fcaqmlpmesa_j5_ChslN2nx2D5Edh9abbaPuavm3L-_K0_zsd1eP9JKXmeN1p2pB_5H9-PSrtQbfcCAAAAAAAAAMDvSfKWPq3u-tG6Mbb9upUemtOWL431smXuy_-R1eU_ZeGCuurqlhcAAAAAAAAAAKDq3gE
+
+
+
 http://sb.bitsnbites.eu/?data=U0JveAwC7d2xSsNAHMfx3921acVSEQUXhy4OHXwN8REEB1cHBQuOFoNLDAkiFcSt4Ct0dPUZnH2TeE1iKRZ1Uezh90Mud_fPDf87LlluyGRd6qrXVHFufJFRo91XyXalnuaYkk1886sCAAAAAAAAAAAAhMSMY7nitCG1mttVyBbSVt_JlM9nNNBwMPBXVQ8vZ31f4ji-Wvap_nX-9pvnx4HnPw48_2e-BgAAAAAAAAAA_DtulMu-xk5qb7R8d-KMvUhWe_d2172PqY_K8qlMWao0TRMlSd3PUh9RmtzWw2_qOq_rjFUGAAAAAAAAAADAMjqMpaO4I3W0X0Vsob3rM_cURYrU9Ix1DR-vjsJG5X16DFYdgd3NRZfbx_xDM59_teoPs3YI658v7Jc02PUPd_9o4X0NcS4AAAAAAAAAAPycvCrF48qOb60ZY9svm8WBOYl811ivHvjZ_8hC-U9ZEmjeAAAAAAAAAAAA-B1v
 
 
@@ -189,15 +193,33 @@ function buildSceneAtTime(t){
     var scaled_time_to_exit = linear_time_to_exit * linear_time_to_exit;
     var travelled_in_tunnel_now = (scaled_time_to_exit * tunnel_length);
     var t_rot = clamp01((beat_at_roll_end - t)/beat_at_roll_end);
-    t_rot = t_rot*t_rot;
+    t_rot = t_rot*t_rot; // rotate in the start
+    var t_rot2 = 0; // later, just to de-stabilize the visual.. have something happening..
 
     // Slowly move camera towards end of the tube
     var camera_pos = translate_wi(0,0,-travelled_in_tunnel_now);
-    // Just some shake-ish minor movement:
-    //    var camerashake = translate_wi(Math.sin(t*.16),Math.sin(t*.18+4),0);
 
-    var camera_roll = rotX_wi(PI*t_rot/6);
-    var camera_transformations = [camera_pos,rotZ_wi(PI*t_rot/6),rotX_wi(PI*t_rot/6)];
+    //var camerashake;
+    var camera_transformations;
+    if (t<32){
+        camera_transformations = [camera_pos,rotZ_wi(PI*t_rot/6),rotX_wi(PI*t_rot/6)];
+    } else {
+        var tt;
+        if (t<96){
+            tt = (t-32)/(beat_at_tunnel_exit-32);
+        } else {
+            tt = (96-32)/(beat_at_tunnel_exit-32);
+        }
+        camera_transformations = [camera_pos,
+                                  rotZ_wi(.2*Math.sin(2*PI*tt*tt)),
+                                  rotY_wi(.1*Math.sin(2*PI*tt*tt)),
+                                  rotX_wi(.07*Math.sin(2*PI*tt*tt)),
+                                 ];
+    }
+
+    // Just some shake-ish minor movement:
+
+
 
     sceneroot.c.push({f:[],
                       o:[],
