@@ -1,0 +1,31 @@
+Flat Ball Invasion Fleet
+==========================
+
+Party-coded at Instanssi 2019, using the "Let's make a demo" workshop
+library and example codes (also by me;)).
+
+Author:     qma
+
+            ("The Old Dude" for Instanssi folk, Paavo Nieminen
+            <paavo.j.nieminen@jyu.fi> in the daily life)
+
+Techniques: Javascript, WebGL, SoundBox, Closure Compiler, Pnginator,
+            GNU toolchain, Emacs
+
+Files:      invasion.compo.html  - "Compo version" under 4096 bytes,
+                                       
+            invasion.debug.html  - Debug version with some checks for
+                                   most common error conditions.
+
+            invasion.nfo         - this file
+
+This production uses the SoundBox synthesizer tracker:
+(http://sb.bitsnbites.eu/).
+
+
+Greets
+-----------------------
+
+Thanks to Instanssi organizers for letting me do these workshops. And
+thanks to the great participants of "Let's make a demo" this year!!
+Wish us all luck in the compos!
