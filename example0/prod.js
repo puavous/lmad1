@@ -56,7 +56,7 @@ defaultLightDirection=[1,1,1,0];
 // --------------------------------------------------------------------------------
 
 /**
- * Initialize the constant and pre-computed "assets" used in this
+ * Initialize the constant and pre-computed "assets" used in your own
  * production; this function is called once before entering the main
  * loop.
  *
@@ -81,6 +81,8 @@ function initAssets(){
 
 
 /**
+ * Your own creative input goes here - this function will be called on every screen update.
+ *
  * Return a scene graph for a specific time. Time given as 'beats' according to song tempo.
  *
  * This is an important function to re-write creatively to make your own entry.
