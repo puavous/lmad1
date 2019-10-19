@@ -1,4 +1,12 @@
 .PHONY: clean cleaner veryclean
+#
+# This is under construction:
+#
+#  - separating the library from compo entries..
+#
+
+
+
 # To use this makefile, you need to install:
 #  - the Closure compiler for Javascript minification
 #  - ruby interpreter, and the PNGinator program for Deflate compression
@@ -78,7 +86,7 @@ lib/minified_shaders.js: $(SHADER_JS_NAMES)
 # Auto-generate documentation.. I'm totally newbie to JS documentation, so do what I can...
 # imitate javadoc and sorts, using jsdoc.js - something that Google showed me..
 documentation: $(DEBUGSRC)
-	$(JSDOC) -d ./documentation/ -c tools/jsdoc_conf.json -r lib/README.md lib/
+	$(JSDOC) -d ./documentation/ -c tools/jsdoc_conf.json -r README.md lib/
 
 clean:
 	-rm *~ tmp.* *.closured.js
@@ -93,7 +101,8 @@ veryclean: cleaner
 	-rm $(SHADER_JS_NAMES)
 	-rm *_by_*.zip
 
-# Download stuff. Needs Internet connection, obviously.
-external/player-small.js:
-	curl http://sb.bitsnbites.eu/player-small.js > external/player-small.js
+# The workshop starter package
 
+lmad1_workshop_2019-10-19.zip:
+	-rm -r lmad1_workshop_2019-10-19
+	sh tools/create_starter_pack.sh
