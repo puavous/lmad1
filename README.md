@@ -69,12 +69,18 @@ Thursday, Friday, and Saturday of the Instanssi 2020 party.)
 
 ## Example of workshop schedule in a 4-day demo party
 
-The example schedule assumes compo deadline to be 6pm on Saturday.
+The following example schedule assumes the compo deadline to be 6pm on
+Saturday. If the deadline is earlier, everybody has to wake up earlier
+to the sessions :). Guidance is given 4 hours per day, so that also
+the teacher(s) can enjoy the party and finalize their own compo
+entries. Participants should be prepared to work hard between the
+sessions - otherwise there is little chance of finishing in time.
 
 ```
     Thursday
       18:00  Introduction session on screen: live-coding with starter package
       19:00  Guided workshop session:
+             * meet the people; launch a channel in some instant message sys.
              * install tools and make sure they work on everybody's laptop
 	     * make sure everybody knows how to modify the starter codes and
 	       preview results
