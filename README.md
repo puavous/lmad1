@@ -67,6 +67,39 @@ the demoparty to also independent programming between the guided hours
 of the workshop. (Some 4 hours of guidance will be provided each day on
 Thursday, Friday, and Saturday of the Instanssi 2020 party.)
 
+## Example of workshop schedule in a 4-day demo party
+
+The example schedule assumes compo deadline to be 6pm on Saturday.
+
+```
+    Thursday
+      18:00  Introduction session on screen: live-coding with starter package
+      19:00  Guided workshop session:
+             * install tools and make sure they work on everybody's laptop
+	     * make sure everybody knows how to modify the starter codes and
+	       preview results
+	     * brainstorm ideas for everybody's own entry: what can / cannot
+	       be done in 3 days.
+      23:00- Independent working
+
+    Friday
+      14:00  Guided workshop session:
+             * attend to problems; discuss details
+	     * clarify the creative concepts and re-work them according to
+	       schedule
+	     * assess the size limits, decide on intro/demo compo for each entry
+	     * try making an entry, possibly test on compo machine if possible
+	     * tool assistance
+      18:00- Independent working
+
+   Saturday
+     14:00  Guided workshop session:
+            * finalize
+	    * make sure entries are in the compo system
+     18:00  Deadline
+     18:00- Enjoy compos and the own entry on screen.
+```
+
 ## Current status as of 1.1 (working towards 1.2)
 
 "Version 1.0" of this library was successfully used to produce some 4
