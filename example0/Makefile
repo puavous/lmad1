@@ -36,12 +36,15 @@ COMMONSRC=$(LMAD1)/lib/library.js \
 COMPOSRC=$(LMAD1)/lib/glconstants.js $(COMMONSRC)
 DEBUGSRC=$(COMMONSRC)
 
+tmp.bulk.compo.js: $(COMPOSRC) song.js prod.js $(LMAD1)/lib/main.js
+	echo "(function (){" > $@
+	cat $^ >> $@
+	echo "})();" >> $@
+
+
 # Compo target: Remove all debugging code, minify and pack everything.
-$(PROD_NAME).compo.html: $(COMPOSRC) song.js prod.js $(LMAD1)/lib/main.js
-	echo "(function (){" > tmp.bulk.js
-	cat $^ >> tmp.bulk.js
-	echo "})();" >> tmp.bulk.js
-	cat tmp.bulk.js | sed -f $(LMAD1)/tools/prep.sed | sed -f $(LMAD1)/tools/shortengl.sed | sed -f $(LMAD1)/tools/shortenplayer.sed | $(CLOS) > tmp.closured.js
+$(PROD_NAME).compo.html: tmp.bulk.compo.js
+	cat tmp.bulk.compo.js | sed -f $(LMAD1)/tools/prep.sed | sed -f $(LMAD1)/tools/shortengl.sed | sed -f $(LMAD1)/tools/shortenplayer.sed | $(CLOS) > tmp.closured.js
 	$(PNGIN) tmp.closured.js $@
 
 #Some compression profiling for fun - if you wanna you canna.. results are approximate, not same as Pnginator output.
