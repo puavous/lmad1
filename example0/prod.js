@@ -95,7 +95,7 @@ function buildSceneAtTime(t){
 
     // Animation parameters
     //var stufftrans=[translate_wi(0,0,0),rotY_wi(-t*.8),rotX_wi(t*.02)];
-    var stufftrans=[];
+    var stufftrans=[translate_wi(0,-3.3,0)];
 
         // TODO: Neater place for these.. perhaps call createScene(t) here;
         function makeStuff(t,ydist,disperse){
@@ -111,29 +111,40 @@ function buildSceneAtTime(t){
                  .6,.3,.1,2, // specular
                  10,1,0,0];
 
-            stuff.c.push({f: [translate_wi(0,0,0)],
-                          o: [new Material(clr),objTile],
-                          c: []
-                         });
+            var black=
+                [.01,.02,.05,1,
+                 .02,.04,.05,1,
+                 .6,.3,.1,2, // specular
+                 10,1,0,0];
 
-            stuff.c.push({f: [translate_wi(2,0,0)],
+            stuff.c.push({f: [translate_wi(0,1,0)],
                           o: [new Material(clr),objBall],
                           c: []
                          });
 
-            stuff.c.push({f: [translate_wi(-2,0,0),rotX_wi(.5*t)],
+            stuff.c.push({f: [translate_wi(0,2,0), scale_wi(.7)],
                           o: [new Material(clr),objBall],
-                          c: []
+                          c: [
+                              {f: [rotY_wi(.2), rotZ_wi(.4*Math.sin(.8*t)), translate_wi(1,0,0), scaleXYZ_wi(.8,.3,.3)],
+                               o: [objBall],
+                               c: []},
+                              {f: [rotY_wi(-.2), rotX_wi(.4*Math.sin(.06*t)),rotZ_wi(3.14-.4*Math.sin(.1*t)), translate_wi(1,0,0), scaleXYZ_wi(.8,.3,.3)],
+                               o: [objBall],
+                               c: []}
+                             ]
                          });
 
-            stuff.c.push({f: [translate_wi(0,2,0), rotY_wi(.4*t + Math.sin(t))],
+            stuff.c.push({f: [translate_wi(0,3,0), scale_wi(.4), rotX_wi(-.3)],
                           o: [new Material(clr),objBall],
-                          c: []
-                         });
-
-            stuff.c.push({f: [translate_wi(0,-2,0), rotY_wi(-.4*t + Math.sin(t))],
-                          o: [new Material(clr),objBall],
-                          c: []
+                          c: [{f: [translate_wi(0,.5,0), scaleXYZ_wi(1.5,.2,1.5)],
+                               o: [new Material(black),objBall],
+                               c: []
+                              },
+                              {f: [translate_wi(0,.2,0), scaleXYZ_wi(.9,1,.9)],
+                               o: [new Material(black),objBall],
+                               c: []
+                              }
+                             ]
                          });
 
             return stuff;
