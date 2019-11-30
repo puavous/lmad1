@@ -340,5 +340,13 @@ var CPlayer = function() {
         }
         return d;
     };
+
+    // Copy data to output buffer (added by nieminen 2019-11-30)
+    this.cpy = function(iframe, nframe, outbuf){
+	    for (var i = 0; i<nframe; i++){
+ 	        outbuf[i] = mMixBuf[2*iframe+2*i] / 32768.0;
+ 	    }
+    };
+
 };
 
