@@ -30,7 +30,8 @@ EXAMPLEFILES="example0/example.nfo \
 TOOLFILES="tools/pnginator_modified.rb \
   tools/shortengl.sed \
   tools/prep.sed \
-  tools/shortenplayer.sed"
+  tools/shortenplayer.sed \
+  tools/makedebug.bat"
 
 EXTFILES="external/player-small.js \
           external/closure-compiler.jar"
@@ -61,6 +62,8 @@ cp $EXAMPLEFILES "${VERSION}/example/"
 cp $EXTFILES "${VERSION}/external/"
 cp $TOOLFILES "${VERSION}/tools/"
 cp -r documentation "${VERSION}"
+# TODO: this is new
+cp -r winext "${VERSION}"
 
 
 # Remove earlier version, and re-zip:
