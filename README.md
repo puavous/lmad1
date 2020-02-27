@@ -79,6 +79,7 @@ sessions - otherwise there is little chance of finishing in time.
 ```
     Thursday
       18:00  Introduction session on screen: live-coding with starter package
+             (NB: Instanssi 2020 has this at 19:00 and 1st workshop session 19:30-23:30)
       19:00  Guided workshop session:
              * meet the people; launch a channel in some instant message sys.
              * install tools and make sure they work on everybody's laptop
