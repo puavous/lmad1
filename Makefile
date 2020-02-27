@@ -103,6 +103,11 @@ veryclean: cleaner
 
 # The workshop starter package
 
-lmad1_workshop_2019-10-19.zip:
-	-rm -r lmad1_workshop_2019-10-19
-	sh tools/create_starter_pack.sh
+lmad1_workshop_Instanssi2020.zip:
+	-rm -r lmad1_workshop_Instanssi2020
+	sh tools/create_starter_pack.sh Instanssi2020
+
+# Quick'n'dirty
+
+publish: lmad1_workshop_Instanssi2020.zip
+	scp $< nieminen@halava.cc.jyu.fi:~/html/
