@@ -5,7 +5,14 @@
 
 set -e
 
-VERSION=lmad1_workshop_2019-10-19
+if [[ $# -lt 1 ]]
+then
+   echo Usage: $0 EVENT_ID
+   echo where EVENT_ID will be appended to output directory name
+   exit 1
+fi
+
+VERSION="lmad1_workshop_$1"
 
 LIBFILES="lib/curve_presets.js \
   lib/glconstants.js \
