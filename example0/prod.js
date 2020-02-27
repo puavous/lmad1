@@ -80,6 +80,52 @@ function initAssets(){
 }
 
 
+function snowman(t){
+    var stuff = {
+        f: [],
+        o: [],
+        c: []
+    };
+    var clr=
+        [.1,.12,.05,1,
+         .2,.4,.5,1,
+         .6,.3,.1,2, // specular
+         10,1,0,0];
+    var black=
+        [.01,.02,.05,1,
+         .02,.04,.05,1,
+         .6,.3,.1,2, // specular
+         10,1,0,0];
+    stuff.c.push({f: [translate_wi(0,1,0)],
+                  o: [new Material(clr),objBall],
+                  c: []
+                 });
+    stuff.c.push({f: [translate_wi(0,2,0), scale_wi(.7)],
+                  o: [new Material(clr),objBall],
+                  c: [
+                      {f: [rotY_wi(.2), rotZ_wi(.4*Math.sin(.8*t)), translate_wi(1,0,0), scaleXYZ_wi(.8,.3,.3)],
+                       o: [objBall],
+                       c: []},
+                      {f: [rotY_wi(-.2), rotX_wi(.4*Math.sin(.06*t)),rotZ_wi(3.14-.4*Math.sin(.1*t)), translate_wi(1,0,0), scaleXYZ_wi(.8,.3,.3)],
+                       o: [objBall],
+                       c: []}
+                             ]
+                 });
+    stuff.c.push({f: [translate_wi(0,3,0), scale_wi(.4), rotX_wi(-.3)],
+                  o: [new Material(clr),objBall],
+                  c: [{f: [translate_wi(0,.5,0), scaleXYZ_wi(1.5,.2,1.5)],
+                       o: [new Material(black),objBall],
+                       c: []
+                      },
+                      {f: [translate_wi(0,.2,0), scaleXYZ_wi(.9,1,.9)],
+                       o: [new Material(black),objBall],
+                       c: []
+                      }
+                     ]
+                 });
+    return stuff;
+}
+
 /**
  * Your own creative input goes here - this function will be called on every screen update.
  *
@@ -97,60 +143,8 @@ function buildSceneAtTime(t){
     //var stufftrans=[translate_wi(0,0,0),rotY_wi(-t*.8),rotX_wi(t*.02)];
     var stufftrans=[translate_wi(0,-3.3,0)];
 
-        // TODO: Neater place for these.. perhaps call createScene(t) here;
-        function makeStuff(t,ydist,disperse){
-            var stuff = {
-                f: [],
-                o: [],
-                c: []
-            };
 
-            var clr=
-                [.1,.12,.05,1,
-                 .2,.4,.5,1,
-                 .6,.3,.1,2, // specular
-                 10,1,0,0];
-
-            var black=
-                [.01,.02,.05,1,
-                 .02,.04,.05,1,
-                 .6,.3,.1,2, // specular
-                 10,1,0,0];
-
-            stuff.c.push({f: [translate_wi(0,1,0)],
-                          o: [new Material(clr),objBall],
-                          c: []
-                         });
-
-            stuff.c.push({f: [translate_wi(0,2,0), scale_wi(.7)],
-                          o: [new Material(clr),objBall],
-                          c: [
-                              {f: [rotY_wi(.2), rotZ_wi(.4*Math.sin(.8*t)), translate_wi(1,0,0), scaleXYZ_wi(.8,.3,.3)],
-                               o: [objBall],
-                               c: []},
-                              {f: [rotY_wi(-.2), rotX_wi(.4*Math.sin(.06*t)),rotZ_wi(3.14-.4*Math.sin(.1*t)), translate_wi(1,0,0), scaleXYZ_wi(.8,.3,.3)],
-                               o: [objBall],
-                               c: []}
-                             ]
-                         });
-
-            stuff.c.push({f: [translate_wi(0,3,0), scale_wi(.4), rotX_wi(-.3)],
-                          o: [new Material(clr),objBall],
-                          c: [{f: [translate_wi(0,.5,0), scaleXYZ_wi(1.5,.2,1.5)],
-                               o: [new Material(black),objBall],
-                               c: []
-                              },
-                              {f: [translate_wi(0,.2,0), scaleXYZ_wi(.9,1,.9)],
-                               o: [new Material(black),objBall],
-                               c: []
-                              }
-                             ]
-                         });
-
-            return stuff;
-        }
-
-        var stuff = makeStuff(2*t,0,0);
+        var stuff = snowman(2*t);
 
         var cpohja=
             [.3,.2,.1,1,
@@ -173,7 +167,7 @@ function buildSceneAtTime(t){
         sceneroot.c.push({f:[],
                           o:[],
                           c:[
-                              {f:[translate_wi(0,-3,0),scaleXYZ_wi(3,.1,30)],
+                              {f:[translate_wi(0,-3,0),scaleXYZ_wi(30,.1,30)],
                                o:[new Material(cpohja),objTile],
                                c:[]},
                               {f:stufftrans,
