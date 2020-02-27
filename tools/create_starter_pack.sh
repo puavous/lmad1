@@ -31,7 +31,8 @@ TOOLFILES="tools/pnginator_modified.rb \
   tools/shortengl.sed \
   tools/prep.sed \
   tools/shortenplayer.sed \
-  tools/makedebug.bat"
+  tools/makedebug.bat \
+  tools/makecompo.bat"
 
 EXTFILES="external/player-small.js \
           external/closure-compiler.jar"
