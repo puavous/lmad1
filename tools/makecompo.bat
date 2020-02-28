@@ -5,6 +5,11 @@
 @REM Path to lmad1 location in your system (can be ".." if you work in a subdirectory of the example package)
 @SET LMAD1=..
 
+@REM Command to make a zip file.. example for 7-Zip in standard installation directory under C:\Program Files
+@SET zip="c:\Program Files\7-Zip\7z" a 
+@SET ZIPNAME=Example_entry.zip
+@SET INFOFILE=example.nfo
+
 @REM Basically, the following part should need no changes..
 @REM ---------------------------------------------------------
 
@@ -21,6 +26,7 @@
 
 @type tmp.bulk.compo.js | %sed% -f %LMAD1%\tools\prep.sed | %sed% -f %LMAD1%\tools\shortengl.sed | %sed% -f %LMAD1%\tools\shortenplayer.sed | %closurecomp% > tmp.closured.js
 
-@%jsexe% -nc tmp.closured.js compo_version.html
+@%jsexe% -cn tmp.closured.js compo_version.html
 
 @REM TODO: Should %zip% here..
+@%zip% %ZIPNAME% compo_version.html debug_version.html %INFOFILE%

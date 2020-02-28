@@ -55,7 +55,7 @@ $(PROD_NAME).compo.html: tmp.bulk.compo.js
 
 # Debug target: just catenate stuff to an HTML file:
 $(PROD_NAME).debug.html: $(DEBUGSRC) song.js prod.js $(LMAD1)/lib/main.js
-	echo "<html><head /><body><script>" > $@
+	echo "<html><head /><body><h1>Click to start show<script>" > $@
 	echo "(function (){" >> $@
 	cat $^ >> $@
 	echo "})();" >> $@
