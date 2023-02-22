@@ -77,26 +77,26 @@ the sessions - otherwise there is little chance of finishing in time.
       20:00  Guided workshop session:
              * meet the people; launch a channel in some instant message sys.
              * install tools and make sure they work on everybody's laptop
-	           * make sure everybody knows how to modify the starter codes and
-	             preview results
-	           * brainstorm ideas for everybody's own entry: what can / cannot
-	             be done in 3 days.
+             * make sure everybody knows how to modify the starter codes and
+               preview results
+             * brainstorm ideas for everybody's own entry: what can / cannot
+               be done in 3 days.
       00:00- Independent working
 
     Friday
       14:00  Guided workshop session:
              * attend to problems encountered in independent work; discuss details
-	           * clarify the creative concepts and re-work them according to
-	             schedule
-	           * assess the size limits, decide on intro/demo compo for each entry
-	           * try making an entry, possibly test on compo machine if possible
-	           * tool assistance
+             * clarify the creative concepts and re-work them according to
+               schedule
+             * assess the size limits, decide on intro/demo compo for each entry
+             * try making an entry, possibly test on compo machine if possible
+             * tool assistance
       18:00- Independent working
 
    Saturday
      14:00  Guided workshop session:
             * finalize
-	          * make sure entries are in the compo system
+            * make sure entries are in the compo system
      18:00  Deadline
      18:00- Enjoy compos and everyone's own entries on screen.
 ```
