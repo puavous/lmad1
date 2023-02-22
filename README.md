@@ -1,7 +1,7 @@
 # lmad1: "Let's Make a Demo 1.3" workshop base code
 
 It is now official: There will be an instance of this workshop at Instanssi
-2023, March 2-5! I'll try to find some spare time before thatt to make sure
+2023, March 2-5! I'll try to find some spare time before that to make sure
 everything still works as fine as it did already back in 2020.
 
 This is a twisted and obscure piece of code, yes. It was my first
