@@ -77,6 +77,7 @@ cleaner: clean
 veryclean: cleaner
 	-rm $(SHADER_JS_NAMES)
 	-rm *_by_*.zip
+	cd example0; make veryclean
 
 # The workshop starter package
 
