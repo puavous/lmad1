@@ -1,72 +1,45 @@
-.PHONY: clean cleaner veryclean
+.PHONY: draft clean cleaner veryclean
 #
-# This is under construction:
+# This is under construction (almost finished) as of Instanssi 2023:
 #
 #  - separating the library from compo entries..
+
+# This makefile is for creating the library and a workshop starter code pack.
 #
-
-
-
-# To use this makefile, you need to install:
-#  - the Closure compiler for Javascript minification
-#  - ruby interpreter, and the PNGinator program for Deflate compression
+# To use this makefile, you need to have:
+#  - ShaderMinifier
 #  - basic GNU tools (make, bash, sed, ...)
 
-include Current_build.mk
+# To also create tiny JS executables, i.e., "compo productions", you need:
+#  - the Closure compiler for Javascript minification
+#  - ruby interpreter, and the PNGinator program for Deflate compression
 
-# The above included file should set a couple of things (see the
-# examples). When the included file and referenced sources are OK (and
-# the tool programs installed), Linux users can just "make
-# $(PROD_NAME_FULL)_by_$(PROD_AUTHOR).zip" and upload the resulting
-# zip file to the compo system at a party place.
 
 ## Commands to find your installations (change paths to suit your setup):
-# FIXME: These were put in Current_build.mk as a quick fix in Instanssi 2019
-#CLOS=java -jar /home/nieminen/files/hacking/closure-compiler/closure-compiler-v20170218.jar
-PNGIN=ruby tools/pnginator_modified.rb
-#PNGIN=ruby /home/nieminen/files/hacking/pnginator/pnginator.rb
+# Tools needed for tiny production development are only in tiny productions..
+# They have a separate Makefile, based on example0/Makefile.
+# This main Makefile is now for just packaging the lib and the starter pack.
+# The idea is that in a workshop, total newbies just say "make my_entry" and be happy
+# (with an instructor present to solve all problems that are likely to appear...)
 
-## Optional (not used at Instanssi 2019):
-DEFDB=/home/nieminen/files/hacking/defdb_04b/defdb
-GZTHERM=/home/nieminen/files/hacking/gzthermal_04c/gzthermal
-#DEFDB=echo "You may optionally download the defdb program and use it here with args:"
-#GZTHERM=echo "You may optionally download the gzthermal program and use it here with args:"
-
-## Even more optional (for library development and documentation)
+## External tools needed for library development and documentation
 SHMIN=mono external/shader_minifier.exe
 JSDOC=jsdoc
 
 
-# Compo entry package:
-$(PROD_NAME_FULL)_by_$(PROD_AUTHOR).zip: $(PROD_NAME).compo.html $(PROD_NAME).debug.html $(PROD_SRC_PATH)/$(PROD_NAME).nfo
-	zip -j $@ $^
+# Preliminary quick testing:
+draft:
+	cd example0; make -B Example_4k_by_The_Old_Dude.zip
+	ls -lat example0
+
 
 # Order matters because of catenation etc:
 COMMONSRC=lib/library.js lib/shaders_simple.js lib/minified_shaders.js external/player-small.js
 COMPOSRC=lib/glconstants.js $(COMMONSRC)
 DEBUGSRC=$(COMMONSRC)
 
-# Compo target: Remove all debugging code, minify and pack everything.
-$(PROD_NAME).compo.html: $(COMPOSRC) $(PROD_SRC_PATH)/$(PROD_NAME)_song.js $(PROD_SRC_PATH)/$(PROD_NAME).js lib/main.js
-	echo "(function (){" > tmp.bulk.js
-	cat $^ >> tmp.bulk.js
-	echo "})();" >> tmp.bulk.js
-	cat tmp.bulk.js | sed -f tools/prep.sed | sed -f tools/shortengl.sed | sed -f tools/shortenplayer.sed | $(CLOS) > tmp.closured.js
-	$(PNGIN) tmp.closured.js $@
-
-#Some compression profiling for fun - if you wanna you canna.. results are approximate, not same as Pnginator output.
-	gzip -c tmp.closured.js > $@.gz
-	$(DEFDB) $@.gz
-	$(GZTHERM) -n $@.gz
-
-
-# Debug target: just catenate stuff to an HTML file:
-$(PROD_NAME).debug.html: $(DEBUGSRC) $(PROD_SRC_PATH)/$(PROD_NAME)_song.js $(PROD_SRC_PATH)/$(PROD_NAME).js lib/main.js
-	echo "<html><head /><body><script>" > $@
-	echo "(function (){" >> $@
-	cat $^ >> $@
-	echo "})();" >> $@
-	echo "</script></body></html>" >> $@
+# (Debug, compo, and entry targets to be built per-production;
+# removed from this Makefile. Use "make draft" for quick try-outs of lib)
 
 #FIXME: Experimental at Instanssi 2019.. not used yet.
 # Minify shaders:
@@ -113,5 +86,5 @@ lmad1_workshop_Instanssi2023.zip:
 
 # Quick'n'dirty
 
-publish: lmad1_workshop_Instanssi2020.zip
+publish: lmad1_workshop_Instanssi2023.zip
 	scp $< nieminen@halava.cc.jyu.fi:~/html/
