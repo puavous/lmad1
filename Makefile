@@ -34,7 +34,7 @@ GZTHERM=/home/nieminen/files/hacking/gzthermal_04c/gzthermal
 
 ## Even more optional (for library development and documentation)
 SHMIN=mono external/shader_minifier.exe
-JSDOC=/home/nieminen/files/hacking/jsdoc/jsdoc.js
+JSDOC=jsdoc
 
 
 # Compo entry package:
@@ -85,8 +85,12 @@ lib/minified_shaders.js: $(SHADER_JS_NAMES)
 
 # Auto-generate documentation.. I'm totally newbie to JS documentation, so do what I can...
 # imitate javadoc and sorts, using jsdoc.js - something that Google showed me..
+# Currently trying with jsdoc-toolkit of the WSL Ubuntu ..
 documentation: $(DEBUGSRC)
-	$(JSDOC) -d ./documentation/ -c tools/jsdoc_conf.json -r README.md lib/
+	$(JSDOC) -d=./documentation/ lib/
+
+# I used to use some jsdoc.js earlier that had a little bit different options... 
+#       $(JSDOC) -d ./documentation/ -c tools/jsdoc_conf.json -r README.md lib/
 
 clean:
 	-rm *~ tmp.* *.closured.js
