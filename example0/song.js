@@ -22,6 +22,7 @@
           0, // ENV_ATTACK
           24, // ENV_SUSTAIN
           15, // ENV_RELEASE
+          0, // ENV_EXP_DECAY
           0, // ARP_CHORD
           0, // ARP_SPEED
           0, // LFO_WAVEFORM
@@ -71,6 +72,7 @@
           0, // ENV_ATTACK
           24, // ENV_SUSTAIN
           17, // ENV_RELEASE
+          0, // ENV_EXP_DECAY
           0, // ARP_CHORD
           0, // ARP_SPEED
           0, // LFO_WAVEFORM
@@ -100,16 +102,17 @@
           0, // OSC1_WAVEFORM
           255, // OSC1_VOL
           116, // OSC1_SEMI
-          1, // OSC1_XENV
+          64, // OSC1_XENV
           0, // OSC2_WAVEFORM
           255, // OSC2_VOL
           116, // OSC2_SEMI
           0, // OSC2_DETUNE
-          1, // OSC2_XENV
+          64, // OSC2_XENV
           0, // NOISE_VOL
           4, // ENV_ATTACK
           6, // ENV_SUSTAIN
           35, // ENV_RELEASE
+          0, // ENV_EXP_DECAY
           0, // ARP_CHORD
           0, // ARP_SPEED
           0, // LFO_WAVEFORM
@@ -149,6 +152,7 @@
           4, // ENV_ATTACK
           10, // ENV_SUSTAIN
           34, // ENV_RELEASE
+          0, // ENV_EXP_DECAY
           0, // ARP_CHORD
           0, // ARP_SPEED
           0, // LFO_WAVEFORM

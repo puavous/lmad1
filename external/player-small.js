@@ -25,6 +25,15 @@
 
 "use strict";
 
+// Some general notes and recommendations:
+//  * This code uses modern ECMAScript features, such as ** instead of
+//    Math.pow(). You may have to modify the code to make it work on older
+//    browsers.
+//  * If you're not using all the functionality (e.g. not all oscillator types,
+//    or certain effects), you can reduce the size of the player routine even
+//    further by deleting the code.
+
+
 var CPlayer = function() {
 
     //--------------------------------------------------------------------------
@@ -52,23 +61,24 @@ var CPlayer = function() {
 
     var getnotefreq = function (n) {
         // 174.61.. / 44100 = 0.003959503758 (F3)
-        return 0.003959503758 * Math.pow(2, (n - 128) / 12);
+        return 0.003959503758 * (2 ** ((n - 128) / 12));
     };
 
     var createNote = function (instr, n, rowLen) {
         var osc1 = mOscillators[instr.i[0]],
             o1vol = instr.i[1],
-            o1xenv = instr.i[3],
+            o1xenv = instr.i[3]/32,
             osc2 = mOscillators[instr.i[4]],
             o2vol = instr.i[5],
-            o2xenv = instr.i[8],
+            o2xenv = instr.i[8]/32,
             noiseVol = instr.i[9],
             attack = instr.i[10] * instr.i[10] * 4,
             sustain = instr.i[11] * instr.i[11] * 4,
             release = instr.i[12] * instr.i[12] * 4,
             releaseInv = 1 / release,
-            arp = instr.i[13],
-            arpInterval = rowLen * Math.pow(2, 2 - instr.i[14]);
+            expDecay = -instr.i[13]/16,
+            arp = instr.i[14],
+            arpInterval = rowLen * (2 **(2 - instr.i[15]));
 
         var noteBuf = new Int32Array(attack + sustain + release);
 
@@ -95,23 +105,16 @@ var CPlayer = function() {
             if (j < attack) {
                 e = j / attack;
             } else if (j >= attack + sustain) {
-                e -= (j - attack - sustain) * releaseInv;
+                e = (j - attack - sustain) * releaseInv;
+                e = (1 - e) * (3 ** (expDecay * e));
             }
 
             // Oscillator 1
-            t = o1t;
-            if (o1xenv) {
-                t *= e * e;
-            }
-            c1 += t;
+            c1 += o1t * e ** o1xenv;
             rsample = osc1(c1) * o1vol;
 
             // Oscillator 2
-            t = o2t;
-            if (o2xenv) {
-                t *= e * e;
-            }
-            c2 += t;
+            c2 += o2t * e ** o2xenv;
             rsample += osc2(c2) * o2vol;
 
             // Noise oscillator
@@ -198,25 +201,25 @@ var CPlayer = function() {
                     instr.i[cmdNo - 1] = instr.c[cp - 1].f[row + patternLen] || 0;
 
                     // Clear the note cache since the instrument has changed.
-                    if (cmdNo < 16) {
+                    if (cmdNo < 17) {
                         noteCache = [];
                     }
                 }
 
                 // Put performance critical instrument properties in local variables
-                var oscLFO = mOscillators[instr.i[15]],
-                    lfoAmt = instr.i[16] / 512,
-                    lfoFreq = Math.pow(2, instr.i[17] - 9) / rowLen,
-                    fxLFO = instr.i[18],
-                    fxFilter = instr.i[19],
-                    fxFreq = instr.i[20] * 43.23529 * 3.141592 / 44100,
-                    q = 1 - instr.i[21] / 255,
-                    dist = instr.i[22] * 1e-5,
-                    drive = instr.i[23] / 32,
-                    panAmt = instr.i[24] / 512,
-                    panFreq = 6.283184 * Math.pow(2, instr.i[25] - 9) / rowLen,
-                    dlyAmt = instr.i[26] / 255,
-                    dly = instr.i[27] * rowLen & ~1;  // Must be an even number
+                var oscLFO = mOscillators[instr.i[16]],
+                    lfoAmt = instr.i[17] / 512,
+                    lfoFreq = (2 ** (instr.i[18] - 9)) / rowLen,
+                    fxLFO = instr.i[19],
+                    fxFilter = instr.i[20],
+                    fxFreq = instr.i[21] * 43.23529 * 3.141592 / 44100,
+                    q = 1 - instr.i[22] / 255,
+                    dist = instr.i[23] * 1e-5,
+                    drive = instr.i[24] / 32,
+                    panAmt = instr.i[25] / 512,
+                    panFreq = 6.283184 * (2 ** (instr.i[26] - 9)) / rowLen,
+                    dlyAmt = instr.i[27] / 255,
+                    dly = instr.i[28] * rowLen & ~1;  // Must be an even number
 
                 // Calculate start sample number for this row in the pattern
                 rowStartSample = (p * patternLen + row) * rowLen;
@@ -302,6 +305,18 @@ var CPlayer = function() {
         return mCurrentCol / mSong.numChannels;
     };
 
+    // Create a AudioBuffer from the generated audio data
+    this.createAudioBuffer = function(context) {
+        var buffer = context.createBuffer(2, mNumWords / 2, 44100);
+        for (var i = 0; i < 2; i ++) {
+            var data = buffer.getChannelData(i);
+            for (var j = i; j < mNumWords; j += 2) {
+                data[j >> 1] = mMixBuf[j] / 65536;
+            }
+        }
+        return buffer;
+    };
+    
     // Create a WAVE formatted Uint8Array from the generated audio data
     this.createWave = function() {
         // Create WAVE header
@@ -349,4 +364,3 @@ var CPlayer = function() {
     };
 
 };
-
