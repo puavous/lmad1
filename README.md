@@ -61,11 +61,11 @@ the demoparty to also **independent programming** between the guided hours
 of the workshop. (Some 4 hours of guidance will be provided each day on
 Thursday, Friday, and Saturday of the Instanssi 2023 party.)
 
-## Tools and equipment for participants
+## Tools and equipment needed to participate
 
 What is needed in the workshop:
 
-- Laptop with current Linux, Mac or Windows.
+- Laptop with current Linux, Mac or Windows is required.
 
 - Headphones will help with creating music without distracting others.
 
