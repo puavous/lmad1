@@ -61,6 +61,24 @@ the demoparty to also **independent programming** between the guided hours
 of the workshop. (Some 4 hours of guidance will be provided each day on
 Thursday, Friday, and Saturday of the Instanssi 2023 party.)
 
+## Tools and equipment for participants
+
+What is needed in the workshop:
+
+- Laptop with current Linux, Mac or Windows.
+
+- Headphones will help with creating music without distracting others.
+
+- Some software will be needed and installed in the first session:
+
+  + GNU software development tools (Linux, Windows Subsystem for Linux, or GNU tools for Mac)
+
+  + Decent code editor such as VSCode
+
+  + A browser that can preview the obfuscated Javascript executable. Tested recently with Chrome Version 110.0.5481.105 (Official Build) (64-bit)
+
+  + Starter package with a barebones example will be made available to participants on-site as a downloadable ZIP file. **No need at all** to clone or fork this git repository in order to participate! The starter package will contain a snapshot of everything.
+
 ## Example of workshop schedule in a 4-day demo party
 
 The following example schedule assumes the compo deadline to be 6pm on Saturday
@@ -130,5 +148,5 @@ As of yet, there are quite a few undocumented nuts and bolts around,
 and it is probably very difficult to go about using this without
 face-to-face guidance. You have been warned...
 
-In a workshop such as those held in Instanssi 2018-2020, there is enough time to
+In a workshop such as those held in Instanssi 2018-2023, there is enough time to
 sort out any technical issues together before the compo deadlines.
