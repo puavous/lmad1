@@ -356,11 +356,20 @@ var CPlayer = function() {
         return d;
     };
 
+    // -----------------------------
+    // ADDITIONS needed for the lmad1 workshop. I hope this is a clear indication
+    // of what has been changed in this derivative version..
+    
     // Copy data to output buffer (added by nieminen 2019-11-30)
+    // Hmm... I'm making it mono, sorry.. will make a stereo option at some
+    // later workshop instance, I promise...
     this.cpy = function(iframe, nframe, outbuf){
 	    for (var i = 0; i<nframe; i++){
  	        outbuf[i] = mMixBuf[2*iframe+2*i] / 32768.0;
  	    }
     };
+    // Return song length in samples (only used for debug mode seek..)
+    this.ns = function(){return mMixBuf.length/2;} //DEBUG
+    // -----------------------------
 
 };
