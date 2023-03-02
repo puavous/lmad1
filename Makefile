@@ -33,7 +33,7 @@ GZTHERM=/home/nieminen/files/hacking/gzthermal_04c/gzthermal
 #GZTHERM=echo "You may optionally download the gzthermal program and use it here with args:"
 
 ## Even more optional (for library development and documentation)
-SHMIN=mono /home/nieminen/files/hacking/shader_minifier/shader_minifier.exe
+SHMIN=mono external/shader_minifier.exe
 JSDOC=/home/nieminen/files/hacking/jsdoc/jsdoc.js
 
 
@@ -103,9 +103,9 @@ veryclean: cleaner
 
 # The workshop starter package
 
-lmad1_workshop_Instanssi2020.zip:
-	-rm -r lmad1_workshop_Instanssi2020
-	sh tools/create_starter_pack.sh Instanssi2020
+lmad1_workshop_Instanssi2023.zip:
+	-rm -r lmad1_workshop_Instanssi2023
+	bash tools/create_starter_pack.sh Instanssi2023
 
 # Quick'n'dirty
 
