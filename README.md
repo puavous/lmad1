@@ -132,7 +132,7 @@ it all depends on the time I can spare. On the current TODO-list would be the
 following, in priority order:
 
 1. Make it easier and faster to install tools and start
-   modifying the example entry.
+   modifying the example entry. (Small things to be fixed in next version: Small installation guide for tools. Simplify info file customization. Add some guideline comments to the starter example code.)
 
 2. Improve documentation to make it easier to work between the guided
    workshop hours, or use this even for self-study (in the far, far, far
