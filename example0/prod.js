@@ -50,8 +50,8 @@ var songBeatsPerMinute = 116;
 var objTile, objBackground, objBall;
 
 // FIXME: Find a proper place for these:
-clearColor=[0,0,0,0];
-defaultLightDirection=[1,1,1,0];
+var clearColor=[0,0,0,1];
+var defaultLightDirection=[1,1,1,0];
 
 // --------------------------------------------------------------------------------
 
@@ -170,7 +170,7 @@ function buildSceneAtTime(t){
                               {f:[translate_wi(0,-3,0),scaleXYZ_wi(2,2,2)],
                                o:[new Material(cpohja),objTile],
                                c:[]},
-/*
+
                               {f:[translate_wi(0,-3,0),scaleXYZ_wi(30,.1,30)],
                                o:[new Material(cpohja),objTile],
                                c:[]},
@@ -181,7 +181,7 @@ function buildSceneAtTime(t){
                                o:[],
                                c:[tausta]
                               },
-*/
+
                               {f:[translate_wi(0,3,0), rotY_wi(t*.16), translate_wi(0,0,20-10*Math.sin(t*.01)), rotX_wi(.2)],
                                o:[],
                                c:[],
