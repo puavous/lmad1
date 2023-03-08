@@ -92,7 +92,10 @@ if USE_PNGOUT
 
                 # HACKING:
                 f2.close
-                system("zopflipng", "--iterations=200", "--splitting=3",f.path, f2.path)
+                retv = system("zopflipng", "-y", "--iterations=200", "--splitting=3",f.path, f2.path)
+		if retv == nil
+			puts "Command zopflipng not executed. Zopfli not installed?"
+		end
 
 		# read file back and extract the IDAT chunk
 		f2.open
