@@ -1,9 +1,5 @@
 # lmad1: "Let's Make a Demo 1.3" workshop base code
 
-It is now official: There will be an instance of this workshop at Instanssi
-2023, March 2-5! I'll try to find some spare time before that to make sure
-everything still works as fine as it did already back in 2020.
-
 This is a twisted and obscure piece of code, yes. It was my first
 attempt at creating a JavaScript library (of any kind...) with the
 intention of it being used in the production of very small
@@ -13,11 +9,14 @@ I am trying to make it very simple and easy for total beginners to
 *use* this library to make some simple and creative 3D graphics and
 participate in a 4k intro competition with their own entries.
 
-This is a work-in-progress that surfaced in March 2019, for the second
-time, in the beginner-friendly demoparty called Instanssi held in
-Jyväskylä, Finland. It was then used in Instanssi 2020 and after some COVID-19 hassle, again in Instanssi 2023. More information will be given, when available, at https://instanssi.org/
+This is a work-in-progress that surfaced in March 2019, for the second time, in
+the beginner-friendly demoparty called Instanssi held in Jyväskylä, Finland. It
+was then used in Instanssi 2020 and after some COVID-19 hassle, again in
+Instanssi 2023. It is likely that there will be Instanssi in 2024 with an
+instance of this workshop, too. More information will be given, when available,
+at https://instanssi.org/
 
-So, Instanssi 2018, 2019, and 2020 party programs contained a workshop called
+So, Instanssi 2018, 2019, 2020, and 2023 party programs contained a workshop called
 "Let's Make a Demo". This is the current instantiation of the "Version 1 series"
 customized for Instanssi. Even though we've had much fun also with other demo
 tools in other workshops in other events, this "Version 1 series" continues
@@ -126,23 +125,29 @@ productions in Instanssi 2018 compos, most of them 4k intros. After some hours
 of free time during the following year, I tried to make this much more
 beginner-friendly, in the spirit of the beginner-friendly event that Instanssi
 is. In Instanssi 2019, "version 1.1" was already quite workable with guidance.
-In Instanssi 2020, "version 1.2" was pretty smooth to carry out. There might be
-some improvements again before Instanssi 2023. I better promise nothing, though;
-it all depends on the time I can spare. On the current TODO-list would be the
-following, in priority order:
+In Instanssi 2020, "version 1.2" was pretty smooth to carry out. Instanssi
+2023 had a successful "version 1.3" with 6 intros from the workshop.
+
+There might be some improvements again before a next time. I better promise
+nothing, though; it all depends on the time I can spare. Ok, ok - I promise that
+there won't be a hardwired white fog in the default shading model next time...
+Other than that, on the current TODO-list would be the following, in priority
+order:
 
 1. Make it easier and faster to install tools and start
-   modifying the example entry. (Small things to be fixed in next version: Small installation guide for tools. Simplify info file customization. Add some guideline comments to the starter example code.)
+   modifying the example entry. (Was very easy at Instanssi 2023; lots to download, so starting is bandwidth-heavy. Only a few small things need to be fixed in next version: Small installation guide for tools. Simplify info file customization; it is now a nuisance. Add some guiding "do this / that here" type of comments to the starter example code. Simplify the example (snowman already quite a load to understand). Note-to-self: Pick up last year's own entry as a starter example for the following year? )
 
 2. Improve documentation to make it easier to work between the guided
    workshop hours, or use this even for self-study (in the far, far, far
    future maybe).
 
-3. Make material parameters more intuitive
+3. Gradually move towards WebGL2 features.
 
-4. Make it easier to work with different shaders and light sources
+4. Make material parameters more intuitive
 
-5. New features
+5. Make it easier to work with different shaders and light sources
+
+6. New features
 
 As of yet, there are quite a few undocumented nuts and bolts around,
 and it is probably very difficult to go about using this without
