@@ -1,4 +1,15 @@
-# lmad1: "Let's Make a Demo 1.3" workshop base code
+# lmad1: "Let's Make a Demo 1.4" workshop base code
+
+**Announcement for 2024:** The "Let's Make a Demo" workshop takes place as
+part of the Instanssi 2024 party program! I'm celebrating the fact
+that my employer, the Faculty of Information Technology of the University
+of Jyväskylä is sponsoring the Instanssi 2024 event and this year's
+instance of this workshop. It is also the best place in the world to study,
+teach, and do research on cool stuff. Be prepared to hear me recite these facts
+repeatedly throughout the event - it has been paid for. Yet, to clarify,
+I'm buing a support-class ticket and T-shirt for myself and doing the
+workshop and all related advertising of my employer *pro bono* on my
+spare time.
 
 This is a twisted and obscure piece of code, yes. It was my first
 attempt at creating a JavaScript library (of any kind...) with the
@@ -12,9 +23,9 @@ participate in a 4k intro competition with their own entries.
 This is a work-in-progress that surfaced in March 2019, for the second time, in
 the beginner-friendly demoparty called Instanssi held in Jyväskylä, Finland. It
 was then used in Instanssi 2020 and after some COVID-19 hassle, again in
-Instanssi 2023. It is likely that there will be Instanssi in 2024 with an
-instance of this workshop, too. More information will be given, when available,
-at https://instanssi.org/
+Instanssi 2023. The workshop has been announced for Instanssi 2024, too!
+More information and detailed schedules are being updated at
+https://instanssi.org/
 
 So, Instanssi 2018, 2019, 2020, and 2023 party programs contained a workshop called
 "Let's Make a Demo". This is the current instantiation of the "Version 1 series"
@@ -45,8 +56,8 @@ demo.
 The entries will be made from scratch, at the party place, with guidance. The
 target audience is first-time demo programmers. "Seasoned veterans" are most
 welcome to hang around at the workshop area, but I hope they'll mostly help in
-guiding the newcomers, having done their homework (i.e., their own compo
-entries) mostly before the party starts.
+guiding the newcomers, having done their own compo entries mostly before the
+party starts.
 
 Previous experience in computer graphics is not required of the
 participants. Programming experience would help, but is not strictly
@@ -55,10 +66,10 @@ and **willingness to work hard towards that goal** are most necessary,
 and also sufficient.
 
 In order to actually make it to the competition before deadline, it is
-absolutely necessary to allocate **dozens of hours** of time during
+**absolutely necessary** to allocate **dozens of hours** of time during
 the demoparty to also **independent programming** between the guided hours
 of the workshop. (Some 4 hours of guidance will be provided each day on
-Thursday, Friday, and Saturday of the Instanssi 2023 party.)
+Thursday, Friday, and Saturday of the Instanssi 2024 party.)
 
 ## Tools and equipment needed to participate
 
@@ -90,8 +101,8 @@ the sessions - otherwise there is little chance of finishing in time.
 ```
     Thursday
       18:00  (Assume the party opens for visitors; allow some settling time)
-      19:30  Introduction session in main hall: live-coding with starter package
-      20:00  Guided workshop session:
+      19:00  Introduction session in main hall: live-coding with starter package
+      20:00  Guided workshop session 1/3:
              * meet the people; launch a channel in some instant message sys.
              * install tools and make sure they work on everybody's laptop
              * make sure everybody knows how to modify the starter codes and
@@ -101,8 +112,9 @@ the sessions - otherwise there is little chance of finishing in time.
       00:00- Independent working
 
     Friday
-      14:00  Guided workshop session:
-             * attend to problems encountered in independent work; discuss details
+      14:00  Guided workshop session 2/3:
+             * attend to problems encountered in independent work; discuss
+               details
              * clarify the creative concepts and re-work them according to
                schedule
              * assess the size limits, decide on intro/demo compo for each entry
@@ -111,14 +123,14 @@ the sessions - otherwise there is little chance of finishing in time.
       18:00- Independent working
 
    Saturday
-     14:00  Guided workshop session:
+     14:00  Guided workshop session 3/3:
             * finalize
             * make sure entries are in the compo system
      18:00  Deadline
      18:00- Enjoy compos and everyone's own entries on screen.
 ```
 
-## Current status as of 1.3
+## Current status as of 1.4
 
 "Version 1.0" of this library was successfully used to produce some 4
 productions in Instanssi 2018 compos, most of them 4k intros. After some hours
@@ -126,12 +138,14 @@ of free time during the following year, I tried to make this much more
 beginner-friendly, in the spirit of the beginner-friendly event that Instanssi
 is. In Instanssi 2019, "version 1.1" was already quite workable with guidance.
 In Instanssi 2020, "version 1.2" was pretty smooth to carry out. Instanssi
-2023 had a successful "version 1.3" with 6 intros from the workshop.
+2023 had a successful "version 1.3" with 6 intros from the workshop. I don't
+find myself under pressure to do more than tiny polishing towards
+"version 1.4". As much as I would like to impress with a new feature every
+yearj, the available spare time remains very limited.
 
-There might be some improvements again before a next time. I better promise
-nothing, though; it all depends on the time I can spare. Ok, ok - I promise that
-there won't be a hardwired white fog in the default shading model next time...
-Other than that, on the current TODO-list would be the following, in priority
+There might always be some improvements. I better promise
+nothing, though; it all depends on the time I can spare.
+On the current TODO-list would be the following, in priority
 order:
 
 1. Make it easier and faster to install tools and start
@@ -153,5 +167,5 @@ As of yet, there are quite a few undocumented nuts and bolts around,
 and it is probably very difficult to go about using this without
 face-to-face guidance. You have been warned...
 
-In a workshop such as those held in Instanssi 2018-2023, there is enough time to
+In a workshop such as those held in Instanssi 2018-2024, there is enough time to
 sort out any technical issues together before the compo deadlines.
