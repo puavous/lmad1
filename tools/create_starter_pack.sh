@@ -68,7 +68,7 @@ fi
 if [[ ! -e external/shader_minifier.exe ]]
 then
     # Github didn't like default curl so use wget here:
-    wget -O - https://github.com/laurentlb/Shader_Minifier/releases/download/1.3.4/shader_minifier.exe > external/shader_minifier.exe
+    wget -O - https://github.com/laurentlb/Shader_Minifier/releases/download/1.3.6/shader_minifier.exe > external/shader_minifier.exe
 fi
 
 
