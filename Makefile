@@ -43,11 +43,12 @@ SHADER_JS_NAMES=test_frag.js test_vert.js noisy_frag.js noisz_frag.js
 		--preserve-externals -o $@ $<
 
 lib/minified_shaders.js: $(SHADER_JS_NAMES)
-	cat  $(SHADER_JS_NAMES) > $@
+	printf '/** @fileOverview Automatically minified shaders. */' > $@
+	cat  $(SHADER_JS_NAMES) >> $@
 
 # Auto-generate documentation.. I'm totally newbie to JS documentation, so do what I can...
 # imitate javadoc and sorts, using jsdoc.js - something that Google showed me..
-# Currently trying with jsdoc-toolkit of the WSL Ubuntu ..
+# Currently trying with jsdoc-toolkit of the WSL Ubuntu .. (version 2.4)
 COMMONSRC=lib/library.js lib/shaders_simple.js lib/minified_shaders.js external/player-small.js
 documentation: $(COMMONSRC)
 	$(JSDOC) -d=./documentation/ lib/
