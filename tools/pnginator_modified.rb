@@ -49,27 +49,9 @@ else
 	html = "<canvas id=c><img onload=for(w=c.width=#{width},a=c.getContext('2d'),a.drawImage(this,p=0,0),e='',d=a.getImageData(0,0,w,#{height}).data;t=d[p+=4];)e+=String.fromCharCode(t);(1,eval)(e) src=#>"
 end
 
-# hmm.. Chromium CORS complains. crossOrigin=Anonymous changes complaint..
-
-
 # prepend each scanline with 0x00 to indicate 'no filtering', then concat into one string
 image_data = scanlines.collect{|line| "\x00" + line}.join
 idat_chunk = Zlib::Deflate.deflate(image_data, 9) # 9 = maximum compression
-
-# My own hack (nieminen 2017-03-20):
-# Something different in the compression format.. won'ẗ work this way:
-#File.write('img_orig', image_data)
-#File.write('idat_orig', idat_chunk)
-#require('open3')
-#f = Tempfile.open(['hmm_tmp', '.dat'])
-#f.write(image_data)
-#f.flush
-#idat_chunk, err, st = Open3.capture3('zopfli', '--zlib', '-c', f.path)
-##system('ls', '-lat', f.path)
-##system('zopfli', f.path)
-#f.close
-#File.write('idat_zopflied', idat_chunk)
-
 
 def png_chunk(signature, data)
 	[data.length, signature, data, Zlib::crc32(signature + data)].pack("NA4A*N")
