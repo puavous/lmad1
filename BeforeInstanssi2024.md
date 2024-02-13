@@ -3,7 +3,7 @@
 Most participants are Finns, but they'll do fine with English instructions, I'm
 sure. We're inclusive, and gladly accept international participants, of course.
 
-## What you absolutely need
+## What you do not need
 
 What you do **not need** to do:
 
@@ -11,8 +11,15 @@ What you do **not need** to do:
   package" will be provided at the event. Using this development version at the
   event would be counter-productive.
 
-- You don't need to take a preparatory programming course or worry about
-  programming skills. We'll learn as we do at the event.
+- You don't need to take a preparatory programming course or worry about knowing
+  how to program or do graphics. We'll learn as we do stuff at the event.
+
+- You don't have to practice with the library... Perhaps better not to. I might
+  have a couple of hours time right before the workshop which could revamp
+  anything or everything in the library - for the better, of course, but it
+  might confuse you if you had done a lot of work on the current one.
+
+## What you absolutely need
 
 What you **absolutely need**:
 
@@ -23,6 +30,10 @@ What you **absolutely need**:
 - Your laptop needs free system space for tool installations even if you don't
   do the installations beforehand. It is not fun to spend the workshop time just
   figuring out what to delete to make space for tools.
+
+- Headphones (any kind will do). There will be many participants previewing
+  their demos each with their own audio track - no, we don't want to hear them
+  all at once from loudspeakers at the workshop area!
 
 ## What would really help
 
