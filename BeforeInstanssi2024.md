@@ -31,9 +31,9 @@ What you **absolutely need**:
   do the installations beforehand. It is not fun to spend the workshop time just
   figuring out what to delete to make space for tools.
 
-- Headphones (any kind will do). There will be many participants previewing
-  their demos each with their own audio track - no, we don't want to hear them
-  all at once from loudspeakers at the workshop area!
+- You need headphones (any kind will do). There will be many participants
+  previewing their demos each with their own audio track - no, we don't want to
+  hear them all at once from loudspeakers at the workshop area!
 
 ## What would really help
 
@@ -94,20 +94,20 @@ What you **can do** to make things go even smoother:
   participate in the 4k competition category, there is a hard trade-off between
   graphics content and audio content. They must both suffer to make an entry in
   4k. The song doesn't have to be very long or sophisticated - we're here to
-  have fun. Just press some of the white keys in sequance, it's fine...
+  have fun. Just press some of the white keys in sequence, it's fine...
 
   TODO (if I have time): Link to some tutorial about SoundBox.. it needs a few
   pointers to get a newbie tracking successfully without frustration..
 
-- Check out some entries that have been created at the workshop earlier, so
-  you'll know what to expect, more or less. You may contrast these to high-end
-  4k intros by experienced programmers using more elaborate tools than my simple
-  library. We can't suddenly become pros at a new thing. This workshop is for
-  your very first step towards demo programming, so you'll start with simple
-  things. Crawl before you walk or run, so to speak... That said, you are
-  allowed to do more elaborate stuff at the workshop and possibly get help for
-  what you try to accomplish -- but always with lesser priority than
-  first-timers using the lmad1 library!
+- Check out earlier entries that have been created at the workshop, so you'll
+  know what to expect, more or less. You may contrast these to high-end 4k
+  intros by experienced programmers using more elaborate tools than my simple
+  library (and mad skills). We can't suddenly become pros at a new thing. This
+  workshop is for your very first step towards demo programming, so you'll start
+  with simple things that you can handle. Crawl before you walk or run, so to
+  speak... That said, you are allowed to do more elaborate stuff at the workshop
+  and possibly get help for what you try to accomplish -- but always with lesser
+  priority than first-timers using the lmad1 library!
 
   TODO (if I have time): Direct links to videos of some earlier
   lmad1-productions in Instanssi streams..
