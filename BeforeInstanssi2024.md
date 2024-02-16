@@ -128,9 +128,12 @@ What you **can do** to make things go even smoother:
   4k. The song doesn't have to be very long or sophisticated - we're here to
   have fun. Just press some of the white keys in sequence, it's fine...
 
-  **TODO (if I have time):** Link to some tutorial about SoundBox.. I think
-  it needs a few pointers to get a newbie tracking successfully without
-  frustration..
+  **Read the help page** of SoundBox: https://sb.bitsnbites.eu/help.html 
+
+  **TODO (if I have time):** A small video tutorial about making the
+  soundtrack.. I think showing some things in practice would help a newbie get
+  tracking more comfortably and to avoid some common problems
+  that usually appear, based on workshop experience.. 
 
 - **Check out earlier productions** that have been created at the workshop, so
   you'll know what to expect, more or less. You may contrast these to high-end
