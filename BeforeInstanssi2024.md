@@ -63,7 +63,10 @@ What you **should do** if you have the time:
     figure it out, no worries.
 
   + On all systems (WSL, Linux, Mac) you need: GNU Software development tools
-    (at least GNU make, bash, sed), Java run-time environment, ruby
+    (at least GNU make, bash, sed), Java run-time environment, ruby interpreter
+    
+  + You need also some **proper** text editor for programming (e.g., VS Code,
+    Emacs, Vim, Sublime text, Atom, ...).
 
   + Would be helpful: zopfli
 
