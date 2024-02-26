@@ -1,0 +1,2241 @@
+0:00:01.000,0:00:03.000
+(Translated to English from Finnish Rally English)
+(video link: https://www.youtube.com/watch?v=JnJ5bUT6s8Q)
+
+0:00:04.012,0:00:06.018
+Hello
+
+0:00:06.018,0:00:12.102
+Welcome. In this video I'll give you some tips
+
+0:00:12.102,0:00:15.947
+about how you could create the soundtrack
+
+0:00:15.947,0:00:18.956
+for your very first demoscene intro
+
+0:00:18.956,0:00:23.135
+using the SoundBox software synthesizer tracker
+
+0:00:23.135,0:00:26.110
+That is quite a specific topic
+
+0:00:26.110,0:00:30.088
+so I suppose you've had a very good reason to find it
+
+0:00:30.088,0:00:34.334
+and be watching now ...
+
+0:00:35.838,0:00:39.683
+My name is Paavo Nieminen
+
+0:00:39.683,0:00:42.758
+Here you see some nicknames or 'handles'
+
+0:00:42.758,0:00:44.998
+("qma" & "The Old Dude")
+
+0:00:44.998,0:00:48.007
+that I've used over the years
+
+0:00:48.007,0:00:51.450
+when producing my own productions to 
+
+0:00:51.450,0:00:54.560
+demoscene intro competitions. They are
+
+0:00:54.560,0:00:58.571
+nothing spectacular. You can easily make 
+
+0:00:58.571,0:01:02.182
+a much nicer demo or intro than I have ever done.
+
+0:01:03.185,0:01:07.397
+In addition, I have also given workshops
+
+0:01:07.397,0:01:13.812
+about how people can do their first demos.
+
+0:01:15.788,0:01:24.346
+In this video, I try to gather some of the learnings
+
+0:01:24.346,0:01:30.431
+that I think will make it smoother for you
+
+0:01:30.431,0:01:36.300
+to make your first intro.
+
+0:01:37.284,0:01:40.622
+One of the things is to create a soundtrack
+
+0:01:40.622,0:01:46.277
+perhaps even before going to a workshop or hackathon
+
+0:01:46.277,0:01:51.994
+so you can focus on the programming and creative part
+
+0:01:51.994,0:01:57.008
+when you have already made your soundtrack.
+
+0:01:58.011,0:02:04.196
+We have made some choices here:
+
+0:02:04.196,0:02:08.676
+We are looking at "intro" competitions
+
+0:02:08.676,0:02:11.679
+which means very small demos,
+
+0:02:11.679,0:02:15.930
+something like 4 kilobytes maximum file size
+
+0:02:15.930,0:02:19.875
+in the competition. 
+
+0:02:19.875,0:02:24.031
+We are using JavaScript programming language
+
+0:02:24.031,0:02:28.032
+on the Web Browser platform
+
+0:02:28.032,0:02:31.475
+because in that specific scenario
+
+0:02:31.475,0:02:35.454
+SoundBox provides a quite good balance 
+
+0:02:35.454,0:02:41.170
+between different constraints.
+
+0:02:43.176,0:02:49.160
+Ok - So, we are doing a soundtrack smoothly
+
+0:02:49.160,0:02:52.102
+for your first demoscene intro of 4 kilobytes
+
+0:02:52.102,0:02:55.579
+in JavaScript, using the SoundBox tracker.
+
+0:02:56.582,0:02:59.524
+Let's get down to business...
+
+0:03:02.533,0:03:05.809
+Let's have a desktop share
+
+0:03:05.809,0:03:10.422
+and a small speaker corner in the upper right...
+
+0:03:11.425,0:03:18.780
+I have 6 points to cover.
+
+0:03:18.780,0:03:22.758
+I'll start with the most important one
+
+0:03:22.758,0:03:25.733
+which I think is this...
+
+0:03:26.703,0:03:30.180
+This might seem obvious
+
+0:03:30.180,0:03:34.191
+but unfortunately people make mistakes with this - 
+
+0:03:34.191,0:03:37.468
+I don't want you to make this mistake
+
+0:03:37.468,0:03:40.142
+so I emphasize this here:
+
+0:03:40.142,0:03:44.221
+Be safe with copyrights - 
+
+0:03:44.221,0:03:47.229
+don't use any melodies
+
+0:03:47.229,0:03:51.876
+or other stuff from songs of others!
+
+0:03:51.876,0:03:54.629
+You might feel tempted to use something
+
+0:03:54.629,0:03:57.025
+from a hit song or a TV show
+
+0:03:57.025,0:04:00.869
+It could seem like a nice idea for your intro
+
+0:04:00.869,0:04:04.847
+but don't do that - it is definitely forbidden
+
+0:04:04.847,0:04:09.829
+in competition rules of demoscene events.
+
+0:04:09.829,0:04:15.880
+Intros are streamed and archived
+
+0:04:15.880,0:04:19.992
+so they become copies of work
+
+0:04:19.992,0:04:23.541
+and you want to really respect the copyrights of others
+
+0:04:23.541,0:04:27.012
+and do only your own, new, stuff here.
+
+0:04:27.748,0:04:30.497
+I promise that it is going to be much fun
+
+0:04:30.497,0:04:35.003
+building your own melody that is not a copy
+
+0:04:35.003,0:04:40.819
+or replication of anything from anybody else
+
+0:04:40.819,0:04:49.645
+Keep this in mind, and we'll be safe.
+
+0:04:52.653,0:04:58.638
+The next point is also important:
+
+0:04:58.638,0:05:01.981
+Don't take it too seriously -  
+
+0:05:01.981,0:05:05.959
+we're here to have fun
+
+0:05:05.959,0:05:10.940
+and not to make the perfect production
+
+0:05:10.940,0:05:14.952
+on the first time ever
+
+0:05:14.952,0:05:19.283
+You don't have to be the next Mozart
+
+0:05:19.283,0:05:24.279
+you don't have to win the Eurovision song contest
+
+0:05:24.279,0:05:28.124
+It is quite possible that you're not even going
+
+0:05:28.124,0:05:33.882
+to win this first intro competition
+
+0:05:33.882,0:05:37.323
+Accepting this fact
+
+0:05:37.323,0:05:41.329
+enables us to have so much fun
+
+0:05:41.329,0:05:45.240
+in being creative and doing our own song
+
+0:05:45.240,0:05:50.288
+for the soundtrack and not judge ourselves
+
+0:05:50.288,0:05:56.774
+for its aesthetical values and "greatness"
+
+0:05:58.780,0:06:01.755
+You can be really proud 
+
+0:06:01.755,0:06:06.885
+to just make new cool-sounding stuff
+
+0:06:06.885,0:06:14.631
+and completing this first intro
+
+0:06:14.631,0:06:21.885
+and making it into the competition that you have in mind.
+
+0:06:23.886,0:06:26.393
+I hope this encourages you to
+
+0:06:26.393,0:06:29.882
+push through to the end
+
+0:06:29.882,0:06:33.314
+and accept your own production
+
+0:06:33.314,0:06:36.824
+even if it is not perfect
+
+0:06:36.824,0:06:44.346
+and you can still be so proud that you have made it!
+
+0:06:44.346,0:06:47.133
+With these two things in mind
+
+0:06:47.133,0:06:50.998
+it is safe to move on
+
+0:06:50.998,0:06:55.010
+towards composing using SoundBox.
+
+0:06:56.013,0:07:00.192
+Before we open SoundBox, I'll prepare you 
+
+0:07:00.192,0:07:05.140
+with the first point about it:
+
+0:07:07.145,0:07:10.388
+I think it is important that you
+
+0:07:10.388,0:07:14.166
+take some time and energy in the beginning
+
+0:07:14.166,0:07:19.151
+to really understand and learn what the 'tracker' structure
+
+0:07:19.151,0:07:26.368
+of a song is and how you edit that in SoundBox.
+
+0:07:28.341,0:07:32.152
+We'll see that in a minute
+
+0:07:32.152,0:07:38.637
+but I want you to focus first on this point
+
+0:07:38.637,0:07:45.992
+and the important word "understand" in there
+
+0:07:45.992,0:07:52.010
+in addition to just jumping in and having fun
+
+0:07:53.012,0:07:57.145
+I emphasize this because
+
+0:07:57.145,0:08:02.373
+in earlier workshops it has become a problem
+
+0:08:02.373,0:08:06.753
+later in the production
+
+0:08:06.753,0:08:14.709
+when changes to the song are needed
+
+0:08:14.709,0:08:20.727
+but it could have become a bit messy
+
+0:08:20.727,0:08:26.911
+because there has not been understanding
+
+0:08:26.911,0:08:30.917
+of what the song elements and parts
+
+0:08:30.917,0:08:34.901
+seen in the user interface actually mean.
+
+0:08:36.874,0:08:42.824
+Let's now open SoundBox ...
+
+0:08:47.839,0:08:49.009
+[Whispering, to let others sleep in the house:]
+
+0:08:50.012,0:08:54.024
+This is what SoundBox looks like
+
+0:08:54.024,0:08:57.032
+when you first open it.
+
+0:08:57.032,0:09:02.014
+You open it by just going to the website
+
+0:09:02.014,0:09:10.004
+https://sb.bitsnbites.eu/
+
+0:09:10.004,0:09:15.018
+Then it opens in your browser
+
+0:09:15.018,0:09:18.027
+and works in your browser.
+
+0:09:18.027,0:09:23.008
+So, it is very easy to just start using SoundBox
+
+0:09:24.011,0:09:29.026
+SoundBox greets you with a welcome text
+
+0:09:29.026,0:09:35.010
+that prompts you to open a demo song to get started
+
+0:09:35.010,0:09:39.021
+At some point,  you should do that
+
+0:09:39.021,0:09:46.008
+and explore how the demo songs are made. But here
+
+0:09:46.008,0:09:54.032
+I want to emphasize the very important link
+
+0:09:54.032,0:09:59.013
+on the welcome message: "Help"
+
+0:10:00.016,0:10:04.028
+You really should click on "Help"
+
+0:10:04.028,0:10:08.006
+SoundBox has a very good help page
+
+0:10:08.006,0:10:12.018
+that has all the details
+
+0:10:12.018,0:10:19.005
+that I'm trying not to cover in this video.
+
+0:10:19.005,0:10:24.019
+My important message here is
+
+0:10:24.019,0:10:28.031
+that you should remember to read the help
+
+0:10:28.031,0:10:35.018
+and keep it by your side while you are learning
+
+0:10:35.018,0:10:39.030
+to use SoundBox.
+
+0:10:44.011,0:10:51.031
+The example songs can be opened
+
+0:10:51.031,0:10:57.015
+using the "Open" button on the left
+
+0:10:57.015,0:11:03.033
+You can explore how they have been made.
+
+0:11:04.002,0:11:11.023
+For this video, though, I'll click on "New"
+
+0:11:11.023,0:11:21.019
+so we start with a completely blank song.
+
+0:11:23.025,0:11:29.009
+We can just click on the virtual keyboard
+
+0:11:29.009,0:11:35.026
+on the lower right corner of the user interface
+
+0:11:35.026,0:11:42.013
+and see - actually we hear - sounds [synth beeps]
+
+0:11:42.013,0:11:49.034
+You can hear the sounds when you click
+
+0:11:49.034,0:11:59.030
+and you can see notes appearing one after each other
+
+0:11:59.030,0:12:07.019
+in what the help calls the "pattern editor"
+
+0:12:07.019,0:12:09.025
+(I said "pattern view" on the video, mistakenly)
+
+0:12:11.031,0:12:15.009
+I'll show you in practice
+
+0:12:15.009,0:12:22.030
+a couple of things from the help
+
+0:12:24.002,0:12:32.026
+No details, but ideas
+
+0:12:33.029,0:12:44.027
+So, these notes that you enter form a 'pattern'
+
+0:12:44.027,0:12:50.011
+Each pattern is always numbered and 
+
+0:12:50.011,0:12:57.032
+the pattern number appears on the left, inside the 'song'.
+
+0:12:57.032,0:13:02.013
+Now we have one pattern here, numbered 0
+
+0:13:02.013,0:13:10.003
+and it contains those notes that were clicked just before.
+
+0:13:12.009,0:13:20.032
+You can always listen to the current song
+
+0:13:20.032,0:13:24.011
+by clicking the "Play" button.
+
+0:13:24.011,0:13:28.022
+It will generate a full song audio file
+
+0:13:28.022,0:13:32.034
+and start looping it over and over
+
+0:13:33.003,0:13:36.012
+And here we already have our first song 
+
+0:13:36.012,0:13:43.033
+made with SoundBox - how cool is that!
+
+0:13:43.033,0:13:46.008
+Completely original... hehe...
+
+0:13:46.008,0:13:54.031
+We can do better after getting used to editing...
+
+0:13:57.007,0:14:03.024
+Quite soon you will want to start using
+
+0:14:03.024,0:14:08.005
+the computer keyboard for editing
+
+0:14:11.014,0:14:14.023
+I will now add a keyboard camera here
+
+0:14:14.023,0:14:19.004
+so you will see what I'm doing
+
+0:14:20.007,0:14:25.022
+Now my physical computer keyboard
+
+0:14:25.022,0:14:34.015
+is laid on top of that virtual synth keyboard on video
+
+0:14:35.017,0:14:45.013
+You want to start using the keyboard to enter notes soon
+
+0:14:45.013,0:14:49.025
+(is my suggestion, because it makes it easier for you...)
+
+0:14:49.025,0:14:55.009
+The computer keys match the musical keyboard notes
+
+0:15:03.032,0:15:10.019
+You have the notes of a musical keyboard
+
+0:15:10.019,0:15:15.001
+in your computer keyboard
+
+0:15:15.001,0:15:18.009
+You have 2 octaves:
+
+0:15:18.009,0:15:22.021
+lower one starting from 'Z'-key (matching a C-note)
+
+0:15:22.021,0:15:27.002
+higher one starting from 'Q'-key (C-note +1 octave)
+
+0:15:29.008,0:15:34.023
+By pressing these keys the pattern is updated
+
+0:15:34.023,0:15:42.013
+and you can always preview the song by clicking "Play"...
+
+0:15:42.013,0:15:44.013
+[musical notes playing]
+
+0:15:44.019,0:15:47.027
+And WOW ...
+
+0:15:47.027,0:15:51.006
+even by pressing random white keys
+
+0:15:51.006,0:15:56.020
+you have created a musical atmosphere
+
+0:15:56.020,0:15:59.029
+that remains interesting for at least a while
+
+0:15:59.029,0:16:04.010
+and could be suitable for an intro maybe
+
+0:16:04.010,0:16:09.025
+Okay. We can do better - moving on ...
+
+0:16:09.025,0:16:13.003
+You can make new notes from the keyboard,
+
+0:16:13.003,0:16:16.012
+move around with the arrow keys (as shown)
+
+0:16:16.012,0:16:22.029
+and delete notes using the 'Delete'-key
+
+0:16:22.029,0:16:32.025
+You probably don't want a note in every time slot...
+
+0:16:32.025,0:16:36.003
+So far you must have observed
+
+0:16:36.003,0:16:44.027
+that time goes from top to bottom
+
+0:16:46.033,0:16:51.014
+The tempo (how fast time goes) can be changed
+
+0:16:51.014,0:16:56.028
+by entering a number in the BPM field (beats per minute)
+
+0:16:57.031,0:17:00.007
+So - this is how you edit a pattern.
+
+0:17:00.007,0:17:02.013
+Then
+
+0:17:02.013,0:17:09.033
+you make a song by repeating a sequence of patterns.
+
+0:17:10.003,0:17:13.011
+So far we have 'pattern 0'.
+
+0:17:13.011,0:17:17.023
+You can switch focus
+
+0:17:17.023,0:17:22.004
+between pattern editor and song editor by clicking.
+
+0:17:22.004,0:17:32.033
+In the song editor, you can go to an empty space
+
+0:17:32.033,0:17:37.015
+and insert a number of a pattern
+
+0:17:37.015,0:17:40.023
+You can move with the arrow keys
+
+0:17:40.023,0:17:45.005
+and lay out the numbered patterns that you make
+
+0:17:45.005,0:17:46.007
+You may have guessed...
+
+0:17:46.007,0:17:53.028
+In addition to number 0, you can have 1, 2, 3, etc.
+
+0:17:53.028,0:17:57.006
+When you insert a number that has not been used
+
+0:17:57.006,0:18:00.015
+you get a blank pattern
+
+0:18:00.015,0:18:05.030
+that you can start filling in.
+
+0:18:05.030,0:18:09.008
+Sometimes we want to copy and paste a pattern
+
+0:18:09.008,0:18:13.020
+and then modify it a little bit
+
+0:18:13.020,0:18:20.007
+From the song, you can pick a pattern to be copied.
+
+0:18:20.007,0:18:27.027
+You don't use "customary" key shortcuts to copy...
+
+0:18:27.027,0:18:35.017
+Instead, click the copy button below the pattern editor
+
+0:18:35.017,0:18:38.026
+Let's click on copy here...
+
+0:18:38.026,0:18:41.001
+this is not very easy to find
+
+0:18:41.001,0:18:50.027
+if you don't know it, or learn from the help page
+
+0:18:50.027,0:18:59.020
+First you need to select the area to be copied
+
+0:18:59.020,0:19:02.029
+then you can click on copy,
+
+0:19:02.029,0:19:05.004
+move to location where to paste
+
+0:19:05.004,0:19:09.016
+and click paste.
+
+0:19:09.016,0:19:20.015
+[silence while examining a possible misclick]
+
+0:19:20.015,0:19:24.026
+Yeah, maybe I misclicked...
+
+0:19:26.032,0:19:32.016
+Now I have made a copy of pattern 0 to pattern 1
+
+0:19:32.016,0:19:39.003
+Then I can modify pattern 1
+
+0:19:39.003,0:19:44.018
+For example by selecting all the notes
+
+0:19:44.018,0:19:52.008
+and making them go down a couple of semitones
+
+0:19:52.008,0:19:59.028
+This kind of simple tools are available to
+
+0:19:59.028,0:20:07.018
+copy, paste, and transpose (-1,+1,-12,+12) selected notes
+
+0:20:07.018,0:20:11.030
+If you want to modify more, you can enter new notes
+
+0:20:11.030,0:20:14.005
+from the keyboard.
+
+0:20:14.005,0:20:19.020
+So far it has been pretty random notes and
+
+0:20:19.020,0:20:25.004
+now I have a song consisting of 2 different patterns
+
+0:20:25.004,0:20:29.016
+numbered 0 and 1.
+
+0:20:29.016,0:20:34.031
+Let's play the song...
+
+0:20:35.033,0:20:42.020
+[random notes playing]
+
+0:20:42.020,0:20:46.032
+Well - it's not genious ...
+
+0:20:46.032,0:20:51.013
+but it sound interesting and could be useful
+
+0:20:51.013,0:20:58.034
+and this is basically how you make a song
+
+0:20:58.034,0:21:00.006
+(also with less randomness...)
+
+0:21:00.006,0:21:07.027
+Now you just need to add more instruments, perhaps
+
+0:21:07.027,0:21:10.002
+For that purpose, you need to understand
+
+0:21:10.002,0:21:17.022
+how instruments work in SoundBox.
+
+0:21:17.022,0:21:22.004
+They are called 'tracks'
+
+0:21:22.004,0:21:29.024
+and they are found as the columns of the song editor
+
+0:21:29.024,0:21:33.002
+The columns go down from the top
+
+0:21:33.002,0:21:38.017
+with pattern numbers on top of each other
+
+0:21:38.017,0:21:42.029
+Each of these columns is a different track
+
+0:21:42.029,0:21:48.013
+that can have an instrument different from the others.
+
+0:21:48.013,0:21:52.024
+You have those 16 tracks that you can see
+
+0:21:52.024,0:21:57.006
+so you can have 16 different instruments
+
+0:21:57.006,0:22:03.023
+In a small 4-kilobyte intro you will have to limit
+
+0:22:03.023,0:22:08.004
+a little bit - we'll talk about that later.
+
+0:22:08.004,0:22:12.016
+But you can have at least a few different instruments.
+
+0:22:13.019,0:22:17.031
+Here is a very important thing to understand:
+
+0:22:17.031,0:22:25.021
+The 0 and 1 (and 2, 3, ...) in the first column
+
+0:22:25.322,0:22:33.312
+are different from 0 and 1 (or 2, 3, ...) in any other track
+
+0:22:33.312,0:22:38.627
+Remember to start pattern numbers from 0 on all tracks
+
+0:22:38.627,0:22:42.639
+This is important because of the file size
+
+0:22:42.639,0:22:47.754
+that will matter with intros - we'll get back to that later
+
+0:22:47.754,0:22:54.774
+For now, it is important to understand the structure:
+
+0:22:54.774,0:23:00.858
+Columns of the left "matrix" or table are instruments
+
+0:23:00.858,0:23:06.909
+They can be different from each other.
+
+0:23:06.909,0:23:12.492
+Each instrument has a different set of patterns
+
+0:23:14.498,0:23:18.109
+Here in the example,
+
+0:23:18.109,0:23:24.327
+we now have made 'pattern 0' for the second instrument (track)
+
+0:23:24.327,0:23:28.265
+and we can enter notes in the pattern editor
+
+0:23:28.265,0:23:37.833
+Let's insert some notes and preview the song
+
+0:23:37.833,0:23:40.808
+Okay, 
+
+0:23:40.808,0:23:45.054
+now we have two different tracks, okay...
+
+0:23:46.057,0:23:52.375
+Then you want to have instruments that sound different
+
+0:23:52.375,0:24:03.107
+You do this with the synthesizer editor on the right.
+
+0:23:58.660,0:24:03.107
+You can play with the preset sounds
+
+0:24:03.107,0:24:08.088
+from the preset drop-down menu at the top
+
+0:24:08.088,0:24:12.935
+Then you can experiment how the sound changes
+
+0:24:12.935,0:24:17.315
+when you fiddle with the sound parameter sliders
+
+0:24:17.315,0:24:20.586
+If you have experience with synthesizers
+
+0:24:20.586,0:24:25.839
+you'll find a familiar two-oscillator additive synthesis
+
+0:24:25.839,0:24:32.191
+with a simple envelope
+
+0:24:32.191,0:24:39.145
+You don't have any way to sustain and release a note at will
+
+0:24:39.145,0:24:48.673
+SoundBox synth has only attack, constant sustain time, and release
+
+0:24:48.673,0:24:53.620
+You don't easily change the length of a note
+
+0:24:53.620,0:24:58.368
+Now I've selected a preset called "Base drum 1"
+
+0:24:58.368,0:25:07.528
+to the second instrument (track)
+
+0:25:07.528,0:25:11.539
+The sound is like a bass drum
+
+0:25:11.539,0:25:18.526
+We can now make a beat in 'pattern 0' of the second track
+
+0:25:18.526,0:25:23.274
+which has a bass drum -like instrument now
+
+0:25:23.274,0:25:28.393
+Let's repeat pattern 0
+
+0:25:28.393,0:25:35.175
+Patterns 1 and 2 and so on work the same way
+
+0:25:35.175,0:25:41.694
+and they are different from the same numbers in other song columns
+
+0:25:41.694,0:25:46.541
+In intros, use small, consecutive numbers
+
+0:25:46.541,0:25:49.784
+It will help you a lot
+
+0:25:49.784,0:25:54.448
+Let's preview the song...
+
+0:25:54.448,0:26:00.114
+[random notes with bass drum at 120 beats per minute]
+
+0:26:02.120,0:26:08.004
+If you change any parameters of the sound
+
+0:26:08.004,0:26:15.994
+the name will stop being the preset name
+
+0:26:15.994,0:26:22.580
+you can always go back to some preset sound
+
+0:26:22.580,0:26:27.260
+to start experimenting
+
+0:26:27.260,0:26:33.211
+Your own sounds don't have a name
+
+0:26:33.211,0:26:39.395
+Okay - that's how you structure a song.
+
+0:26:43.374,0:26:50.461
+One more thing about the instrument editor
+
+0:26:50.461,0:26:56.144
+You have the third editor view with a column
+
+0:26:56.144,0:27:02.429
+that can record changes to an instrument
+
+0:27:02.429,0:27:09.614
+For your first intro this can be a little confusing
+
+0:27:09.614,0:27:15.032
+because of reasons explained more in the help page
+
+0:27:15.032,0:27:22.546
+You might achieve great effects with it
+
+0:27:22.546,0:27:29.341
+but also confusion at some point.
+
+0:27:29.341,0:27:35.392
+So, maybe you could experiment with the third column editor later
+
+0:27:35.392,0:27:42.381
+and stick to instruments that remain the same throughout the song
+
+0:27:42.381,0:27:51.472
+So each track on the left has one instrument
+
+0:27:51.472,0:28:01.802
+and you can keep it simple by not changing them on the fly
+
+0:28:01.802,0:28:06.727
+Then you just create patterns
+
+0:28:06.727,0:28:12.534
+and repeat them in the song.
+
+0:28:13.829,0:28:15.776
+Then...
+
+0:28:15.776,0:28:20.757
+with this kind of understanding
+
+0:28:20.757,0:28:25.933
+I can safely let you do experimentation by yourself
+
+0:28:25.933,0:28:30.364
+and looking at the example songs
+
+0:28:30.364,0:28:38.409
+because then you can find this kind of structure in them
+
+0:28:38.409,0:28:45.772
+and can better understand those examples of what can be done
+
+0:28:47.334,0:28:51.079
+Of course, most importantly,
+
+0:28:51.079,0:28:57.172
+you can just start doing your own songs
+
+0:28:57.172,0:29:03.675
+pretty easily
+
+0:29:03.675,0:29:05.588
+like so...
+
+0:29:05.588,0:29:08.363
+using your keyboard
+
+0:29:08.363,0:29:17.356
+Observe: with the Tab-key you can switch between editors
+
+0:29:17.356,0:29:22.604
+Tab goes to right, shift+tab to left
+
+0:29:22.604,0:29:29.199
+and then you have the arrow keys
+
+0:29:29.199,0:29:35.174
+and then it's all under control using your keyboard.
+
+0:29:35.174,0:29:42.462
+What else about the user interface ... 
+
+0:29:42.462,0:29:49.416
+things that may have caused confusion?
+
+0:29:50.419,0:29:54.397
+[silence while thinking hard]
+
+0:29:54.397,0:29:58.810
+Nothing comes to my mind right away..
+
+0:29:59.441,0:30:07.089
+Some things to observe though...
+
+0:30:09.059,0:30:15.358
+[sound quality issues with random notes and bass drum beat]
+
+0:30:15.358,0:30:20.841
+[because of drawing red highlight on volume indicators]
+
+0:30:22.980,0:30:26.162
+I was going to say:
+
+0:30:26.162,0:30:30.638
+Observe the volume meters on top of the song editor
+
+0:30:30.638,0:30:34.538
+You don't want to go far on the red zone
+
+0:30:34.538,0:30:38.726
+because then you get out of control
+
+0:30:38.726,0:30:43.559
+with your distortion. What you can do is
+
+0:30:43.559,0:30:50.000
+you can manage the 'drive' level of your instruments
+
+0:30:50.000,0:30:54.639
+which makes them louder or softer
+
+0:30:54.639,0:30:58.985
+So you can balance your instruments
+
+0:30:58.985,0:31:03.933
+and see that the total volume doesn't go to the red zone
+
+0:31:03.933,0:31:09.783
+very much because then it gets out of control.
+
+0:31:09.783,0:31:13.679
+If you want actual "distortion" (as a wanted effect)
+
+0:31:13.679,0:31:21.551
+you should use the distortion effect (slider called 'Dist') of the instrument
+
+0:31:21.551,0:31:30.511
+but 'Drive' it less to keep the total volumes below red
+
+0:31:30.511,0:31:41.476
+That is one thing to remember while getting creative with sounds
+
+0:31:41.476,0:31:45.088
+About the user interface...
+
+0:31:45.088,0:31:57.401
+The keyboard can enter notes as shown
+
+0:31:57.401,0:32:01.640
+You have to have a pattern to enter notes
+
+0:32:01.640,0:32:06.348
+Let's put 'pattern 0' of third instrument
+
+0:32:06.348,0:32:14.606
+and pick any sound
+
+0:32:14.606,0:32:19.921
+I was going to show you
+
+0:32:19.921,0:32:42.217
+how you can use the '<' and '>' keys to change octave
+
+0:32:42.217,0:33:00.606
+The same symbols appear in the clickable octave change buttons
+
+0:33:00.606,0:33:07.593
+on each side of the virtual keyboard
+
+0:33:07.593,0:33:11.939
+It is quite simple to change octaves
+
+0:33:11.939,0:33:18.927
+lower and higher as shown and heard here
+
+0:33:18.927,0:33:31.797
+[Synth sounds from multiple octaves; keyboard tapping]
+
+0:33:31.797,0:33:34.773
+Octave down with '<' 
+
+0:33:34.773,0:33:38.684
+Octave up with '>'
+
+0:33:40.617,0:33:44.276
+Then I let you experiment ...
+
+0:33:44.276,0:33:48.480
+Some limitations:
+
+0:33:48.480,0:33:56.035
+Even though you could make Waltz kind of music
+
+0:33:56.035,0:34:06.231
+with 3 beats per bar or some other number of beats per bar
+
+0:34:06.231,0:34:11.012
+counting to 3, 5, 7 or whatever in your music
+
+0:34:11.012,0:34:15.023
+you could do that (using the 'RPP' / 'rows per pattern' selector) 
+
+0:34:15.023,0:34:24.518
+but SoundBox behaves much nicer with the default 4 beats per bar
+
+0:34:30.787,0:34:34.714
+[tonal information happening]
+
+0:34:34.714,0:34:40.000
+So... whoah... we're in musical spheres already!
+
+0:34:40.000,0:34:41.634
+Totally random...
+
+0:34:41.634,0:34:44.476
+but let's just have fun ...
+
+0:34:44.476,0:34:50.025
+I'm super proud of this production!
+
+0:34:50.025,0:34:53.001
+With these points in mind and
+
+0:34:53.001,0:34:57.514
+especially this understanding of the song structure
+
+0:34:57.514,0:35:01.557
+I'm sure that given some time you will 
+
+0:35:01.557,0:35:06.023
+actually have control over your song
+
+0:35:06.023,0:35:10.620
+and the end result doesn't have to be
+
+0:35:10.620,0:35:15.217
+the randomness that I'm creating here when
+
+0:35:15.217,0:35:21.561
+showing you things on-the-fly in half an hour
+
+0:35:21.561,0:35:24.142
+I hope you get into control 
+
+0:35:24.142,0:35:33.466
+using this understanding of the structure, learning it first.
+
+0:35:36.216,0:35:50.986
+I think it is time for a next point about intro soundtrack ...
+
+0:35:55.008,0:36:01.784
+The next point is:
+
+0:36:02.843,0:36:15.026
+Save often and keep track of versions
+
+0:36:17.164,0:36:27.226
+[sounds of learning to use streaming software]
+
+0:36:27.226,0:36:34.273
+Point number 4: Save often and keep track of versions...
+
+0:36:34.680,0:36:42.375
+Saving is very easy with SoundBox - 
+
+0:36:42.375,0:36:48.755
+It's almost too easy and perhaps 
+
+0:36:48.755,0:36:54.166
+a little bit of showing and explaining will help in the beginning
+
+0:36:54.166,0:36:59.542
+There is this "Save" button that you can click
+
+0:36:59.542,0:37:03.121
+and then it looks like this
+
+0:37:03.121,0:37:12.811
+It gives you a jumbled-looking URL to this same site
+
+0:37:12.811,0:37:15.961
+and indeed
+
+0:37:15.961,0:37:21.064
+the song data is in the end of the URL
+
+0:37:21.064,0:37:23.803
+which is very clever ...
+
+0:37:23.803,0:37:35.473
+You can just copy this address anywhere you like
+
+0:37:35.473,0:37:42.461
+My humble suggestion is to use a code text editor - 
+
+0:37:42.461,0:37:51.421
+the one that you're going to use also for programming
+
+0:37:51.421,0:37:57.274
+Here, for example, is only the system text editor
+
+0:37:57.274,0:38:02.380
+not so suitable for coding 
+
+0:38:02.380,0:38:09.473
+but just to show you the idea with a most simple tool
+
+0:38:09.473,0:38:13.233
+for saving the URL.
+
+0:38:13.233,0:38:18.392
+So there: you have your song saved now
+
+0:38:18.392,0:38:23.559
+as long as you remember to save this document
+
+0:38:23.559,0:38:30.459
+To keep the example complete, I'll save the file
+
+0:38:30.459,0:38:42.300
+and name it "versions_of_my_song.txt"
+
+0:38:42.300,0:38:52.838
+It is just text like any programming code would be text as well
+
+0:38:52.838,0:38:55.731
+Now that version is saved
+
+0:38:55.731,0:39:07.097
+At any time I can just go to my text editor
+
+0:39:07.097,0:39:25.680
+and copy the URL into the address bar of a browser
+
+0:39:25.680,0:39:34.256
+SoundBox will then open with the song data
+
+0:39:34.256,0:39:42.488
+The data of the song is now back to be edited
+
+0:39:42.488,0:39:45.944
+How nice...
+
+0:39:45.944,0:39:51.352
+Any change you make
+
+0:39:51.352,0:40:01.557
+for example add patterns 2, 3, 4 and some notes in pattern 4 ...
+
+0:40:01.557,0:40:04.717
+makes is a different version now.
+
+0:40:04.717,0:40:08.184
+Let us save again:
+
+0:40:08.184,0:40:14.404
+Just copy the URL from the "Save Song" dialog
+
+0:40:14.404,0:40:20.000
+and put it in a safe place in your editor
+
+0:40:20.000,0:40:27.350
+preferably a better editor than your system default
+
+0:40:27.350,0:40:33.092
+And then you can annotate
+
+0:40:33.092,0:40:37.625
+writing descriptions
+
+0:40:37.625,0:40:46.086
+like "this version of the song could be to long"
+
+0:40:46.086,0:40:51.011
+or whatever texts. You can manage your versions like this
+
+0:40:51.011,0:40:54.997
+It is very easy and simple
+
+0:40:54.997,0:41:00.204
+and you can finally include your song as a URL
+
+0:41:00.204,0:41:09.305
+as a comment in your intro source codes
+
+0:41:09.305,0:41:14.187
+That's nice. Now, the point was: save often
+
+0:41:14.187,0:41:18.713
+and somehow keep track of these versions
+
+0:41:18.713,0:41:31.693
+because otherwise you might accidentally do some damage
+
+0:41:31.693,0:41:39.667
+by just pressing delete too many times
+
+0:41:39.667,0:41:47.231
+or you can get lost in some ideas that end up being not good
+
+0:41:47.231,0:41:55.808
+But never mind - you can just come back to a version
+
+0:41:55.808,0:42:00.657
+that you have annotated and have the URL
+
+0:42:00.657,0:42:05.215
+Just copy the address,
+
+0:42:05.215,0:42:17.790
+put it in your browser
+
+0:42:17.790,0:42:26.803
+and you get back to your safe, good, annotated version
+
+0:42:29.553,0:42:41.693
+So, I think this is one very important thing to remember
+
+0:42:41.693,0:42:49.508
+to make your first intro soundtrack go smoothly.
+
+0:42:49.508,0:42:55.668
+You won't lose good versions because you remember to save often
+
+0:42:55.668,0:43:01.065
+and you have annotated the saved versions
+
+0:43:01.065,0:43:05.102
+It is so simple - remember to do it!
+
+0:43:07.241,0:43:14.474
+Towards the next point I think
+
+0:43:17.427,0:43:27.271
+The next point is:
+
+0:43:27.271,0:43:33.333
+Mind the file size - 
+
+0:43:33.333,0:43:40.000
+this is important especially for intro competitions
+
+0:43:40.000,0:43:46.131
+in which you have the size limitation.
+
+0:43:48.270,0:43:56.355
+Let's go back to SoundBox
+
+0:43:59.105,0:44:05.491
+In an intro, you have a hard limitation, say 4 kilobytes,
+
+0:44:05.491,0:44:08.486
+for everything - 
+
+0:44:08.486,0:44:13.702
+that includes the software synthesizer part of SoundBox
+
+0:44:13.702,0:44:16.677
+see its help page for details
+
+0:44:16.677,0:44:23.530
+Then, the song data - all the notes and patterns -
+
+0:44:23.530,0:44:27.040
+has to be there
+
+0:44:27.040,0:44:33.025
+And of course your graphics, your story -  everything
+
+0:44:33.025,0:44:37.839
+has to be in the 4 kilobytes, which is very little
+
+0:44:37.839,0:44:43.589
+So, you really have to mind the file size.
+
+0:44:44.613,0:44:54.069
+In SoundBox, there is this check box 'Display file size'
+
+0:44:54.069,0:45:00.818
+I suggest you start using it
+
+0:45:01.939,0:45:10.406
+When checked, SoundBox will keep displaying two numbers
+
+0:45:10.406,0:45:18.669
+I'm not sure how visible the small font is on video
+
+0:45:18.669,0:45:23.438
+but you can experiment with it by yourself 
+
+0:45:23.438,0:45:28.229
+while learning how to make songs
+
+0:45:28.229,0:45:32.296
+You can see two measurements:
+
+0:45:32.296,0:45:37.747
+The first number is the length of the song in JavaScript
+
+0:45:37.747,0:45:44.991
+when it is finally exported to be used in the intro program
+
+0:45:44.991,0:45:51.166
+by clicking on the 'JS/JavaScript' download button
+
+0:45:54.161,0:46:02.418
+You can view the downloaded JavaScript if you want to - 
+
+0:46:02.418,0:46:06.397
+(never mind if programming is a new thing to you, no worries...)
+
+0:46:06.430,0:46:11.485
+the download is in JavaScript programming language
+
+0:46:11.485,0:46:15.928
+It begins with some comments with instructions
+
+0:46:15.928,0:46:19.603
+that explain about programming
+
+0:46:19.603,0:46:23.025
+but this video is not about the programming part ...
+
+0:46:23.025,0:46:25.025
+Still, (even without deeper programming),
+
+0:46:25.025,0:46:34.011
+you can see the structure that ends up inside your intro:
+
+0:46:34.011,0:46:39.025
+The notes and patterns become numbers
+
+0:46:39.025,0:46:45.009
+and all of them take up some space.
+
+0:46:45.009,0:46:51.795
+The first number that is shown with 'Display file size'
+
+0:46:51.795,0:46:57.868
+is the size of that code that we just saw
+
+0:46:57.868,0:47:04.298
+as JavaScript source code.
+
+0:47:04.298,0:47:13.946
+That is not the actual number of bytes consumed in your intro
+
+0:47:13.946,0:47:21.954
+because usually some tricks are applied using automatic tools
+
+0:47:21.954,0:47:27.172
+before your production is finalized
+
+0:47:27.172,0:47:32.889
+It will be compressed using something like a ZIP-compression.
+
+0:47:32.889,0:47:41.219
+Thus, the second number ('Compressed JS') is more important
+
+0:47:41.219,0:47:46.925
+In this example so far,
+
+0:47:46.925,0:47:53.770
+the compressed size of that songs's data
+
+0:47:53.770,0:47:58.214
+ is now 302 bytes (if the font is visible...)
+
+0:47:58.214,0:48:03.234
+You can see these numbers all the time
+
+0:48:03.234,0:48:11.069
+while you compose and compare versions of your soundtrack
+
+0:48:11.962,0:48:17.233
+So, remember to click on 'Display file size'
+
+0:48:17.233,0:48:22.099
+and look at the numbers time to time.
+
+0:48:22.099,0:48:25.881
+I can't give you any maximums to aim for
+
+0:48:25.881,0:48:32.005
+It all depends on the compromise you eventually do
+
+0:48:32.005,0:48:38.588
+between your graphical and song elements
+
+0:48:38.588,0:48:43.684
+and the length of the whole show
+
+0:48:43.684,0:48:46.832
+and maybe there is some time
+
+0:48:46.832,0:48:51.582
+to innovate ways to reduce the code size
+
+0:48:51.582,0:48:53.582
+in certain places ...
+
+0:48:53.582,0:48:57.454
+So, I can't give you a rule about
+
+0:48:57.454,0:49:02.000
+which number of bytes you should aim for
+
+0:49:02.000,0:49:08.574
+But you must remember that here less is less, always -
+
+0:49:08.574,0:49:14.138
+so you have to be mindful of the size
+
+0:49:14.138,0:49:18.735
+if you really want to get your production done
+
+0:49:18.735,0:49:23.744
+for a 4 kilobyte intro competition.
+
+0:49:23.744,0:49:29.512
+You can observe how the numbers change:
+
+0:49:29.512,0:49:35.432
+for example, if you add 
+
+0:49:35.432,0:49:43.848
+one more repetition of 'pattern 0' of the first track here
+
+0:49:43.848,0:49:50.787
+You find out that the JavaScript now contains more data
+
+0:49:50.787,0:49:56.615
+but the actual compressed size is still the same
+
+0:49:56.615,0:50:01.823
+because there are things happening in the compression
+
+0:50:01.823,0:50:07.553
+Also, eventually the thing is compressed 
+
+0:50:07.553,0:50:11.334
+with all the other code
+
+0:50:11.334,0:50:15.168
+So these figures are not exact
+
+0:50:15.168,0:50:19.644
+but they give you some kind of clues
+
+0:50:19.644,0:50:22.000
+Let's add some more to the example ...
+
+0:50:22.000,0:50:26.291
+If you are very repetitive
+
+0:50:26.291,0:50:30.599
+the song might become boring
+
+0:50:30.599,0:50:33.973
+so don't repeat all the time, but
+
+0:50:33.973,0:50:39.283
+whatever you repeat will be compressed better
+
+0:50:39.283,0:50:43.727
+because of the compression algorithm
+
+0:50:43.727,0:50:51.540
+So, some tricks like repetition can be applied
+
+0:50:51.540,0:50:58.676
+and you should avoid some easy mistakes
+
+0:50:58.676,0:51:05.921
+like using accidentally letters as pattern numbers
+
+0:51:05.921,0:51:10.000
+Now when I put a 'pattern A' there
+
+0:51:10.000,0:51:16.722
+it immediately produces a larger size
+
+0:51:16.722,0:51:23.543
+than any number 0-9
+
+0:51:23.543,0:51:35.907
+Observe: the later alphabet you use the more bytes it needs
+
+0:51:35.907,0:51:43.864
+You can explore from the JavaScript how this actually works
+
+0:51:43.864,0:51:49.123
+But even without understanding programming
+
+0:51:49.123,0:51:53.821
+you can see the effect from these size numbers
+
+0:51:53.821,0:52:01.784
+It is not good to include any funny text messages
+
+0:52:01.784,0:52:09.168
+in the song data even for the fun of it ...
+
+0:52:09.168,0:52:15.903
+You will end up using too much space.
+
+0:52:15.903,0:52:21.976
+That is the reason why you should stick with small numbers
+
+0:52:21.976,0:52:29.220
+and not leave any gaps between the pattern numbers, finally
+
+0:52:29.220,0:52:36.057
+Yeah, and you can always explore how your choices
+
+0:52:36.057,0:52:40.959
+affect the size
+
+0:52:40.959,0:52:47.847
+Here, I put a big letter as a pattern number
+
+0:52:47.847,0:52:53.463
+which is stupid because it costs so many bytes
+
+0:52:53.463,0:53:00.490
+compared to putting a 0 (329 bytes vs. 320 bytes here)
+
+0:53:04.614,0:53:12.307
+Depending on also the locations - how many tracks you use - 
+
+0:53:12.307,0:53:17.344
+you could be using more bytes
+
+0:53:17.344,0:53:27.991
+Putting a new 'pattern 0' here in the 5th instrument (track)
+
+0:53:27.991,0:53:31.621
+uses some bytes, okay, ... 
+
+0:53:31.621,0:53:42.990
+but if I accidentally use a track that is more on the right (like 15)
+
+0:53:42.990,0:53:48.537
+the file size is bigger
+
+0:53:48.537,0:53:54.304
+because the knowledge of nothing happening between tracks
+
+0:53:54.304,0:53:56.332
+is stored.
+
+0:53:56.332,0:54:02.201
+What you want to do in a 4 kilobyte intro is
+
+0:54:02.201,0:54:07.460
+you want to have small numbers like 0, 1, ...
+
+0:54:07.460,0:54:17.811
+close to the left side of the song editor
+
+0:54:19.811,0:54:23.644
+That's what you aim for
+
+0:54:23.644,0:54:31.245
+and the tool that you use is 'Display file size'
+
+0:54:32.247,0:54:36.141
+Remember that the size is approximate
+
+0:54:36.141,0:54:39.504
+so in the longer run 
+
+0:54:39.504,0:54:44.473
+you also need to test, compile your intro
+
+0:54:44.473,0:54:49.625
+and see what the actual final size would be
+
+0:54:49.625,0:54:53.600
+But while you are making the soundtrack
+
+0:54:53.600,0:54:58.080
+you can approximate
+
+0:54:58.080,0:55:05.375
+and see the effect of the choices that you make
+
+0:55:05.375,0:55:11.209
+Here was my point number 5
+
+0:55:11.209,0:55:15.958
+important for you to succeed
+
+0:55:15.958,0:55:19.537
+in making your first demoscene intro
+
+0:55:19.537,0:55:23.469
+as smoothly as possible.
+
+0:55:23.469,0:55:35.347
+I think I have one more point to go ...
+
+0:55:36.264,0:55:39.523
+The final point:
+
+0:55:39.523,0:55:45.238
+Be prepared to leave stuff out
+
+0:55:45.238,0:55:48.683
+What this means...
+
+0:55:48.683,0:56:03.476
+[sounds of learning to use a streaming software]
+
+0:56:04.342,0:56:14.184
+"To leave stuff out" means that eventually
+
+0:56:14.184,0:56:21.171
+you will probably end up having to do a compromise
+
+0:56:21.171,0:56:28.550
+between your original plan of what you wanted
+
+0:56:28.550,0:56:33.249
+to tell in your intro story
+
+0:56:33.249,0:56:37.591
+and how much graphics you can fit in
+
+0:56:37.591,0:56:41.925
+and how much music.
+
+0:56:41.925,0:56:48.679
+So, it is quite possible that you have to leave something out 
+
+0:56:48.679,0:56:52.105
+for many reasons.
+
+0:56:52.105,0:56:55.459
+So, it is good to prepare for this - 
+
+0:56:55.459,0:57:06.056
+mentally, which comes back to the earlier points
+
+0:57:06.056,0:57:12.578
+ about not being to hard on yourself
+
+0:57:12.578,0:57:19.110
+and managing expectations on your first ever intro
+
+0:57:19.110,0:57:27.219
+But now, thinking about a smooth process
+
+0:57:27.219,0:57:33.464
+it will help if you keep this in mind from the onset:
+
+0:57:33.464,0:57:38.876
+ When you create your song,
+
+0:57:38.876,0:57:42.353
+you can structure it so that
+
+0:57:42.353,0:57:45.568
+maybe there is a main melody
+
+0:57:45.568,0:57:49.004
+or those beats that you really, really want there to be
+
+0:57:49.004,0:57:58.861
+the "main thing" built in the leftmost tracks
+
+0:57:58.861,0:58:06.462
+Then you could have additional ones
+
+0:58:06.462,0:58:15.416
+that could be left out if need be
+
+0:58:16.689,0:58:30.441
+Also, you should somehow plan also the concept of your intro
+
+0:58:30.441,0:58:37.787
+so that you know what is the main thing
+
+0:58:37.787,0:58:43.605
+and that could help you leave out additional things
+
+0:58:43.605,0:58:48.014
+that "could have been nice"
+
+0:58:48.014,0:58:54.613
+Knowing what is the main thing will enable you
+
+0:58:54.613,0:58:59.719
+to survive with leaving the other things out
+
+0:58:59.719,0:59:06.862
+and to focus on the one thing that you get finished
+
+0:59:06.862,0:59:13.429
+You can do this preparation technically
+
+0:59:13.429,0:59:22.937
+in the structure of your song.
+
+0:59:22.937,0:59:34.828
+Maybe I'll try finding a longer song as an example
+
+0:59:34.828,0:59:47.368
+from some earlier production of my own
+
+0:59:47.368,0:59:56.903
+In my recent downloads there is one from years ago
+
+0:59:56.903,1:00:01.907
+an entry called "Tilestys"
+
+1:00:01.907,1:00:15.074
+Probably I have the song as a comment in the source code
+
+1:00:15.074,1:00:21.464
+so we could look at it as an  example
+
+1:00:21.464,1:00:30.214
+Ok, I found it and opened it in the editor
+
+1:00:30.214,1:00:40.000
+Looks like it was in 2018 - time flies past
+
+1:00:40.000,1:00:50.927
+My annotations for song versions was not super good
+
+1:00:50.927,1:00:55.604
+but I suppose these are exactly
+
+1:00:55.604,1:01:01.344
+versions that I've made during the very last hours
+
+1:01:01.344,1:01:06.858
+of making that intro
+
+1:01:06.858,1:01:17.521
+and they are experiments on what could stay or be left out
+
+1:01:17.521,1:01:24.352
+If there was more time back then
+
+1:01:24.352,1:01:30.344
+the annotations could have been more accurate
+
+1:01:30.344,1:01:39.394
+Let's load one version and look at it after 6 years
+
+1:01:39.394,1:01:50.000
+Ok - here you can see my own attempt
+
+1:01:50.000,1:02:05.108
+Let's see if I could play it here on the video
+
+1:02:05.108,1:02:16.045
+[soundtrack of "Tilestys" playing; with unwanted crackling]
+
+1:02:16.045,1:02:23.528
+Yep, this computer could be too slow for streaming
+
+1:02:23.528,1:02:28.714
+But we can see how the song is structured:
+
+1:02:28.714,1:02:33.311
+there is a lot of repetition going on
+
+1:02:33.311,1:02:37.652
+one trick "from the book"
+
+1:02:37.652,1:02:42.300
+but also some alterations
+
+1:02:42.300,1:02:47.202
+so that it doesn't become too boring too soon
+
+1:02:47.202,1:02:50.119
+kind of attempts to do this
+
+1:02:50.119,1:02:55.182
+Then there's a clearly different section
+
+1:02:55.182,1:03:02.307
+so there are kind of different phases in the intro
+
+1:03:02.307,1:03:05.645
+not enough of course ...
+
+1:03:05.645,1:03:07.645
+it's not perfect ...
+
+1:03:07.645,1:03:13.209
+but then... my point 2 was "Let's have fun"
+
+1:03:13.209,1:03:20.000
+and be merciful about the quality of these productions
+
+1:03:21.375,1:03:27.963
+Anyway, if it should have happened
+
+1:03:27.963,1:03:32.395
+that I ran out of time to make the intro
+
+1:03:32.395,1:03:38.876
+and there was absolutely not enough graphics
+
+1:03:38.876,1:03:44.018
+to sustain interest for as much time as this song lasts
+
+1:03:44.018,1:03:49.098
+I could perhaps be happy about being prepared - 
+
+1:03:49.098,1:03:53.796
+it looks like there is a separate part
+
+1:03:53.796,1:03:58.902
+that could be left out
+
+1:03:58.902,1:04:06.087
+so that a shorter running time could be made
+
+1:04:06.087,1:04:11.618
+more interesting by adding something there
+
+1:04:11.618,1:04:15.095
+and leaving out the rest.
+
+1:04:15.095,1:04:25.445
+It is as easy as loading this version and deleting those final parts
+
+1:04:27.845,1:04:36.922
+Another thing is the apparently infrequent 'pattern 0' on track 6
+
+1:04:36.922,1:04:42.537
+maybe a low base note (remembered wrong; it's a cymbal-like noisy sound)
+
+1:04:42.537,1:04:48.514
+It makes some interesting thing in the song
+
+1:04:48.514,1:04:56.675
+but if there was absolute need to add something to the graphics
+
+1:04:56.675,1:05:06.041
+maybe I could just delete it
+
+1:05:06.041,1:05:14.151
+and see how it would affect the size
+
+1:05:14.151,1:05:22.465
+It turns out that it could give me a lot of bytes for the graphics
+
+1:05:22.465,1:05:35.409
+Let's check if I had done that stupid mistake of empty tracks in between..
+
+1:05:35.409,1:05:45.505
+No.. there was stuff in all the tracks in the final song
+
+1:05:48.917,1:05:53.903
+The final point was:
+
+1:05:53.903,1:05:56.434
+prepare to leave stuff out
+
+1:05:56.434,1:06:06.690
+and now after 6 years I remember more about this track
+
+1:06:06.690,1:06:12.547
+If need be, track 6 (with occasional cymbal sound)
+
+1:06:12.547,1:06:17.042
+could be left out
+
+1:06:17.042,1:06:21.721
+Then you get 70 bytes
+
+1:06:21.721,1:06:26.419
+to make a nice fade-out or other polishing to graphics
+
+1:06:26.419,1:06:29.743
+It goes two ways:
+
+1:06:29.743,1:06:34.493
+if you really want to add something to the song
+
+1:06:34.493,1:06:40.000
+then you end up leaving stuff out from the graphics
+
+1:06:40.000,1:06:45.615
+or story, or running time or something
+
+1:06:49.077,1:06:57.342
+I think that is a hard thing about intros but also
+
+1:06:57.342,1:07:09.429
+the main interesting thing about the whole hobby
+
+1:07:09.429,1:07:14.672
+why else should we even have these competitions
+
+1:07:14.672,1:07:20.208
+with limitations of executable file size
+
+1:07:20.208,1:07:31.322
+It's fun and you can get hooked on finding the perfect compromise
+
+1:07:31.322,1:07:36.401
+which can never be found ultimately
+
+1:07:37.776,1:07:46.413
+So, that was my point 6 about leaving stuff out
+
+1:07:46.413,1:07:53.759
+I think I've covered all the points now.
+
+1:07:53.759,1:08:01.003
+Some aspects of SoundBox that you can find in the help
+
+1:08:01.003,1:08:05.803
+but you may want to observe:
+
+1:08:05.803,1:08:15.396
+You can select a range and preview range only
+
+1:08:15.396,1:08:18.040
+like so
+
+1:08:18.040,1:08:21.160
+[soundtrack of "tilestys" playing from middle; crackling due to low-end computer]
+
+1:08:22.688,1:08:30.515
+And then in the patterns
+
+1:08:30.515,1:08:42.309
+you can have at most 4 notes play at the same time
+
+1:08:42.309,1:08:46.736
+using the same instrument sound
+
+1:08:46.736,1:08:52.911
+This is one way to possibly conserve space
+
+1:08:52.911,1:09:00.000
+and make interesting musical things happening
+
+1:09:00.000,1:09:08.365
+I won't go to any detail about the synthesizer part
+
+1:09:08.365,1:09:14.257
+because that would be off topic
+
+1:09:14.257,1:09:21.545
+Then it is time to recap ...
+
+1:09:30.522,1:09:33.030
+So, that's about it ...
+
+1:09:33.030,1:09:42.196
+I tried to remember things that have happened in intro workshops
+
+1:09:42.196,1:09:48.269
+I think all of these main points have history
+
+1:09:48.269,1:09:53.850
+of having happened sometimes:
+
+1:09:53.850,1:10:04.302
+People have made nice demos but copied music from others 
+
+1:10:04.302,1:10:09.714
+and then the intros have to be disqualified
+
+1:10:09.714,1:10:13.689
+which is the best that can happen
+
+1:10:13.689,1:10:17.431
+because you can't go forward with somebody else's music
+
+1:10:17.431,1:10:20.398
+So, you be safe with copyrights!
+
+1:10:20.398,1:10:23.955
+Use only your own material.
+
+1:10:23.955,1:10:29.027
+This one is important - it has happened
+
+1:10:29.027,1:10:35.457
+that people are shy about their productions 
+
+1:10:35.457,1:10:43.465
+they think that the product isn't cool or shiny enough 
+
+1:10:43.465,1:10:48.008
+to go forward in a competition
+
+1:10:48.008,1:10:52.099
+But I think it is a shame
+
+1:10:52.099,1:10:58.215
+because in my opinion they have been very creative
+
+1:10:58.215,1:11:01.386
+and nice works, both music and graphics
+
+1:11:01.386,1:11:06.340
+I hope you can prepare yourself
+
+1:11:06.340,1:11:14.094
+for letting go of "serious business" here
+
+1:11:14.094,1:11:20.829
+and have fun and accept the result that you can produce
+
+1:11:20.829,1:11:22.829
+for your first intro.
+
+1:11:22.829,1:11:26.548
+Oh, it has happened that people have 
+
+1:11:26.548,1:11:34.018
+forgotten to learn and understand the tool they use for music
+
+1:11:34.018,1:11:37.291
+so watching over their shoulder ... 
+
+1:11:37.291,1:11:41.282
+you see random clicking of buttons here and there
+
+1:11:41.282,1:11:49.325
+which also usually produces too big a file size
+
+1:11:50.496,1:12:00.300
+So, I hope my tips help, one of which was
+
+1:12:00.300,1:12:05.202
+to read the help page of SoundBox and understand the tool
+
+1:12:05.202,1:12:08.577
+I hope you remember to do that too
+
+1:12:08.577,1:12:17.041
+Yes, #4 has happened to myself many times:
+
+1:12:17.041,1:12:23.405
+I get so caught up with creating the music 
+
+1:12:23.405,1:12:28.409
+that I end up with a complete side-track
+
+1:12:28.409,1:12:38.486
+but I have forgotten to save an earlier version
+
+1:12:38.486,1:12:44.000
+That is a shame because it would be so easy to save
+
+1:12:44.000,1:12:50.000
+the URL-format of a snapshot of your song
+
+1:12:50.000,1:12:55.244
+many times and keep track of the versions
+
+1:12:55.244,1:12:58.873
+so that you can find an earlier version
+
+1:12:58.873,1:13:01.725
+if you get lost
+
+1:13:01.725,1:13:06.220
+Try to be mindful of that.
+
+1:13:06.220,1:13:08.893
+The file size was covered - 
+
+1:13:08.893,1:13:15.336
+you have many things you can do to manage it
+
+1:13:15.336,1:13:23.599
+Finally, you can prepare both technically and also mentally
+
+1:13:23.599,1:13:27.670
+for leaving stuff out
+
+1:13:27.670,1:13:36.951
+because everything comes with the cost of some more bytes
+
+1:13:36.951,1:13:45.062
+and the whole idea of the intro competition is the maximum size 
+
+1:13:45.062,1:13:50.000
+and applying your creativity within that constraint.
+
+1:13:50.000,1:13:54.444
+It doesn't have be too painful -
+
+1:13:54.444,1:13:59.194
+a way to achieve this is to
+
+1:13:59.194,1:14:04.656
+create options from which you can pick, mix and match parts
+
+1:14:04.656,1:14:13.071
+and leave out those not essential to the main message
+
+1:14:13.071,1:14:15.885
+in your demo
+
+1:14:15.885,1:14:22.263
+This is also a good thing that enables you  
+
+1:14:22.263,1:14:28.215
+to really focus on the key ideas
+
+1:14:28.215,1:14:31.335
+forcing you to be creative
+
+1:14:32.761,1:14:39.547
+I believe that it will make you better
+
+1:14:39.547,1:14:46.181
+in your next project in any field of life, study, or work:
+
+1:14:46.181,1:14:51.949
+You have practiced focusing on the essence
+
+1:14:51.949,1:14:55.527
+here, having fun in a demoscene intro competition
+
+1:14:55.527,1:14:57.476
+Okay...
+
+1:14:57.476,1:15:02.494
+I don't think I have anything more to say here
+
+1:15:02.494,1:15:07.287
+So, have a good time tracking
+
+1:15:07.287,1:15:11.957
+and see you at a demo party!
+
+1:15:11.957,1:15:17.750
+Thank you for watching. See you!

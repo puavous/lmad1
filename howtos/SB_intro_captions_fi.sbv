@@ -1,0 +1,2241 @@
+0:00:01.000,0:00:03.000
+(rallienglannista käännetty ensin enkuksi ja sitten suomeksi)
+(video link: https://www.youtube.com/watch?v=JnJ5bUT6s8Q)
+
+0:00:04.012,0:00:06.018
+Hei
+
+0:00:06.018,0:00:12.102
+Tervetuloa. Tällä videolla annan vinkkejä
+
+0:00:12.102,0:00:15.947
+miten voit tehdä ääniraidan
+
+0:00:15.947,0:00:18.956
+ihkaensimmäiseen pikkiriikkiseen demoosi eli introon
+
+0:00:18.956,0:00:23.135
+SoundBox-nimisellä softasyntikkaträkkerillä
+
+0:00:23.135,0:00:26.110
+Otsikko on aika spesifi
+
+0:00:26.110,0:00:30.088
+joten luulenpa, että sinulla on ollut tosi hyvä syy
+
+0:00:30.088,0:00:34.334
+etsiä tämä käsiisi ja katsoa.
+
+0:00:35.838,0:00:39.683
+Nimeni on Paavo Nieminen
+
+0:00:39.683,0:00:42.758
+ja ruudulla näkyy muutamia skene-händlejä
+
+0:00:42.758,0:00:44.998
+("qma" & "The Old Dude")
+
+0:00:44.998,0:00:48.007
+joita olen käyttänyt
+
+0:00:48.007,0:00:51.450
+omien introjeni julkaisemiseen
+
+0:00:51.450,0:00:54.560
+demoscene-kilpailuissa. Ne eivät ole
+
+0:00:54.560,0:00:58.571
+mitenkään ihmeellisiä. Pystyt helposti tekemään
+
+0:00:58.571,0:01:02.182
+siistimmän demon tai intron kuin mitä minä koskaan.
+
+0:01:03.185,0:01:07.397
+Lisäksi olen saanut mahdollisuuden pitää työpajoja
+
+0:01:07.397,0:01:13.812
+joissa autetaan ensimmäisten demojen tekemisessä.
+
+0:01:15.788,0:01:24.346
+Tähän videolle koetan kerätä työpajojen oppeja,
+
+0:01:24.346,0:01:30.431
+joista uskon olevan apua sinulle
+
+0:01:30.431,0:01:36.300
+ensimmäisen introsi tekemisessä.
+
+0:01:37.284,0:01:40.622
+Yksi sellainen juttu voisi olla tehdä ääniraita
+
+0:01:40.622,0:01:46.277
+ehkä jopa ennen osallistumista työpajaan tai hackathoniin
+
+0:01:46.277,0:01:51.994
+jotta voit sitten keskittyä ohjelmointiin ja luovaan toteuttamiseen
+
+0:01:51.994,0:01:57.008
+kun äänet on jo tehty aiemmin.
+
+0:01:58.011,0:02:04.196
+Tässä on nyt tehty seuraavat valinnat:
+
+0:02:04.196,0:02:08.676
+Aiotaan osallistua "intro" (eli "pikkiriikkinen") -kilpailusarjaan
+
+0:02:08.676,0:02:11.679
+joka tarkoittaa tosi pientä demoa
+
+0:02:11.679,0:02:15.930
+eli jotakuinkin 4 kilotavun kokoista tiedostoa
+
+0:02:15.930,0:02:19.875
+kilpailussa.
+
+0:02:19.875,0:02:24.031
+Käytetään JavaScript-ohjelmointikieltä
+
+0:02:24.031,0:02:28.032
+ja tehdään selaimessa pyörivä ohjelma
+
+0:02:28.032,0:02:31.475
+koska siinä erityistilanteessa
+
+0:02:31.475,0:02:35.454
+SoundBox on hyvin tasapainossa
+
+0:02:35.454,0:02:41.170
+eri rajoitteiden suhteen
+
+0:02:43.176,0:02:49.160
+Okei - eli ollaan tekemässä jouhevasti
+
+0:02:49.160,0:02:52.102
+sun ensimmäistä 4 kilotavun introa
+
+0:02:52.102,0:02:55.579
+JavaScriptille SoundBox -träkkeriä käyttämällä.
+
+0:02:56.582,0:02:59.524
+Ryhdytään hommiin...
+
+0:03:02.533,0:03:05.809
+Otetaanpas tuohon tietokoneen työpöytänäkymä
+
+0:03:05.809,0:03:10.422
+ja puhuva pää pikkuruutuun yläkulmassa
+
+0:03:11.425,0:03:18.780
+Aion käydä läpi 6 pointtia.
+
+0:03:18.780,0:03:22.758
+Aloitan tärkeimmästä
+
+0:03:22.758,0:03:25.733
+joka mielestäni on tämä
+
+0:03:26.703,0:03:30.180
+ehkä vähän itsestäänselvältä vaikuttava
+
+0:03:30.180,0:03:34.191
+juttu, jonka ihmiset valitettavasti joskus mokaa - 
+
+0:03:34.191,0:03:37.468
+En halua sinun mokaavan tätä
+
+0:03:37.468,0:03:40.142
+joten korostan:
+
+0:03:40.142,0:03:44.221
+Ole varovasti tekijänoikeuksien kanssa -
+
+0:03:44.221,0:03:47.229
+älä käytä mitään melodioita
+
+0:03:47.229,0:03:51.876
+tai muutakaan toisten tekemistä biiseistä!
+
+0:03:51.876,0:03:54.629
+Voisi olla houkuttelevaa käyttää juttuja
+
+0:03:54.629,0:03:57.025
+hittikappaleista tai TV-ohjelmien tunnareista
+
+0:03:57.025,0:04:00.869
+Niistä voisi tulla jänniä ideoita introonkin
+
+0:04:00.869,0:04:04.847
+mutta älä tee sitä - se on ehdottomasti kiellettyä
+
+0:04:04.847,0:04:09.829
+demoscene-tapahtumien kilpailusäännöissä
+
+0:04:09.829,0:04:15.880
+Introthan striimataan ja arkistoidaan
+
+0:04:15.880,0:04:19.992
+joten niistä tulee teosten kopioita
+
+0:04:19.992,0:04:23.541
+ja haluat tosissaan ottaa tekijänoikeusasiat huomioon
+
+0:04:23.541,0:04:27.012
+ja tehdä vain omaa, uutta, tuotantoa.
+
+0:04:27.748,0:04:30.497
+Takaan, että tulee olemaan hauskaa
+
+0:04:30.497,0:04:35.003
+tehdä ihan oma musa, joka ei ole kopio
+
+0:04:35.003,0:04:40.819
+tai jäljitelmä mistään kenenkään muun tekemästä.
+
+0:04:40.819,0:04:49.645
+Pidä tämä mielessä, niin ollaan turvassa.
+
+0:04:52.653,0:04:58.638
+Seuraavakin pointti on tärkeä:
+
+0:04:58.638,0:05:01.981
+Älä ota tätä liian vakavasti - 
+
+0:05:01.981,0:05:05.959
+täällä ollaan pitämässä hauskaa
+
+0:05:05.959,0:05:10.940
+eikä tekemässä täydellistä tuotosta
+
+0:05:10.940,0:05:14.952
+heti ensimmäisellä kerralla
+
+0:05:14.952,0:05:19.283
+Sun ei tarvitse olla seuraava Mozart
+
+0:05:19.283,0:05:24.279
+eikä voittaa Euroviisuja
+
+0:05:24.279,0:05:28.124
+On myös ihan todennäköistä että et välttämättä
+
+0:05:28.124,0:05:33.882
+tule voittamaan tätä ensimmäistä introkilpailuasikaan
+
+0:05:33.882,0:05:37.323
+Tämä kun hyväksytään
+
+0:05:37.323,0:05:41.329
+niin pystytään pitämään hauskaa
+
+0:05:41.329,0:05:45.240
+luovan tekemisen kanssa ja osana sitä
+
+0:05:45.240,0:05:50.288
+oman ääniraidan tekeminen - ilman että tuomitaan
+
+0:05:50.288,0:05:56.774
+itseämme esteettisten arvojen tai täydellisyyden perässä
+
+0:05:58.780,0:06:01.755
+Voit olla tosi ylpeä
+
+0:06:01.755,0:06:06.885
+että saat tehtyä siistin kuuloista kamaa
+
+0:06:06.885,0:06:14.631
+ja saat tehtyä ensimmäisen introsi
+
+0:06:14.631,0:06:21.885
+valmiiksi ja laitettua sen kilpailuun suunnitelmasi mukaan.
+
+0:06:23.886,0:06:26.393
+Toivottavasti tämä rohkaisee
+
+0:06:26.393,0:06:29.882
+puskemaan päätyyn asti
+
+0:06:29.882,0:06:33.314
+ja hyväksymään oma tuotos
+
+0:06:33.314,0:06:36.824
+vaikkei siitä täydellistä tulisikaan
+
+0:06:36.824,0:06:44.346
+ja olemaan ylpeä siitä, että saat sen tehdyksi!
+
+0:06:44.346,0:06:47.133
+Nämä kaksi juttua mielessä
+
+0:06:47.133,0:06:50.998
+on turvallista mennä eteenpäin
+
+0:06:50.998,0:06:55.010
+kohti SoundBoxin opettelua
+
+0:06:56.013,0:07:00.192
+Ennen kuin otetaan se auki, pohjustan ensimmäisen
+
+0:07:00.192,0:07:05.140
+siihen liittyvän pointin:
+
+0:07:07.145,0:07:10.388
+On tärkeätä
+
+0:07:10.388,0:07:14.166
+että aluksi käytät aikaa ja energiaa ymmärtääksesi
+
+0:07:14.166,0:07:19.151
+mitä musiikkikappaleen 'träkkerimäinen' rakenne tarkoittaa
+
+0:07:19.151,0:07:26.368
+ja miten sitä muokataan SoundBoxissa.
+
+0:07:28.341,0:07:32.152
+Siihen päästään ihan kohta
+
+0:07:32.152,0:07:38.637
+mutta haluan, että ensin makustelet tätä pointtia
+
+0:07:38.637,0:07:45.992
+ja siinä olevaa tärkeää sanaa eli ymmärtämistä
+
+0:07:45.992,0:07:52.010
+sen lisäksi että hyppäät vain sisään hauskanpitoon.
+
+0:07:53.012,0:07:57.145
+Korostan tätä, koska
+
+0:07:57.145,0:08:02.373
+aiemmissa työpajoissa on tullut pieniä hankaluuksia
+
+0:08:02.373,0:08:06.753
+myöhemmissä työskentelyvaiheissa
+
+0:08:06.753,0:08:14.709
+kun intron musiikkia on tarvinnut muuttaa
+
+0:08:14.709,0:08:20.727
+mutta se onkin mennyt sotkuiseksi
+
+0:08:20.727,0:08:26.911
+sen takia, että ei ole ihan ymmärretty
+
+0:08:26.911,0:08:30.917
+mitä eri osat ja osiot
+
+0:08:30.917,0:08:34.901
+käyttöliittymässä oikeastaan tarkoittavat
+
+0:08:36.874,0:08:42.824
+Avataanpas nyt se SoundBox ...
+
+0:08:47.839,0:08:49.009
+[Kuiskaten, että muut saa nukkua:]
+
+0:08:50.012,0:08:54.024
+SoundBox näyttää tältä
+
+0:08:54.024,0:08:57.032
+kun avaat sen.
+
+0:08:57.032,0:09:02.014
+Sehän avataan ihan menemällä nettiosoitteeseen
+
+0:09:02.014,0:09:10.004
+https://sb.bitsnbites.eu/
+
+0:09:10.004,0:09:15.018
+Sitten se aukeaa selaimessasi
+
+0:09:15.018,0:09:18.027
+ja toimii siinä.
+
+0:09:18.027,0:09:23.008
+On tosi helppoa ihan vain aloittaa käyttämään SoundBoxia
+
+0:09:24.011,0:09:29.026
+Se tervehtii tervetulotekstillä
+
+0:09:29.026,0:09:35.010
+joka kehottaa aloittamaan esimerkkikappaleen avaamisella
+
+0:09:35.010,0:09:39.021
+Jossain vaiheessa kannattaakin
+
+0:09:39.021,0:09:46.008
+tutkia, miten esimerkkikappaleet on tehty. Mutta nyt
+
+0:09:46.008,0:09:54.032
+haluan tässä korostaa tärkeätä linkkiä
+
+0:09:54.032,0:09:59.013
+tervehdysviestissä: "Help" eli avustus
+
+0:10:00.016,0:10:04.028
+Kannattaa tosissaankin klikata tuo "Help"-sivu auki
+
+0:10:04.028,0:10:08.006
+SoundBoxin avustus on hyvä, ja siitä
+
+0:10:08.006,0:10:12.018
+löytyy käyttelyn yksityiskohdat
+
+0:10:12.018,0:10:19.005
+joihin yritän olla menemättä tällä videolla
+
+0:10:19.005,0:10:24.019
+Tärkeä viestini tässä on
+
+0:10:24.019,0:10:28.031
+että sun kannattaa muistaa lukea avustus
+
+0:10:28.031,0:10:35.018
+ja hyödyntää sitä samalla, kun opettelet
+
+0:10:35.018,0:10:39.030
+käyttämään SoundBoxia
+
+0:10:44.011,0:10:51.031
+Esimerkkikappaleet saa auki
+
+0:10:51.031,0:10:57.015
+painikkeesta "Open" vasemmassa laidassa
+
+0:10:57.015,0:11:03.033
+Voit tutkia, miten ne on tehty
+
+0:11:04.002,0:11:11.023
+Tätä videota varten kuitenkin klikkaan "New"
+
+0:11:11.023,0:11:21.019
+josta pääsee aloittamaan kokonaan tyhjän kappaleen.
+
+0:11:23.025,0:11:29.009
+Voidaan vaan klikata virtuaalista koskettimistoa
+
+0:11:29.009,0:11:35.026
+käyttöliittymän oikeassa alareunassa
+
+0:11:35.026,0:11:42.013
+niin kuullaan ääntä [syntikka soi]
+
+0:11:42.013,0:11:49.034
+Voit kuulla äänet, kun klikkaat
+
+0:11:49.034,0:11:59.030
+ja voit nähdä, miten nuotteja ilmestyy toistensa perään
+
+0:11:59.030,0:12:07.019
+sävelkuviomuokkaimessa (käyttöohjeessa "pattern editor")
+
+0:12:07.019,0:12:09.025
+(videolla sanoin vahingossa "pattern view")
+
+0:12:11.031,0:12:15.009
+Näytän käytännössä
+
+0:12:15.009,0:12:22.030
+pari juttua avustussivulta
+
+0:12:24.002,0:12:32.026
+Ei yksityiskohtia vaan ideoita.
+
+0:12:33.029,0:12:44.027
+Näistä nuoteista, joita syötät, syntyy 'sävelkuvio' ('pattern')
+
+0:12:44.027,0:12:50.011
+Jokainen sävelkuvio on aina numeroitu ja
+
+0:12:50.011,0:12:57.032
+kuvion numero näkyy vasemmalla, kappalemuokkaimessa ('song editor').
+
+0:12:57.032,0:13:02.013
+Nyt esimerkissä on yksi sävelkuvio, jonka numero on 0
+
+0:13:02.013,0:13:10.003
+ja jossa on peräkkäin äsken klikkaillut nuotit
+
+0:13:12.009,0:13:20.032
+Voit aina kuunnella nykyisen kappaleen
+
+0:13:20.032,0:13:24.011
+klikkaamalla soittopainiketta ("Play").
+
+0:13:24.011,0:13:28.022
+Se generoi ensin äänitiedoston kokonaan
+
+0:13:28.022,0:13:32.034
+ja alkaa sitten soittamaan sitä loputtomalla toistolla
+
+0:13:33.003,0:13:36.012
+Ja nythän meillä onkin jo ensimmäinen kappale
+
+0:13:36.012,0:13:43.033
+tehty SoundBoxilla - kuin siistiä!
+
+0:13:43.033,0:13:46.008
+Tosi originaalia tavaraa... hehe...
+
+0:13:46.008,0:13:54.031
+Pystytään parempaan, kunhan totutaan muokkamiseen...
+
+0:13:57.007,0:14:03.024
+Aika pian alat haluta käyttää
+
+0:14:03.024,0:14:08.005
+tietokoneen näppäimistöä muokkaamiseen
+
+0:14:11.014,0:14:14.023
+Lisään tähän nyt näppäimistökameran
+
+0:14:14.023,0:14:19.004
+jotta näet, mitä teen.
+
+0:14:20.007,0:14:25.022
+Nyt näkyy mun näppäimistö
+
+0:14:25.022,0:14:34.015
+tuossa virtuaalisen synakoskettimiston päälle aseteltuna
+
+0:14:35.017,0:14:45.013
+Haluat alkaa syöttää nuottena näppäimistöltä
+
+0:14:45.013,0:14:49.025
+(on siis suositukseni, koska se tekee asiasta sinulle helpompaa)
+
+0:14:49.025,0:14:55.009
+Tietokoneen näppäimet vastaavat koskettimiston nuotteja
+
+0:15:03.032,0:15:10.019
+Eli pianokoskentinten nuotit
+
+0:15:10.019,0:15:15.001
+löytyvät yksi-yhteen näppäimistöltä
+
+0:15:15.001,0:15:18.009
+Käytössä on 2 oktaavia:
+
+0:15:18.009,0:15:22.021
+alempi oktaavi 'Z'-näppäimestä alkaen (joka on C-nuotti)
+
+0:15:22.021,0:15:27.002
+ylempi oktaavi 'Q'-näppäimestä alkaen (C-nuotti +1 okt.)
+
+0:15:29.008,0:15:34.023
+Näiden näppäinten painaminen päivittää sävelkuviota
+
+0:15:34.023,0:15:42.013
+ja voit aina kuunnella kappaleen klikkaamalla "Play"...
+
+0:15:42.013,0:15:44.013
+[nuotit soi syntikassa]
+
+0:15:44.019,0:15:47.027
+Ja VAU ...
+
+0:15:47.027,0:15:51.006
+satunnaisia valkoisia koskettimia painelemalla
+
+0:15:51.006,0:15:56.020
+oletkin tehnyt musiikillisen atmosfäärin
+
+0:15:56.020,0:15:59.029
+joka pysyy mielenkiintoisena ainakin hetken aikaa
+
+0:15:59.029,0:16:04.010
+ja joka voisi olla hyödyllinen introssa, ehkä
+
+0:16:04.010,0:16:09.025
+Okei. Voidaan parantaa tästäkin. Mennään eteenpäin ...
+
+0:16:09.025,0:16:13.003
+Voit tehdä nuotteja kirjainnäppäimillä
+
+0:16:13.003,0:16:16.012
+liikkua ympäriinsä nuolinäppäimillä (kuten näytän)
+
+0:16:16.012,0:16:22.029
+ja poistaa nuotteja 'Delete'-näppäimellä
+
+0:16:22.029,0:16:32.025
+Luultavasti et halua nuottia ihan jokaisen aikarakoseen...
+
+0:16:32.025,0:16:36.003
+Tähän mennessä olet varmaan huomannut
+
+0:16:36.003,0:16:44.027
+että aika kulkee ylhäältä alas
+
+0:16:46.033,0:16:51.014
+Tempoa (eli miten nopeasti aika juoksee) voi muuttaa
+
+0:16:51.014,0:16:56.028
+syöttämällä luku BPM-kenttään ("beats per minute")
+
+0:16:57.031,0:17:00.007
+Elikkäs näin muokkaat sävelkuviota.
+
+0:17:00.007,0:17:02.013
+Sitten
+
+0:17:02.013,0:17:09.033
+teet kappaleen laittamalla näitä numeroituja sävelkuvioita järjestykseen
+
+0:17:10.003,0:17:13.011
+Tähän mennessä meillä on 'sävelkuvio 0'.
+
+0:17:13.011,0:17:17.023
+Voit vaihtaa fokusta
+
+0:17:17.023,0:17:22.004
+sävelkuviomuokkaimen ja kappalemuokkaimen välillä klikkaamalla.
+
+0:17:22.004,0:17:32.033
+Kappalemuokkaimessa voit mennä tyhjään lokeroon
+
+0:17:32.033,0:17:37.015
+ja laittaa siihen sävelkuvion numeron
+
+0:17:37.015,0:17:40.023
+Voit liikkua nuolinäppäimillä
+
+0:17:40.023,0:17:45.005
+ja asetella numeroituja sävelkulkuja
+
+0:17:45.005,0:17:46.007
+Olet varmaan arvannut...
+
+0:17:46.007,0:17:53.028
+Numeron 0 lisäksi voi olla 1, 2, 3, jne.
+
+0:17:53.028,0:17:57.006
+Jos laitat numeron, jota ei aiemmin ole ollut,
+
+0:17:57.006,0:18:00.015
+saat tyhjän sävelkuvion
+
+0:18:00.015,0:18:05.030
+jota voit ryhtyä muokkaamaan.
+
+0:18:05.030,0:18:09.008
+Joskus halutaan kopioida ja liittää sävelkuvio
+
+0:18:09.008,0:18:13.020
+ja sitten muokata sitä pikkuisen.
+
+0:18:13.020,0:18:20.007
+Kappaleesta voi valita kopioitavan sävelkuvion.
+
+0:18:20.007,0:18:27.027
+Tavanomaisia pikanäppäimiä kopioinnille ei käytetä
+
+0:18:27.027,0:18:35.017
+vaan klikataan kopiointikuvakkeesta sävelkuviomuokkaimen alla
+
+0:18:35.017,0:18:38.026
+Klikataanpas tästä kopiointia...
+
+0:18:38.026,0:18:41.001
+tätä ei ole hirmu helppo hoksata
+
+0:18:41.001,0:18:50.027
+jos et tiedä sitä ennalta tai opettele avustussivulta.
+
+0:18:50.027,0:18:59.020
+Ensin pitää valita alue, joka kopioidaan.
+
+0:18:59.020,0:19:02.029
+Sitten voi klikata kopiointia,
+
+0:19:02.029,0:19:05.004
+siirtyä liittämisen kohdepaikkaan
+
+0:19:05.004,0:19:09.016
+ja klikata liittämistä.
+
+0:19:09.016,0:19:20.015
+[hiljaisuutta hutiklikkauksen selvittelemiseksi]
+
+0:19:20.015,0:19:24.026
+Jep, taisin klikata ohi...
+
+0:19:26.032,0:19:32.016
+Nyt on tehty sävelkuviosta 0 kopio sävelkuvioon 1
+
+0:19:32.016,0:19:39.003
+Sitten voin muokata sävelkuviota 1.
+
+0:19:39.003,0:19:44.018
+Esimerkiksi voi valita kaikki nuotit
+
+0:19:44.018,0:19:52.008
+ja laittaa ne pari sävelaskelta matalammiksi
+
+0:19:52.008,0:19:59.028
+Tällaisia välineitä on saatavilla valitun alueen
+
+0:19:59.028,0:20:07.018
+kopiointiin, liittämiseen ja transponointiin (-1,+1,-12,+12 puolisävelaskelta)
+
+0:20:07.018,0:20:11.030
+Jos haluat muokata sävelkuviota isommin, voit syöttää uusia nuotteja
+
+0:20:11.030,0:20:14.005
+näppäimistöltä.
+
+0:20:14.005,0:20:19.020
+Tähän asti on ollut aika sattumanvaraisia nuotteja
+
+0:20:19.020,0:20:25.004
+ja nyt kappaleessa on 2 erilaista sävelkuviota
+
+0:20:25.004,0:20:29.016
+numeroilla 0 ja 1.
+
+0:20:29.016,0:20:34.031
+Kuunnellaanpas kappale
+
+0:20:35.033,0:20:42.020
+[satunnaisia nuotteja soi]
+
+0:20:42.020,0:20:46.032
+No joo - se ei ole nerokas ...
+
+0:20:46.032,0:20:51.013
+mutta kuulostaa jännältä ja voisi olla hyödyllinen
+
+0:20:51.013,0:20:58.034
+ja näin näitä kappaleita oikeastaan rakennetaan
+
+0:20:58.034,0:21:00.006
+(vähemmän sattumanvaraisiakin...)
+
+0:21:00.006,0:21:07.027
+Nyt tarvitsisi ehkä lähinnä lisätä erilaisia soittimia.
+
+0:21:07.027,0:21:10.002
+Sitä varten pitää ymmärtää
+
+0:21:10.002,0:21:17.022
+miten soittimet toimivat SoundBoxissa.
+
+0:21:17.022,0:21:22.004
+Niitä sanotaan raidoiksi ('tracks')
+
+0:21:22.004,0:21:29.024
+ja ne ovat kappalemuokkaimen sarakkeita
+
+0:21:29.024,0:21:33.002
+Sarakkeet roikkuvat muokkaimen yläreunasta
+
+0:21:33.002,0:21:38.017
+ja niissä on sävelkulkujen numeroita toistensa päällä
+
+0:21:38.017,0:21:42.029
+Jokainen sarake on erillinen raita
+
+0:21:42.029,0:21:48.013
+jossa voi olla erilainen soitin kuin toisissa.
+
+0:21:48.013,0:21:52.024
+Käytössä on 16 raitaa, jotka näkymässä on
+
+0:21:52.024,0:21:57.006
+eli voi olla 16 erilaista syntikkainstrumenttia
+
+0:21:57.006,0:22:03.023
+Neljän kilotavun introssa pitää vähän rajoittaa -
+
+0:22:03.023,0:22:08.004
+puhutaan siitä lisää myöhemmin.
+
+0:22:08.004,0:22:12.016
+Mutta ainakin muutama erilainen soundi voi olla.
+
+0:22:13.019,0:22:17.031
+Tässä on tosi tärkeä asia ymmärtää:
+
+0:22:17.031,0:22:25.021
+Numerot 0 ja 1 (ja 2, 3, ...) yhdessä sarakkeessa
+
+0:22:25.322,0:22:33.312
+ovat eri kuin 0 ja 1 (ja 2, 3, ...) muissa sarakkeissa
+
+0:22:33.312,0:22:38.627
+Muista aloittaa sävelkuvioiden numerointi 0:sta kaikilla raidoilla
+
+0:22:38.627,0:22:42.639
+Se on tärkeätä tiedoston koolle
+
+0:22:42.639,0:22:47.754
+jolla on väliä introissa - palataan tosiaan siihen myöhemmin.
+
+0:22:47.754,0:22:54.774
+Tässä vaiheessa on tärkeää ymmärtää rakenne:
+
+0:22:54.774,0:23:00.858
+Vasemmanpuoleisen taulukon sarakkeet ovat soittimia,
+
+0:23:00.858,0:23:06.909
+jotka voivat olla keskenään erilaisia.
+
+0:23:06.909,0:23:12.492
+Jokaiselle soittimelle on erilliset sävelkuviot.
+
+0:23:14.498,0:23:18.109
+Tässä esimerkissä
+
+0:23:18.109,0:23:24.327
+Meillä on nyt 'sävelkuvio 0' toiselle soittimelle (raidalle)
+
+0:23:24.327,0:23:28.265
+ja voidaan syöttää nuotteja sävelkuviomuokkaimessa
+
+0:23:28.265,0:23:37.833
+Laitetaanpa vähän nuotteja ja kuulostellaan
+
+0:23:37.833,0:23:40.808
+Okei,
+
+0:23:40.808,0:23:45.054
+meillä on kaksi eri raitaa, okei ...
+
+0:23:46.057,0:23:52.375
+Sitten haluat tosiaan soittimet, jotka kuulostavat erilaisille
+
+0:23:52.375,0:23:59.663
+Voit tehdä sen syntetisaattorimuokkaimella oikealla.
+
+0:23:58.660,0:24:03.107
+Voit ottaa käyttöön ennalta määriteltyjä valmisasetuksia ("preset")
+
+0:24:03.107,0:24:08.088
+valmisasetusten pudotusvalikosta yläreunassa.
+
+0:24:08.088,0:24:12.935
+Sitten voit tutkia, miten ääni muuttuu
+
+0:24:12.935,0:24:17.315
+kun säätelet ääniparametrien liukusäätimiä.
+
+0:24:17.315,0:24:20.586
+Jos sinulla on kokemusta syntetisaattoreista
+
+0:24:20.586,0:24:25.839
+löydät tästä vanhan tutun 2 oskillaattorin summasyntikan
+
+0:24:25.839,0:24:32.191
+yksinkertaiselle verhokäyrällä.
+
+0:24:32.191,0:24:39.145
+Mitään kontrolloitua tapaa nuotin pitämiseen ja vapauttamiseen ei ole
+
+0:24:39.145,0:24:48.673
+SoundBoxin äänissä on syttyminen, vakiokestoinen pito ja vapautus
+
+0:24:48.673,0:24:53.620
+Nuottien pituuksia ei helpolla tavalla vaihdella.
+
+0:24:53.620,0:24:58.368
+Nyt valitsin valmisasetuksen nimeltä "Base drum 1"
+
+0:24:58.368,0:25:07.528
+toiseksi soittimeksi (eli toiselle raidalle)
+
+0:25:07.528,0:25:11.539
+Ääni on vähän bassorumpumainen [TODO: menoss täss]
+
+0:25:11.539,0:25:18.526
+Voidaan nyt laittaa biitti 'sävelkuvio 0':ksi toisessa raidassa
+
+0:25:18.526,0:25:23.274
+jossa on nyt bassorumpu soittimena
+
+0:25:23.274,0:25:28.393
+Toistetaanpa kuvio 0
+
+0:25:28.393,0:25:35.175
+Kuviot 1 ja 2 ja niin edelleen toimii samalla tavalla
+
+0:25:35.175,0:25:41.694
+ja ne on tosiaan erillisiä samoista numeroista muissa sarakkeissa
+
+0:25:41.694,0:25:46.541
+Käytä introissa pieniä, peräkkäisiä numeroita
+
+0:25:46.541,0:25:49.784
+Se tulee auttamaan paljon
+
+0:25:49.784,0:25:54.448
+Kuunnellaanpas ...
+
+0:25:54.448,0:26:00.114
+[satunnaisia nuotteja ja basaribiitti 120 iskua minuutissa]
+
+0:26:02.120,0:26:08.004
+Jos muutat äänen parametreja
+
+0:26:08.004,0:26:15.994
+valmisasetuksen nimi häviää näkymästä
+
+0:26:15.994,0:26:22.580
+voit aina palata valmisasetuksiin
+
+0:26:22.580,0:26:27.260
+ja ryhtyä kokeilemaan
+
+0:26:27.260,0:26:33.211
+Omilla soundeillasi ei ole nimeä.
+
+0:26:33.211,0:26:39.395
+Okei - tällä tavalla rakentelet kappaleen.
+
+0:26:43.374,0:26:50.461
+Yksi juttu vielä syntetisaattorimuokkaimesta:
+
+0:26:50.461,0:26:56.144
+On vielä kolmaskin sarakkeellinen muokkain
+
+0:26:56.144,0:27:02.429
+johon voi tallentaa ääniparametrien muutoksia sävelkuvion yhteyteen
+
+0:27:02.429,0:27:09.614
+Ensialkuun sen käyttäminen voi aiheuttaa vähän sekaannusta
+
+0:27:09.614,0:27:15.032
+johtuen syistä, joita avustussivulla kerrotaan
+
+0:27:15.032,0:27:22.546
+Voit saada sen avulla aikaan hienoja efektejä
+
+0:27:22.546,0:27:29.341
+mutta myös epäselvyyksiä.
+
+0:27:29.341,0:27:35.392
+Niinpä voi olla hyvä, että kokeilet kolmatta muokkainta joskus myöhemmin
+
+0:27:35.392,0:27:42.381
+ja toistaiseksi pitäydyt soittimissa, jotka pysyy biisin ajan samoina.
+
+0:27:42.381,0:27:51.472
+Eli jokaisella raidalla on oma soitin
+
+0:27:51.472,0:28:01.802
+ja voit pitää homman yksinkertaisena olemalla vaihtelematta niitä lennosta
+
+0:28:01.802,0:28:06.727
+Sitten luot raidoille sävelkuvioita
+
+0:28:06.727,0:28:12.534
+ja toistat niitä kappaleessa.
+
+0:28:13.829,0:28:15.776
+Sitten...
+
+0:28:15.776,0:28:20.757
+tämän kun ymmärrät
+
+0:28:20.757,0:28:25.933
+niin voin turvallisesti päästää sinut tutkiskelemaan lisää itsenäisesti
+
+0:28:25.933,0:28:30.364
+ja katsomaan esimerkkikappaleita
+
+0:28:30.364,0:28:38.409
+koska pystyt hahmottamaan niistä tällaisen rakenteen
+
+0:28:38.409,0:28:45.772
+ja pystyt ymmärtämään esimerkit jutuista, joita voi tehdä.
+
+0:28:47.334,0:28:51.079
+Tottakai kaikkein tärkeimpänä
+
+0:28:51.079,0:28:57.172
+pystyt aloittamaan omien kappaleiden tekemisen
+
+0:28:57.172,0:29:03.675
+aika helposti
+
+0:29:03.675,0:29:05.588
+tällä lailla...
+
+0:29:05.588,0:29:08.363
+näppäimistöä käyttämällä.
+
+0:29:08.363,0:29:17.356
+Huomaa: Sarkain-näppäimellä "tab" voit vaihtaa muokkainten välillä
+
+0:29:17.356,0:29:22.604
+Sarkain vie oikealle, vaihtonäppäin+sarkain vasemmalle
+
+0:29:22.604,0:29:29.199
+ja sitten on nuolinäppäimet liikkumiseen
+
+0:29:29.199,0:29:35.174
+niin sitten kaikki on sulla kontrollissa näppäimistön kautta
+
+0:29:35.174,0:29:42.462
+Mitähän muuta käyttöliittymästä ...
+
+0:29:42.462,0:29:49.416
+muistanko jotain, mistä on tullut sekaannusta?
+
+0:29:50.419,0:29:54.397
+[miettimishiljaisuus]
+
+0:29:54.397,0:29:58.810
+Ei tule ainakaan heti mieleen mitään...
+
+0:29:59.441,0:30:07.089
+Mutta joitain juttuja, joita voisi huomioida...
+
+0:30:09.059,0:30:15.358
+[äänenlaadussa ongelmia satunnaisten nuottien ja basaribiitin kanssa]
+
+0:30:15.358,0:30:20.841
+[johtuen punaisen huomioympyrän piirtelystä vasemmalle ylös]
+
+0:30:22.980,0:30:26.162
+Olin sanomassa:
+
+0:30:26.162,0:30:30.638
+Tarkkaile äänenvoimakkuusmittareita kappalemuokkaimen yllä
+
+0:30:30.638,0:30:34.538
+Et halua mennä pitkälle punaisen puolelle
+
+0:30:34.538,0:30:38.726
+koska sitten joudut hallitsemattoman
+
+0:30:38.726,0:30:43.559
+säröäänen puolelle. Pystyt vaikuttamaan asiaan
+
+0:30:43.559,0:30:50.000
+hallitsemalla soittimiesi 'drive'-parametria
+
+0:30:50.000,0:30:54.639
+joka tekee niistä kovempia tai hiljaisempia
+
+0:30:54.639,0:30:58.985
+Eli voit tasapainottaa soittimiasi
+
+0:30:58.985,0:31:03.933
+ja katsoa, että yhteisvoimakkuus ei mene punaisen puolelle
+
+0:31:03.933,0:31:09.783
+kovin paljoa, koska sitten se riistäytyy hallinnasta.
+
+0:31:09.783,0:31:13.679
+Jos haluat oikeata "säröefektiä" (tarkoituksellisesti)
+
+0:31:13.679,0:31:21.551
+käytä siihen soittimen säröefektiparametria (liuku nimeltä 'Dist')
+
+0:31:21.551,0:31:30.511
+mutta pistä 'Drive' pienemmäksi kokonaisvolyymin hallitsemiseksi
+
+0:31:30.511,0:31:41.476
+Siinä oli juttu muistettavaksi, kun ryhdyt tekemään soundeja luovasti.
+
+0:31:41.476,0:31:45.088
+Käyttöliittymästä vielä...
+
+0:31:45.088,0:31:57.401
+Näppäimistöltä laitetaan nuotteja, kuten näytin
+
+0:31:57.401,0:32:01.640
+Pitää aina olla sävelkuvio, johon nuotit syötetään
+
+0:32:01.640,0:32:06.348
+Laitetaanpa 'kuvio 0' kolmannelle soittimelle
+
+0:32:06.348,0:32:14.606
+ja valitaan mikä vaan soundi
+
+0:32:14.606,0:32:19.921
+Olin aikeissa näyttää
+
+0:32:19.921,0:32:42.217
+miten voit käyttää näppäimiä '<' and '>' oktaavin valintaan
+
+0:32:42.217,0:33:00.606
+Samat symbolit näkyy klikattavissa oktaavinvaihtopainikkeissa
+
+0:33:00.606,0:33:07.593
+virtuaalisen koskettimiston eri puolilla
+
+0:33:07.593,0:33:11.939
+On tosi yksinkertaista vaihtaa oktaavia
+
+0:33:11.939,0:33:18.927
+matalammaksi ja korkeammaksi, kuten näkyy ja kuuluu
+
+0:33:18.927,0:33:31.797
+[Syntikka soi eri oktaaveista; näppäimistö napsuu]
+
+0:33:31.797,0:33:34.773
+Oktaavi alas näppäimellä '<'
+
+0:33:34.773,0:33:38.684
+Oktaavi ylös näppäimellä '>'
+
+0:33:40.617,0:33:44.276
+Sitten päästän sinut kokeilemaan ...
+
+0:33:44.276,0:33:48.480
+Joitakin rajoituksia:
+
+0:33:48.480,0:33:56.035
+Vaikka voisit tehdä valssin tyyppistä musaa
+
+0:33:56.035,0:34:06.231
+jossa on 3 iskua tahdissa tai joku muu määrä
+
+0:34:06.231,0:34:11.012
+eli musaa, jossa lasketaan 3:een, 5:een, 7:ään tai muuta
+
+0:34:11.012,0:34:15.023
+(käyttämällä kuvion rivimäärän valitsinta 'RPP' / 'rows per pattern')
+
+0:34:15.023,0:34:24.518
+SoundBox toimii kuitenkin mukavimmin oletuksena olevalla 4 iskun tahdilla
+
+0:34:30.787,0:34:34.714
+[tonaalista informaatiota tapahtuu]
+
+0:34:34.714,0:34:40.000
+Joten... vooou... ollaan musiikillisissa sfääreissä!
+
+0:34:40.000,0:34:41.634
+Täysin satunnaista...
+
+0:34:41.634,0:34:44.476
+mutta pidetään vaan hauskaa ...
+
+0:34:44.476,0:34:50.025
+Olen tosi ylpeä tästä tuotoksesta!
+
+0:34:50.025,0:34:53.001
+Nämä pointit mielessä
+
+0:34:53.001,0:34:57.514
+ja erityisesti ymmärrys kappaleen rakenteesta
+
+0:34:57.514,0:35:01.557
+niin käyttämällä jonkin verran aikaa
+
+0:35:01.557,0:35:06.023
+pystyt itse asiassa hallitsemaan kappalettasi
+
+0:35:06.023,0:35:10.620
+eikä lopputuloksen tarvitse olla
+
+0:35:10.620,0:35:15.217
+tällaista satunnaisuutta, jota tein tässä,
+
+0:35:15.217,0:35:21.561
+kun näytin juttuja lennosta puolessa tunnissa.
+
+0:35:21.561,0:35:24.142
+Toivottavasti saat homman haltuun
+
+0:35:24.142,0:35:33.466
+käyttämällä ymmärrystä, jonka ensin opettelet.
+
+0:35:36.216,0:35:50.986
+Luulenpa, että on aika siirtyä seuraavaan pointtiin ...
+
+0:35:55.008,0:36:01.784
+Seuraava pointti on:
+
+0:36:02.843,0:36:15.026
+Tallenna usein ja pidä kirjaa versioista
+
+0:36:17.164,0:36:27.226
+[striimausohjelman opiskelun ääniä]
+
+0:36:27.226,0:36:34.273
+Pointti 4: Tallenna usein ja pidä kirjaa versioista...
+
+0:36:34.680,0:36:42.375
+Tallentaminen on SoundBoxissa tosi helppoa -
+
+0:36:42.375,0:36:48.755
+melkein liian helppoa, joten ehkäpä
+
+0:36:48.755,0:36:54.166
+auttaa pikkuisen näyttää ja selittää asiaa aluksi.
+
+0:36:54.166,0:36:59.542
+Löytyy tallennuspainike "Save" josta voit klikata
+
+0:36:59.542,0:37:03.121
+ja sitten se näyttää tältä.
+
+0:37:03.121,0:37:12.811
+Se antaa soppaisen näköisen URL:n samalle saitille
+
+0:37:12.811,0:37:15.961
+ja tosiaankin
+
+0:37:15.961,0:37:21.064
+kappaleen data on URLin lopussa
+
+0:37:21.064,0:37:23.803
+tää on aika fiksua ...
+
+0:37:23.803,0:37:35.473
+Voit vain kopioida osoitteen ihan mihin haluat
+
+0:37:35.473,0:37:42.461
+Nöyrä suositukseni on käyttää editoria
+
+0:37:42.461,0:37:51.421
+jota aiot käyttää ohjelmointiinkin
+
+0:37:51.421,0:37:57.274
+Tässä esimerkissä on nyt vain järjestelmän oletuseditori
+
+0:37:57.274,0:38:02.380
+joka ei oikein sovellu ohjelmointiin
+
+0:38:02.380,0:38:09.473
+mutta pystyn näyttämään idean yksinkertaisimmalla työkalulla
+
+0:38:09.473,0:38:13.233
+johon osoitteen saa talteen.
+
+0:38:13.233,0:38:18.392
+Eli näin: biisi on nyt tallessa
+
+0:38:18.392,0:38:23.559
+kunhan vaan muistat tallentaa tekstidokumentin
+
+0:38:23.559,0:38:30.459
+Täydellisyyden vuoksi tallennan tiedostonkin esimerkiksi
+
+0:38:30.459,0:38:42.300
+ja nimeän sen "versions_of_my_song.txt"
+
+0:38:42.300,0:38:52.838
+Se on vaan tekstiä, kuten kaikki ohjelmakoodikin
+
+0:38:52.838,0:38:55.731
+Nyt tuo versio on tallessa.
+
+0:38:55.731,0:39:07.097
+Milloin vain voin mennä tesktieditoriin
+
+0:39:07.097,0:39:25.680
+ja kopioida URLin selaimen osoiteriville
+
+0:39:25.680,0:39:34.256
+jolloin SoundBox aukeaa kappaleen data mukanaan
+
+0:39:34.256,0:39:42.488
+Kappaletta voi nyt taas muokkailla siitä, mihin jäätiin
+
+0:39:42.488,0:39:45.944
+Kuinka mukavaa...
+
+0:39:45.944,0:39:51.352
+Aina kun teet muutoksia
+
+0:39:51.352,0:40:01.557
+lisätään esimerkiksi kuviot 2, 3, 4 ja joitain nuotteja kuvioon 4 ...
+
+0:40:01.557,0:40:04.717
+tulee kappaleestasi uusi versio.
+
+0:40:04.717,0:40:08.184
+Tallennetaanpas taas:
+
+0:40:08.184,0:40:14.404
+Kopioit vaan URLin "Save Song"-toiminnolla
+
+0:40:14.404,0:40:20.000
+ja laitat sen turvalliseen paikkaan editorissasi
+
+0:40:20.000,0:40:27.350
+jonka kannattaa olla muu kuin järjestelmän oletuseditori
+
+0:40:27.350,0:40:33.092
+Sitten voit myös kuvailla versioita
+
+0:40:33.092,0:40:37.625
+kirjoittamalla kuvaavaa tekstiä
+
+0:40:37.625,0:40:46.086
+kuten "tämä versio biisistä voi olla liian piiitkä"
+
+0:40:46.086,0:40:51.011
+tai mitä tahansa. Voit hallita kappaleen versioita tällä tavalla
+
+0:40:51.011,0:40:54.997
+Se on helppoa ja yksinkertaista
+
+0:40:54.997,0:41:00.204
+ja lopulta voit liittää kappaleesi nettiosoitteena
+
+0:41:00.204,0:41:09.305
+introsi lähdekoodin kommentteihin.
+
+0:41:09.305,0:41:14.187
+Näppärää. Tärkeä pointti oli: tallenna usein
+
+0:41:14.187,0:41:18.713
+ja pidä jollain tavalla eri versiot näpeissäsi
+
+0:41:18.713,0:41:31.693
+koska muuten voi helposti tulla tuhoja
+
+0:41:31.693,0:41:39.667
+painamalla deleteä vahingossa
+
+0:41:39.667,0:41:47.231
+tai voit eksyä kehittelemään ideoita, jotka ei lopulta ole hyviä
+
+0:41:47.231,0:41:55.808
+Mutta ei hätää - voit aina palata versioon
+
+0:41:55.808,0:42:00.657
+jonka URL-osoitteen ja kuvailun olet laittanut talteen.
+
+0:42:00.657,0:42:05.215
+Kopioi vain osoite
+
+0:42:05.215,0:42:17.790
+Laita se selaimeen
+
+0:42:17.790,0:42:26.803
+ja olet takaisin turvallisessa, hyvässä, tunnetussa versiossasi.
+
+0:42:29.553,0:42:41.693
+Mun mielestä tämä on yksi aika tärkeä asia muistaa
+
+0:42:41.693,0:42:49.508
+että ensimmäisen introsi sävellyspuoli menee jouhevasti.
+
+0:42:49.508,0:42:55.668
+Et hukkaa hyviä versioita, koska muistat tallentaa usein
+
+0:42:55.668,0:43:01.065
+ja kirjata riittävästi kuvailutekstiä ylös
+
+0:43:01.065,0:43:05.102
+Se on niin helppoa - kun vain muistat toteuttaa!
+
+0:43:07.241,0:43:14.474
+Kohti seuraavaa pointtia varmaankin ...
+
+0:43:17.427,0:43:27.271
+Seuraava pointti on:
+
+0:43:27.271,0:43:33.333
+Pidä tiedoston koko mielessä
+
+0:43:33.333,0:43:40.000
+tämä on tärkeätä erityisesti introkilpailuissa
+
+0:43:40.000,0:43:46.131
+joissa on kokorajoitus.
+
+0:43:48.270,0:43:56.355
+Mennäänpäs takaisin SoundBoxiin
+
+0:43:59.105,0:44:05.491
+Introssa on siis jyrkkä kokorajoitus, esimerkiksi 4 kilotavua
+
+0:44:05.491,0:44:08.486
+kaikkeen -
+
+0:44:08.486,0:44:13.702
+jossa on mukana SoundBoxin syntikkakoodi
+
+0:44:13.702,0:44:16.677
+josta löytyy lisätietoa SoundBoxin avustussivulla
+
+0:44:16.677,0:44:23.530
+Lisäksi on kappaleen dasta - kaikki nuotit ja sävelkulut
+
+0:44:23.530,0:44:27.040
+pitää mahtua mukaan
+
+0:44:27.040,0:44:33.025
+Ja tietysti myös grafiikka, tarina - kaikki
+
+0:44:33.025,0:44:37.839
+pitää mahtua 4 kilotavuun, mikä on tosi vähän.
+
+0:44:37.839,0:44:43.589
+Niinpä täytyy tosissaan pitää tiedostokoko mielessä.
+
+0:44:44.613,0:44:54.069
+SoundBoxista löytyy valintaruksi 'Display file size'
+
+0:44:54.069,0:45:00.818
+Kehotan ryhtyä käyttämään sitä
+
+0:45:01.939,0:45:10.406
+Kun siinä on ruksi, SoundBox näyttää kaksi lukua
+
+0:45:10.406,0:45:18.669
+En tiedä, miten hyvin ne näkyy videolla pikkufontilla
+
+0:45:18.669,0:45:23.438
+mutta voit tehdä kokeiluja itsekin
+
+0:45:23.438,0:45:28.229
+samalla kun opettelet tekemään kappaleita.
+
+0:45:28.229,0:45:32.296
+Mittareita on kaksi:
+
+0:45:32.296,0:45:37.747
+Ensimmäinen luku on kappaleen pituus JavaScript-koodina
+
+0:45:37.747,0:45:44.991
+kun se lopulta viedään intro-ohjelman käyttöön
+
+0:45:44.991,0:45:51.166
+klikkaamalla latauspainiketta 'JS/JavaScript'.
+
+0:45:54.161,0:46:02.418
+Voit halutessasi katsella siitä latautuvaa JavaScriptiä -
+
+0:46:02.418,0:46:06.397
+(eikä siis haittaa, jos ohjelmointi on uutta ja ihmeellistä...)
+
+0:46:06.430,0:46:11.485
+latautuva teksti on lähdekoodia JavaScript-ohjelmointikielellä
+
+0:46:11.485,0:46:15.928
+Se alkaa muutamalla kommentilla, joissa on opastusta
+
+0:46:15.928,0:46:19.603
+ohjelmointiin liittyen
+
+0:46:19.603,0:46:23.025
+mutta tässä videossa ei nyt mennä ohjelmointiin ...
+
+0:46:23.025,0:46:25.025
+Kuitenkin (ilman sen kummempaa ohjelmointia),
+
+0:46:25.025,0:46:34.011
+voit nähdä rakenteen sellaisena kuin se tulee introosi:
+
+0:46:34.011,0:46:39.025
+Nuoteista ja sävelkuvioista tulee numeroita
+
+0:46:39.025,0:46:45.009
+ja jokainen niistä vaatii jonkun verran tilaa.
+
+0:46:45.009,0:46:51.795
+Ensimmäinen lukumäärä, jonka 'Display file size' näyttää
+
+0:46:51.795,0:46:57.868
+on juuri tuon koodin koko, jota vilkaistiin
+
+0:46:57.868,0:47:04.298
+JavaScript-kielisenä.
+
+0:47:04.298,0:47:13.946
+Se ei ole todellinen määrä tavuja, joita introstasi kuluu
+
+0:47:13.946,0:47:21.954
+koska yleensä tehdään joitain temppuja automaattisilla työkaluilla
+
+0:47:21.954,0:47:27.172
+ennen kuin tuotos on valmis
+
+0:47:27.172,0:47:32.889
+Se muun muassa pakataan ("compress") ZIP-tyyppiseen pakettiin
+
+0:47:32.889,0:47:41.219
+Niinpä toinen tavumäärä ('Compressed JS') on tärkeämpi.
+
+0:47:41.219,0:47:46.925
+Esimerkissä tähän asti
+
+0:47:46.925,0:47:53.770
+kappaleen datan pakattu koko ("compressed size")
+
+0:47:53.770,0:47:58.214
+on nyt 302 tavua ("302 bytes" jos vaan fontti näkyy kuvassa...)
+
+0:47:58.214,0:48:03.234
+Voit nähdä nämä luvut kaiken aikaa
+
+0:48:03.234,0:48:11.069
+kun sävellät ja vertaat ääniraitasi versioita
+
+0:48:11.962,0:48:17.233
+Muista siis klikata 'Display file size'
+
+0:48:17.233,0:48:22.099
+ja katsella lukuja ajoittain.
+
+0:48:22.099,0:48:25.881
+En pysty sanomaan mitään mahdollista maksimia
+
+0:48:25.881,0:48:32.005
+Kaikki riippuu lopulta kompromisseista, joita täytyy tehdä
+
+0:48:32.005,0:48:38.588
+grafiikan ja musiikin painottamissa
+
+0:48:38.588,0:48:43.684
+ja koko intron pituudessa
+
+0:48:43.684,0:48:46.832
+ja ehkä aika riittää
+
+0:48:46.832,0:48:51.582
+kekseliäisiin tapoihin pienentää koodia
+
+0:48:51.582,0:48:53.582
+joissain kohdissa ...
+
+0:48:53.582,0:48:57.454
+Ei siis ole mitään sääntöä
+
+0:48:57.454,0:49:02.000
+tai tiettyä tavumäärää, mihin tähdätä
+
+0:49:02.000,0:49:08.574
+Mutta muista, että vähemmän on vähemmän joka tapauksessa -
+
+0:49:08.574,0:49:14.138
+eli koko on hyvä pitää mielessä
+
+0:49:14.138,0:49:18.735
+jos aiot tosissaan saada tuotoksen tehtyä
+
+0:49:18.735,0:49:23.744
+neljän kilon introkisaan.
+
+0:49:23.744,0:49:29.512
+Voit havainnoida, miten luvut muuttuu:
+
+0:49:29.512,0:49:35.432
+jos esimerkiksi lisäät
+
+0:49:35.432,0:49:43.848
+yhden toiston 'kuvio 0':sta ekaan raitaan
+
+0:49:43.848,0:49:50.787
+Huomaat, että JavaScriptissä on nyt enemmän dataa
+
+0:49:50.787,0:49:56.615
+mutta varsinainen pakattu koko on edelleen sama
+
+0:49:56.615,0:50:01.823
+koska asioita tapahtuu pakkaamisessa.
+
+0:50:01.823,0:50:07.553
+Lopulta sekin vaikuttaa, että juttu pakataan könttänä
+
+0:50:07.553,0:50:11.334
+kaiken muun koodin kanssa.
+
+0:50:11.334,0:50:15.168
+Siinpä nämä luvut eivät ole tarkkoja
+
+0:50:15.168,0:50:19.644
+mutta ne antavat jonkinlaista suuntaa.
+
+0:50:19.644,0:50:22.000
+Lisätäänpä juttuja esimerkkiin ...
+
+0:50:22.000,0:50:26.291
+Jos käytät paljon toistoa
+
+0:50:26.291,0:50:30.599
+kappaleesta voi tulla tylsä
+
+0:50:30.599,0:50:33.973
+joten älä toista koko ajan, mutta
+
+0:50:33.973,0:50:39.283
+kaikki toistot pakkautuvat paremmin
+
+0:50:39.283,0:50:43.727
+pakkausalgoritmin ansiosta.
+
+0:50:43.727,0:50:51.540
+Niinpä joitain temppuja kuten toistoa voi soveltaa
+
+0:50:51.540,0:50:58.676
+ja kannattaa välttää helppoja mokia
+
+0:50:58.676,0:51:05.921
+kuten kirjainten käyttäminen sävelkuvioille vahingossa
+
+0:51:05.921,0:51:10.000
+Katsos kun laitan 'kuvio A':n tänne
+
+0:51:10.000,0:51:16.722
+tulee heti isompi tiedosto
+
+0:51:16.722,0:51:23.543
+kuin laittamalla numero 0-9
+
+0:51:23.543,0:51:35.907
+Huomaa: mitä myöhempi aakkonen, sitä enemmän tilaa se tarvitsee
+
+0:51:35.907,0:51:43.864
+Voit tutkia JavaScriptistä, miten homma käytännössä toimii
+
+0:51:43.864,0:51:49.123
+Mutta ilman ohjelman tutkimistakin
+
+0:51:49.123,0:51:53.821
+voit tarkkailla vaikutuksia näistä luvuista.
+
+0:51:53.821,0:52:01.784
+Ei ole hyvä tehdä hauskoja tekstiviestejä
+
+0:52:01.784,0:52:09.168
+kappaleen dataan vaikka se olisi niin hauskaa ...
+
+0:52:09.168,0:52:15.903
+Siinä menee tilaa turhan päiten.
+
+0:52:15.903,0:52:21.976
+Tämän takia kannattaa pysytellä pienissä numeroissa kuvioille
+
+0:52:21.976,0:52:29.220
+eikä jättää välinumeroita käyttämättä lopullisessa versiossa
+
+0:52:29.220,0:52:36.057
+Joo, ja aina pystyy tutkimaan miten valinnat
+
+0:52:36.057,0:52:40.959
+vaikuttavat kokoon.
+
+0:52:40.959,0:52:47.847
+Tässä pistän ison kirjaimen kuvion numeroksi
+
+0:52:47.847,0:52:53.463
+mikä on tyhmää, koska se maksaa enemmän tavuja
+
+0:52:53.463,0:53:00.490
+kuin laittaa 0 (329 tavua vs. 320 tavua tässä, jos videolta ei erotu)
+
+0:53:04.614,0:53:12.307
+Riippuen myös sijainneista - kuinka monta raitaa on käytössä - 
+
+0:53:12.307,0:53:17.344
+voi tulla käytettyä enemmän tavuja
+
+0:53:17.344,0:53:27.991
+Kun laittaa 'kuvio 0':n tänne soittimeen 5
+
+0:53:27.991,0:53:31.621
+niin menee joitain tavuja, okei, ...
+
+0:53:31.621,0:53:42.990
+mutta jos vahingossa käyttäisin raitaa, joka on enempi oikealla (esim. 15)
+
+0:53:42.990,0:53:48.537
+menisi tavuja enemmän
+
+0:53:48.537,0:53:54.304
+koska tieto siitä, että käytettyjen raitojen välissä ei ole mitään
+
+0:53:54.304,0:53:56.332
+tallentuu kuitenkin mukaan.
+
+0:53:56.332,0:54:02.201
+Neljän kilotavun introa varten
+
+0:54:02.201,0:54:07.460
+haluat käyttää pieniä numeroita kuten 0, 1, ...
+
+0:54:07.460,0:54:17.811
+lähellä kappalemuokkaimen vastenta laitaa
+
+0:54:19.811,0:54:23.644
+Siihen on hyvä tähdätä
+
+0:54:23.644,0:54:31.245
+ja keino, jota voit käyttää on 'Display file size'
+
+0:54:32.247,0:54:36.141
+Muista, että koko on vain arvio
+
+0:54:36.141,0:54:39.504
+joten viimekädessä
+
+0:54:39.504,0:54:44.473
+täytyy myös testata koko intron koostettua muotoa
+
+0:54:44.473,0:54:49.625
+jotta näkee, paljonko sen lopullinen koko on.
+
+0:54:49.625,0:54:53.600
+Mutta ääniraitaa tehdessä
+
+0:54:53.600,0:54:58.080
+voit tehdä arviota
+
+0:54:58.080,0:55:05.375
+ja verrata erilaisten valintojen vaikutuksia.
+
+0:55:05.375,0:55:11.209
+Tässä oli viides pointtini
+
+0:55:11.209,0:55:15.958
+joka on tärkeätä, että onnistuisit
+
+0:55:15.958,0:55:19.537
+tekemään ensimmäisen demoscene-introsi
+
+0:55:19.537,0:55:23.469
+mahdollisimman jouhevasti.
+
+0:55:23.469,0:55:35.347
+Minulla taitaa olla enää yksi pointti ...
+
+0:55:36.264,0:55:39.523
+Viimeinen pointti:
+
+0:55:39.523,0:55:45.238
+Valmistaudu jättämään asioita pois.
+
+0:55:45.238,0:55:48.683
+Mitä tämä tarkoittaa...
+
+0:55:48.683,0:56:03.476
+[striimausohjelman opiskelun ääniä]
+
+0:56:04.342,0:56:14.184
+"Jättää asioita pois" tarkoittaa, että
+
+0:56:14.184,0:56:21.171
+lopulta joudut luultavasti tekemään kompromissin
+
+0:56:21.171,0:56:28.550
+alkuperäisen suunnitelmasi suhteen,
+
+0:56:28.550,0:56:33.249
+mitä halusit kertoa introsi tarinassa,
+
+0:56:33.249,0:56:37.591
+ja kuinka paljon grafiikkaa saat mahtumaan
+
+0:56:37.591,0:56:41.925
+ja kuinka paljon musiikkia.
+
+0:56:41.925,0:56:48.679
+On siis hyvin mahtollista, että joudut jättämään jotain pois
+
+0:56:48.679,0:56:52.105
+monista syistä.
+
+0:56:52.105,0:56:55.459
+Niinpä on tärkeätä valmistautua siihen -
+
+0:56:55.459,0:57:06.056
+henkisesti, mikä palautuu aiempaan pointtiin
+
+0:57:06.056,0:57:12.578
+olla itselleen suopea
+
+0:57:12.578,0:57:19.110
+ja hallita odotuksia ihan ensimmäisen intron osalta
+
+0:57:19.110,0:57:27.219
+Mutta jouhevan prosessin kannalta
+
+0:57:27.219,0:57:33.464
+auttaa pitää tämä mielessä alusta alkaen:
+
+0:57:33.464,0:57:38.876
+Kun luot kappaleesi,
+
+0:57:38.876,0:57:42.353
+voit rakennella sen niin että
+
+0:57:42.353,0:57:45.568
+ehkä siinä on joku päämelodia
+
+0:57:45.568,0:57:49.004
+tai just ne biitit, jotka todella, todella, haluat sinne
+
+0:57:49.004,0:57:58.861
+eli "pääjuttu" rakennettuna vasemmanpuoleisiin raitoihin
+
+0:57:58.861,0:58:06.462
+Sitten voi olla lisukkeita
+
+0:58:06.462,0:58:15.416
+joita voisi tarpeen tullen jättää pois
+
+0:58:16.689,0:58:30.441
+Lisäksi kannattaa suunnitella intron konseptia
+
+0:58:30.441,0:58:37.787
+niin että tiedät, mikä on pääjuttu
+
+0:58:37.787,0:58:43.605
+koska se voi helpottaa lisukkeiden jättämistä pois
+
+0:58:43.605,0:58:48.014
+eli "olisi ollut kiva" -osastoa.
+
+0:58:48.014,0:58:54.613
+Kun tiedät, mikä on pääjuttu, niin se mahdollistaa
+
+0:58:54.613,0:58:59.719
+selviytyä muiden juttujen jättämisestä pois
+
+0:58:59.719,0:59:06.862
+ja fokusoida siihen yhteen asiaan, jonka saat valmiiksi
+
+0:59:06.862,0:59:13.429
+Voit valmistautua teknisesti
+
+0:59:13.429,0:59:22.937
+kappaleen rakenteen avulla.
+
+0:59:22.937,0:59:34.828
+Ehkäpä löytäisin esimerkiksi jonkun pidemmän kappaleen
+
+0:59:34.828,0:59:47.368
+jostain omasta aiemmasta tutotoksestani
+
+0:59:47.368,0:59:56.903
+Äskettäisissä latauksissa mulla on yksi vuosien takaa
+
+0:59:56.903,1:00:01.907
+kisatuotos nimeltä "Tilestys"
+
+1:00:01.907,1:00:15.074
+Luultavasti kappale on kommenteissa lähdekoodissa
+
+1:00:15.074,1:00:21.464
+niin voitaisiin katsoa sitä esimerkkinä
+
+1:00:21.464,1:00:30.214
+Ok, löysin sen ja avasin editoriin
+
+1:00:30.214,1:00:40.000
+Näyttää, että tämä oli 2018 - kylläpä aika rientää
+
+1:00:40.000,1:00:50.927
+Versioiden kuvailu ei ole ollut ihan superia
+
+1:00:50.927,1:00:55.604
+mutta luulen, että nämä on just
+
+1:00:55.604,1:01:01.344
+versioita, joita olen tehnyt ihan viime hetkillä
+
+1:01:01.344,1:01:06.858
+introa työstäessä
+
+1:01:06.858,1:01:17.521
+ja näissä on juuri kokeiluja, mitä voi pitää ja mitä jättää
+
+1:01:17.521,1:01:24.352
+Jos silloin olisi ollut enemmän aikaa
+
+1:01:24.352,1:01:30.344
+niin kuvailut olisivat voineet olla tarkempia
+
+1:01:30.344,1:01:39.394
+Ladataanpas yksi versio ja tutkintaan sitä 6 vuoden jälkeen
+
+1:01:39.394,1:01:50.000
+Ok - tässä näkyy oma yritykseni
+
+1:01:50.000,1:02:05.108
+Kokeillan, saisiko sen soimaan tässä videolla
+
+1:02:05.108,1:02:16.045
+["Tilestys"-intron ääniraita epätoivotulla rutinalla]
+
+1:02:16.045,1:02:23.528
+Joo, tämä tietokone voi olla liian hidas striimaukseen
+
+1:02:23.528,1:02:28.714
+Mutta tästä näkyy, miten biisi on rakenneltu:
+
+1:02:28.714,1:02:33.311
+tapahtuu paljon toisteisuutta
+
+1:02:33.311,1:02:37.652
+eli yksi "oppikirjatemppu"
+
+1:02:37.652,1:02:42.300
+mutta kuitenkin joitain muunnelmia
+
+1:02:42.300,1:02:47.202
+jotta se ei käy liian tylsäksi liian pian
+
+1:02:47.202,1:02:50.119
+vähän niin kuin yrityksiä toteuttaa näitä juttuja
+
+1:02:50.119,1:02:55.182
+Sitten on yksi selkeästi erilainen osio
+
+1:02:55.182,1:03:02.307
+joten introssa on ikään kuin erilaisia vaiheita
+
+1:03:02.307,1:03:05.645
+ei tietysti tarpeeksi ...
+
+1:03:05.645,1:03:07.645
+se ei ole täydellinen ...
+
+1:03:07.645,1:03:13.209
+muttapa... pointtini numero 2 oli "Pidetään hauskaa"
+
+1:03:13.209,1:03:20.000
+ja ollaan itsellemme armollisia tuotosten laadun suhteen
+
+1:03:21.375,1:03:27.963
+Kumminkin, jos olisi käynyt niin
+
+1:03:27.963,1:03:32.395
+että aika olisi loppunut pahemmin introa tehdessä
+
+1:03:32.395,1:03:38.876
+eikä olisi ollut riittävästi grafiikkaa
+
+1:03:38.876,1:03:44.018
+pitämään mielenkiintoa yllä niinkään pitkään kuin biisi kestää
+
+1:03:44.018,1:03:49.098
+olisin ehkä ollut tyytyväinen ennakkovalmisteluun -
+
+1:03:49.098,1:03:53.796
+näyttäisi, että on melko erillinen osuus
+
+1:03:53.796,1:03:58.902
+jonka olisi voinut jättää pois
+
+1:03:58.902,1:04:06.087
+niin että lyhyempikestoisen kokonaisuuden
+
+1:04:06.087,1:04:11.618
+olisi voinut kehitellä mielenkiintoisemmaksi
+
+1:04:11.618,1:04:15.095
+ja jättää vaan loput pois.
+
+1:04:15.095,1:04:25.445
+Se olisi niin helppoa kuin avata tämä versio ja poistaa loppuosa
+
+1:04:27.845,1:04:36.922
+Toinen juttu on ilmeisen harvoin tuleva 'kuvio 0' raidalla 6
+
+1:04:36.922,1:04:42.537
+ehkä se on joku bassonuotti (muistin väärin; on peltityypinen kohinasoundi)
+
+1:04:42.537,1:04:48.514
+Se tekee jotakin mielenkiintoista kappaleessa
+
+1:04:48.514,1:04:56.675
+mutta jos olisi absoluuttisen pakko lisätä jotakin grafiikkaan
+
+1:04:56.675,1:05:06.041
+niin ehkä sen voisi poistaa
+
+1:05:06.041,1:05:14.151
+ja katsoa, miten koko muuttuisi
+
+1:05:14.151,1:05:22.465
+Ilmenee, että siitä saisi monta tavua tilaa grafiikalle
+
+1:05:22.465,1:05:35.409
+Tarkistetaanpas, olinko tehnyt myös sen tyhmän virheen tyhjistä väliraidoista
+
+1:05:35.409,1:05:45.505
+Ei.. oli siellä juttuja kaikilla raidoilla lopullisessa kappaleessa
+
+1:05:48.917,1:05:53.903
+Viimeinen pointti oli:
+
+1:05:53.903,1:05:56.434
+valmistaudu jättämään tavaraa pois
+
+1:05:56.434,1:06:06.690
+nyt 6 vuoden jälkeen palautuu asioita mieleen tästä raidasta
+
+1:06:06.690,1:06:12.547
+Jos tarpeen, raidan 6 (ajoittainen peltisoundi)
+
+1:06:12.547,1:06:17.042
+voisi jättää pois
+
+1:06:17.042,1:06:21.721
+Sitten saisi 70 tavua
+
+1:06:21.721,1:06:26.419
+tehdä vaikka joku feidaus tai muu hinkkaus grafiikkaan
+
+1:06:26.419,1:06:29.743
+Tämä on kaksisuuntaista:
+
+1:06:29.743,1:06:34.493
+jos tosissaan haluat listätä kappaleeseen jotakin
+
+1:06:34.493,1:06:40.000
+niin sitten täytyy jättää grafiikasta juttuja pois
+
+1:06:40.000,1:06:45.615
+tai tarinasta, kokonaiskestosta tai jostakin
+
+1:06:49.077,1:06:57.342
+Tämä on introjen tekemisessä vaikeaa, mutta mielestäni myös
+
+1:06:57.342,1:07:09.429
+se tärkein kiinnostava juttu koko harrastuksessa - 
+
+1:07:09.429,1:07:14.672
+miksi meillä muuten olisi näitä kisoja
+
+1:07:14.672,1:07:20.208
+joissa on kokorajoitus suoritettavalle ohjelmalle
+
+1:07:20.208,1:07:31.322
+Se on hauskaa ja koukuttavaa etsiä täydellistä kompromissia
+
+1:07:31.322,1:07:36.401
+jota ei koskaan voi lopulta löytää.
+
+1:07:37.776,1:07:46.413
+Siinäpä oli pointtini #6 asioiden jättämisestä pois.
+
+1:07:46.413,1:07:53.759
+Pointit on nyt varmaankin käsitelty.
+
+1:07:53.759,1:08:01.003
+Vielä joitain asioita SoundBoxista, jotka löytyvät avustuksesta
+
+1:08:01.003,1:08:05.803
+mutta jotka on ehkä hyvä havaita:
+
+1:08:05.803,1:08:15.396
+Voit valita alueen ja kuunnella pelkästään sitä
+
+1:08:15.396,1:08:18.040
+näin
+
+1:08:18.040,1:08:21.160
+["Tilestys"-intron ääniraita alkaen keskeltä; rutisee hitaalla koneella]
+
+1:08:22.688,1:08:30.515
+Ja sitten näissä sävelkuvioissa
+
+1:08:30.515,1:08:42.309
+sulla voi olla monta nuottia eli korkeintaan 4 samaan aikaan
+
+1:08:42.309,1:08:46.736
+samalla soittimella
+
+1:08:46.736,1:08:52.911
+Tämä on yksi tapa, jolla mahdollisesti säästää tilaa
+
+1:08:52.911,1:09:00.000
+ja saada tapahtumaan jänniä musiikillisia juttuja
+
+1:09:00.000,1:09:08.365
+En käy mitään yksityiskohtia syntikkamuokkaimesta
+
+1:09:08.365,1:09:14.257
+koska se menisi jo ohi aiheen.
+
+1:09:14.257,1:09:21.545
+Sitten päästään kertaamaan ...
+
+1:09:30.522,1:09:33.030
+No niin, se oli suurinpiirtein siinä ...
+
+1:09:33.030,1:09:42.196
+Yritin muistella asioita, joita on käynyt introtyöpajoissa
+
+1:09:42.196,1:09:48.269
+Luulenpa, että näillä kaikilla pointeilla on historiaa
+
+1:09:48.269,1:09:53.850
+eli on oikeasti tapahtunut:
+
+1:09:53.850,1:10:04.302
+Porukka on tehnyt kivoja demoja, mutta musiikki onkin kopioitu muualta
+
+1:10:04.302,1:10:09.714
+niin sitten tuotos täytyy hylätä kilpailusta
+
+1:10:09.714,1:10:13.689
+mikä on siinä tilanteessa paras vaihtoehto
+
+1:10:13.689,1:10:17.431
+koska ei voi edetä ja julkaista muiden musiikkia
+
+1:10:17.431,1:10:20.398
+Elikkäs, ole varovainen tekijänoikeuksien kanssa!
+
+1:10:20.398,1:10:23.955
+Käytä vain itse tehtyä materiaalia.
+
+1:10:23.955,1:10:29.027
+Tämä toinenkin pointti on tärkeä - on käynyt
+
+1:10:29.027,1:10:35.457
+että ihmiset arastelevat tuotoksiaan
+
+1:10:35.457,1:10:43.465
+ajatellen, että ne eivät ole riittävän siistejä tai kiiltäviä
+
+1:10:43.465,1:10:48.008
+pistettäväksi kilpailuun
+
+1:10:48.008,1:10:52.099
+Mutta se on mun mielestä harmi
+
+1:10:52.099,1:10:58.215
+koska omasta mielestäni kaikki on olleet tosi luovia
+
+1:10:58.215,1:11:01.386
+ja mukavia teoksia, musa ja grafiikat.
+
+1:11:01.386,1:11:06.340
+Toivottavasti saat psyykattua itseäsi
+
+1:11:06.340,1:11:14.094
+irtautumaan ryppyotsaisuudesta
+
+1:11:14.094,1:11:20.829
+ja pitämään hauskaa ja hyväksymään tuotokset, mitä pystyt tekemään
+
+1:11:20.829,1:11:22.829
+ensimmäiseksi introksesi.
+
+1:11:22.829,1:11:26.548
+Joo, sitten on tapahtunut, että
+
+1:11:26.548,1:11:34.018
+jotkut on unohtaneet oppia ja ymmärtää musiikkityökaluston
+
+1:11:34.018,1:11:37.291
+ja sitten kun olan yli katsoo ...
+
+1:11:37.291,1:11:41.282
+niin siellä on satunnaista painikkeiden klikkailua sinne tänne
+
+1:11:41.282,1:11:49.325
+mikä yleensä myös tuottaa liian ison tiedoston
+
+1:11:50.496,1:12:00.300
+Eli toivottavasti vinkeistäni on apua - yksi niistä oli
+
+1:12:00.300,1:12:05.202
+lukea SoundBoxin omakin avustus ja ymmärtää työkalu
+
+1:12:05.202,1:12:08.577
+Toivottavasti muistat myös tehdä sen.
+
+1:12:08.577,1:12:17.041
+Joo, #4 on tapahtunut itselleni monesti:
+
+1:12:17.041,1:12:23.405
+tulee innostuttua niin paljon
+
+1:12:23.405,1:12:28.409
+että päädyn jonnekin sivuraiteille
+
+1:12:28.409,1:12:38.486
+mutta olen unohtanut tallentaa aiemman version
+
+1:12:38.486,1:12:44.000
+Se on harmi, kun olisi niin helppoa tallentaa
+
+1:12:44.000,1:12:50.000
+tilannekuvia kappaleesta URL-osoitteena
+
+1:12:50.000,1:12:55.244
+matkan varrella ja pitää niistä kirjaa
+
+1:12:55.244,1:12:58.873
+niin että aiempi hyvä versio löytyy
+
+1:12:58.873,1:13:01.725
+jos sattuu eksymään.
+
+1:13:01.725,1:13:06.220
+Koeta pitää tää mielessä.
+
+1:13:06.220,1:13:08.893
+Pointti #5 oli tiedostokoosta
+
+1:13:08.893,1:13:15.336
+voit hallita sita usealla eri tavalla.
+
+1:13:15.336,1:13:23.599
+Lopuksi (pointti #6) voit valmistautua teknisesti ja henkisesti
+
+1:13:23.599,1:13:27.670
+jättämään tavaraa pois
+
+1:13:27.670,1:13:36.951
+koska kaikki maksaa jonkin verran tavuja
+
+1:13:36.951,1:13:45.062
+ja introkisan koko idea on, että maksimikoko on määrätty
+
+1:13:45.062,1:13:50.000
+ja sovellat luovuutta sen rajoitteen puitteissa.
+
+1:13:50.000,1:13:54.444
+Sen ei tarvitse olla liian tuskallista -
+
+1:13:54.444,1:13:59.194
+yksi keino päästä tavoitteeseen on
+
+1:13:59.194,1:14:04.656
+rakennella vaihtoehtoja, joista voi valikoida osiota
+
+1:14:04.656,1:14:13.071
+ja jättää pois ne, jotka ei ole olennaisimpia pääviestille
+
+1:14:13.071,1:14:15.885
+demossasi.
+
+1:14:15.885,1:14:22.263
+Tämä on myös hyvä juttu, joka mahdollistaa
+
+1:14:22.263,1:14:28.215
+keskittymisen tärkeimpiin ideoihin
+
+1:14:28.215,1:14:31.335
+ja pakottaa luoviin ratkaisuihin.
+
+1:14:32.761,1:14:39.547
+Uskon, että tämä tekee sinusta paremman
+
+1:14:39.547,1:14:46.181
+seuraavaan projektiisi elämässä, työssä tai opiskelussa:
+
+1:14:46.181,1:14:51.949
+Olet harjoitellut keskittymistä olennaisimpaan
+
+1:14:51.949,1:14:55.527
+tässä, hauskanpidossa demoscenen introkisaa varten.
+
+1:14:55.527,1:14:57.476
+Okei...
+
+1:14:57.476,1:15:02.494
+Mulla ei taida olla enempää sanottavaa tässä kohtaa
+
+1:15:02.494,1:15:07.287
+Joten - hauskaa biisin träkkeröintiä
+
+1:15:07.287,1:15:11.957
+ja nähdään jossain demopartyillä!
+
+1:15:11.957,1:15:17.750
+Kiitos, kun katselit. Nähdään!

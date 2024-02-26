@@ -86,16 +86,16 @@ What you **should do** if you have the time:
 What you **can do** to make things go even smoother:
 
 - **Plan a concept** for your entry: What kind of idea or mood would you like to
-  aim for? What is the main idea you want your audience to grasp? **Mentally
+  aim for? What is the **main idea** you want your audience to grasp? **Mentally
   prepare to let go** of lots of details or execute your concept in a different
-  way than could be done in dreams! This workshop deliberately brings tough
-  constraints to visual elements, and we only have a couple of days and nights
-  to make your concept live.
+  way than could be done in a perfect world! This workshop deliberately brings
+  tough constraints to visual elements, and we only have a couple of days and
+  nights to bring your concept alive.
 
   Examples:
 
   + [Demoilijan Käsikirja (PDF, In finnish)](https://www.postimuseo.fi/wp-content/uploads/2023/08/demoilijan_kasikirja_0623_A5_N.pdf)
-    is a general newcomer guide to demoscene. In a short workshop, it is best to
+    is a general newcomer guide to demoscene (in Finnish only). In a short workshop, it is best to
     aim at one scene (20-40 seconds) in which a story can be told by putting
     together quite simple graphical elements. Start with the idea / mood /
     story. I promise **we can get creative** with the implementation using just
@@ -107,8 +107,8 @@ What you **can do** to make things go even smoother:
 
   + My own [design documents](http://users.jyu.fi/~nieminen/courselogo_plan.jpg)
     for the 4k intro that was an intro to an intro course in graphics and later
-    became this workshop. The course logo was a main 'asset' that needed careful
-    thought. Underneath there is once again a paper with a timeline or 'sync
+    became the base code for this workshop. The course logo "TIEA311" was a main 'asset' that needed careful
+    thought and consideration. Underneath there is once again a paper with a timeline or 'sync
     track'.
 
   Ideas happen in your mind. I recommend putting them on paper first. When we
@@ -133,10 +133,12 @@ What you **can do** to make things go even smoother:
 
   **Read the help page** of SoundBox: https://sb.bitsnbites.eu/help.html 
 
-  **TODO (if I have time):** A small video tutorial about making the
-  soundtrack.. I think showing some things in practice would help a newbie get
-  tracking more comfortably and to avoid some common problems
-  that usually appear, based on workshop experience.. 
+  Take a look at my [video tutorial](https://youtu.be/JnJ5bUT6s8Q)
+  "How to make a soundtrack for your first demoscene intro using the
+  SoundBox soft synth tracker" ... I think showing some things in
+  practice would help a newbie get tracking more comfortably and to
+  avoid some common problems encountered in earlier workshops. I hope
+  it makes the process smoother for you!
 
 - **Check out earlier productions** that have been created at the workshop, so
   you'll know what to expect, more or less. You may contrast these to high-end
