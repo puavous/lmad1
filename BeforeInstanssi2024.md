@@ -133,7 +133,7 @@ What you **can do** to make things go even smoother:
 
   **Read the help page** of SoundBox: https://sb.bitsnbites.eu/help.html 
 
-  **Check out my video tutorial** about it: https://youtu.be/JnJ5bUT6s8Q
+  **Check out a video tutorial** about it: https://youtu.be/JnJ5bUT6s8Q
 
   The video is titled "How to make a soundtrack for your first demoscene intro using the
   SoundBox soft synth tracker" ... I think showing some things in
