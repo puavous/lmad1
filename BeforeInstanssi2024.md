@@ -133,10 +133,11 @@ What you **can do** to make things go even smoother:
 
   **Read the help page** of SoundBox: https://sb.bitsnbites.eu/help.html 
 
-  Take a look at my [video tutorial](https://youtu.be/JnJ5bUT6s8Q)
-  "How to make a soundtrack for your first demoscene intro using the
+  **Check out my video tutorial** about it: https://youtu.be/JnJ5bUT6s8Q
+
+  The video is titled "How to make a soundtrack for your first demoscene intro using the
   SoundBox soft synth tracker" ... I think showing some things in
-  practice would help a newbie get tracking more comfortably and to
+  practice will help a newbie get tracking more comfortably and to
   avoid some common problems encountered in earlier workshops. I hope
   it makes the process smoother for you!
 
