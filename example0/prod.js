@@ -54,9 +54,11 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7dk9SgNBGAbgd2MS0MKfSsvFnELwOJZCGhsRJN0SEi
 /** Song tempo; the library computes time in beats for easy sync. */
 var songBeatsPerMinute = 116;
 /** You must give an RGBA color; scene background is cleared by the library.*/
-var clearColor=[0,0,0,1];
+var clearColor = [0,0,0,1];
 /** You must give a light direction in camera space. */
-var defaultLightDirection=[1,1,1,0];
+// FIXME: No - the Light will be in scenegraph before I'24 !!
+// FIXME: The fog will disappear from the example even before..
+var defaultLightDirection = [1,1,1,0];
 // (so far, the only lighting model available; will improve in later workshop
 // instances, but not yet in the one we have today...)
 
@@ -157,7 +159,7 @@ function snowman(t){
         [ .1,  .12, .05, 1, // ambient
           .2,  .4,  .5,  1, // diffuse
           .6,  .3,  .1,  2, // specular
-          10,   1,   0,  0  // control
+           4,   1,   0,  0  // control
         ];
 
     var black=
@@ -167,11 +169,11 @@ function snowman(t){
           10,   1,   0,  0  ];
 
     stuff.c.push({f: [translate_wi(0,1,0)],
-                  o: [new Material(clr),objBall],
+                  o: [new Material(clr), objBall],
                   c: []
                  });
     stuff.c.push({f: [translate_wi(0,2,0), scale_wi(.7)],
-                  o: [new Material(clr),objBall],
+                  o: [new Material(clr), objBall],
                   c: [
                       {f: [rotY_wi(.2), rotZ_wi(.4*Math.sin(.8*t)), translate_wi(1,0,0), scaleXYZ_wi(.8,.3,.3)],
                        o: [objBall],
@@ -182,13 +184,13 @@ function snowman(t){
                              ]
                  });
     stuff.c.push({f: [translate_wi(0,3,0), scale_wi(.4), rotX_wi(-.3)],
-                  o: [new Material(clr),objBall],
+                  o: [new Material(clr), objBall],
                   c: [{f: [translate_wi(0,.5,0), scaleXYZ_wi(1.5,.2,1.5)],
-                       o: [new Material(black),objBall],
+                       o: [new Material(black), objBall],
                        c: []
                       },
                       {f: [translate_wi(0,.2,0), scaleXYZ_wi(.9,1,.9)],
-                       o: [new Material(black),objBall],
+                       o: [new Material(black), objBall],
                        c: []
                       }
                      ]
