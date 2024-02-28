@@ -6,13 +6,13 @@
 
 include Settings.mk
 
-# The above included file should set a couple of things (see the
-# examples). When the included file and referenced sources are OK (and
-# the tool programs installed), Linux users can just "make
+# The above included file should be edited to set a couple of things.
+# When the Settings.mk file and referenced sources are OK (and
+# the tool programs installed), Workshop participants can just "make
 # $(PROD_NAME_FULL)_by_$(PROD_AUTHOR).zip" and upload the resulting
 # zip file to the compo system at a party place.
 
-# While developing, you can try new things quickly with "make
+# While creating your intro, you can try new things quickly with "make
 # $(PROD_NAME).debug.html" and then reload the debug version in your
 # browser.
 
@@ -73,3 +73,29 @@ cleaner: clean
 veryclean: cleaner
 	-rm *_by_*.zip
 
+
+# The above might be GNU make -specific; it is in my long-term plan
+# to possibly make it in more standard.
+# An English explanation of how an end product using lmad1 is created:
+#
+#  1. Create a JavaScript file containing "(function(){BULK})();"
+#     where BULK is a catenation of the library, the soft-synth, code
+#     specific to artistic production, and *last of all* the main
+#     "on-load code".
+# 
+#  2. <!-- To run in "debug mode", create an HTML file containing
+#     "<html><head /><body><script>JS</script></body></html>" where JS
+#     is the JavaScript produced in step 1. Open in a browser that
+#     happens to accept the beast. -->
+# 
+#  3. To produce a minified "intro competition" version, Remove
+#     debugging code and other redundant
+#     functionality (lines that end with "DEBUG". Feed into a
+#     JavaScript minifier like Closure. Then pack with PNGinator or
+#     JSExe or similar. Recently Brotli compression has been allowed
+#     in Assembly Summer intro competitions, de facto.
+# 
+#     TODO: Write some "batch file" for Windows users who don't want
+#     to install WSL, MinGW or similar GNU toolset? So far, I see no
+#     point in not wanting to do that, though... so the priority is
+#     low or none.

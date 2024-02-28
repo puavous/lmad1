@@ -1,30 +1,38 @@
 /* -*- mode: javascript; tab-width: 4; indent-tabs-mode: nil; -*- */
 
 /**
- * Example thingy
+ * @fileOverview This file "prod.js" is the intro content
  *
- * Now using the dirty small library.
+ * This initial example belongs to the starter package of "Let's make a demo
+ * 1.x" party coding workshop. During 3 x 4 tutored hours and your own effort
+ * between them, this file eventually becomes your own artistic production.
+ * Additionally, you will replace song.js with your own music exported from
+ * SoundBox as JavaScript, write your own README.txt and set up a few names in
+ * Settings.mk.
  *
- * How-to:
+ * How to start:
  *
- * 1. Create a JavaScript file containing "(function(){BULK})();"
- *    where BULK is a catenation of the library, the soft-synth, this
- *    file, and *last of all* the main "on-load code".
+ * 1. Make a complete copy of the whole "example0" directory and rename it
+ *    according to your planned concept or just "PaulsFirstIntro" or whatever
  *
- * 2. <!-- To run in "debug mode", create an HTML file containing
- *    "<html><head /><body><script>JS</script></body></html>" where JS
- *    is the JavaScript produced in step 1. Open in a browser that
- *    happens to accept the beast. -->
+ * 2. If you happen to know what it means, do your favorite flavor of 'git init;
+ *    git add *.js *.txt *.mk Makefile; git commit -m "Start from the example"' 
  *
- * 3. To produce a minified "intro competition" version, use the
- *    provided GNU Makefile or other means (automatic, to keep sane)
- *    to do the following: Remove debugging code and other redundant
- *    functionality (lines that end with "DEBUG". Feed into a
- *    JavaScript minifier like Closure. Then pack with PNGinator or
- *    JSExe or similar.
+ *    If you don't know what it means, skip that one.
  *
- *    TODO: Write some "batch file" for Windows users who don't want
- *    to install MinGW or similar GNU toolset.
+ * 3. Make sure that you can build and preview the example without problems.
+ *
+ * 4. Explore and try to learn how the example works like it obviously does.
+ *
+ * 5. Gradually, piece by piece, make it your own. Ask help from the tutor
+ *    available in the workshop. I recommend starting from very small changes to
+ *    the example that help your understanding - how you change a color, how you
+ *    change a location, how you change a rotation, how you sync something with
+ *    the song time, ...
+ *
+ * 6. At some point, when comfortable, you can let go of these how-to comments
+ *    and make this code file completely yours. One thing I recommend is storing
+ *    your SoundBox song URL in a comment.
  *
  **/
 
