@@ -15,7 +15,7 @@ PROD_AUTHOR=The_Old_Dude
 
 ## Change these to match your local installation directories...
 #
-# If you are in my workshop, using the provided starter code package,
+# If you are in a workshop, using the provided starter code package,
 # everything is already included so you don't have to customize these.
 
 # --------------------------------------------------------------------

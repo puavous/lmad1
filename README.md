@@ -163,7 +163,13 @@ On the current TODO-list would be the following, in priority
 order:
 
 1. Make it easier and faster to install tools and start
-   modifying the example entry. (Was very easy at Instanssi 2023; lots to download, so starting is bandwidth-heavy. Only a few small things need to be fixed in next version: Small installation guide for tools. Simplify info file customization; it is now a nuisance. Add some guiding "do this / that here" type of comments to the starter example code. Simplify the example (snowman already quite a load to understand). Note-to-self: Pick up last year's own entry as a starter example for the following year? )
+   modifying the example entry. (Was very easy at Instanssi 2023; lots to download, so starting is bandwidth-heavy. Only a few small things need to be fixed in next version:
+   Small installation guide for tools (done).
+   Simplify info file customization; it is now a nuisance (done).
+   Add some guiding "do this / that here" type of comments to the starter example code.
+   Simplify the example (snowman already quite a load to understand).
+   Make the white fog disappear from example.
+   Note-to-self: Pick up last year's own entry as a starter example for the following year? )
 
 2. Improve documentation to make it easier to work between the guided
    workshop hours, or use this even for self-study (in the far, far, far
