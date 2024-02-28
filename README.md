@@ -141,7 +141,8 @@ Starting from 2024, I'll keep a log here about what's new and shiny:
   
   + Video tutorial for creating soundtrack.
 
-  + No need to rename source files - just replace example contents with own.
+  + No need to rename source files - just make a copy of the whole starter
+    example and start replacing contents with own.
 
 ## Current status and roadmap as of 1.4
 
