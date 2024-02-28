@@ -1,4 +1,5 @@
 /* -*- mode: javascript; tab-width: 4; indent-tabs-mode: nil; -*- */
+// TODO: Old product likely out of sync with current library. Update worthwhile?
 
 /**
  * My own entry to Instanssi 2019 compo.. I hope..

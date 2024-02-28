@@ -1,4 +1,5 @@
 /* -*- mode: javascript; tab-width: 4; indent-tabs-mode: nil; -*- */
+// TODO: Old product likely out of sync with current library. Update worthwhile?
 
 /**
  * "Scrolling text" as presented in Vortex III, but with cleaned-up source.
