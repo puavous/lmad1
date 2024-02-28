@@ -53,14 +53,28 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7dk9SgNBGAbgd2MS0MKfSsvFnELwOJZCGhsRJN0SEi
 
 /** Song tempo; the library computes time in beats for easy sync. */
 var songBeatsPerMinute = 116;
+
+/**
+ * Shader selection; this tutorial example depends on the exact ones selected.
+ * You better know what you do, if you change these. That said, why not ...
+ * The library compiles the combination of shaders given here and uses that
+ * as the shader program for everything that you draw.
+ * 
+ * TODO: In the future (maybe not yet in 2024) there could be a larger
+ * selection of "demo type" choices here. So far let's have one simple one.
+ */
+var shaders = [vert_shader_vanilla14,
+    frag_shader_vanilla14];
+
 /** You must give an RGBA color; scene background is cleared by the library.*/
 var clearColor = [0,0,0,1];
+
+
+
 /** You must give a light direction in camera space. */
 // FIXME: No - the Light will be in scenegraph before I'24 !!
 // FIXME: The fog will disappear from the example even before..
 var defaultLightDirection = [1,1,1,0];
-// (so far, the only lighting model available; will improve in later workshop
-// instances, but not yet in the one we have today...)
 
 // ----------------------------------------------------------------------------
 // Global variables that belong to your own production - the library does not
@@ -121,7 +135,7 @@ function snowman(t){
      * demoscene intro. Here is the semantics and some mnemonics to help you
      * remember what they mean:
      *
-     *   "f" stands for transForms or Functions: a list of 4x4 matrices that are
+     *   "f" stands for Frame transforms or Functions: a list of 4x4 matrices that are
      *   right-multiplied to scene transformation matrix before entering the
      *   node.
      *
@@ -150,23 +164,24 @@ function snowman(t){
      * (currently the only one available; calendar looks a bit so-so whether new
      * models are coming at Instanssi 2024 or must be left to later time):
      *
-     * First row:  Ambient  color RGBA - base color in shadowed region
-     * Second row: Diffuse  color RGBA - diffuse reflectance in lit region 
-     * Third row:  Specular color RGBA - specular 'shiny' reflectance
-     * Fourth row: [ shininess, (unused), mesh brightness, (unused) ]
+     * First row:  [ Ambient  R,G,B = base color in shadowed region,      (unused) ]
+     * Second row: [ Diffuse  R,G,B = diffuse reflectance in lit region,  (unused) ]
+     * Third row:  [ Specular R,G,B = specular 'shiny' reflectance,      shininess ]
+     * Fourth row: [ (unused), (unused), (unused), mesh brightness ]
      */
     var clr=
         [ .1,  .12, .05, 1, // ambient
           .2,  .4,  .5,  1, // diffuse
-          .6,  .3,  .1,  2, // specular
-           4,   1,   0,  0  // control
+          .1,  .1,  .1,  1, // specular + shininess
+           0,   0,   0,  0  // control
         ];
 
+    // A black kind of color with a reddish "glow" using specular color
     var black=
         [ .01, .02, .05, 1,
           .02, .04, .05, 1,
-          .6,  .3,  .1,  2, // specular
-          10,   1,   0,  0  ];
+          .6,  .3,  .1,  2,
+           0,   0,   0,  0  ];
 
     stuff.c.push({f: [translate_wi(0,1,0)],
                   o: [new Material(clr), objBall],
@@ -198,12 +213,24 @@ function snowman(t){
     return stuff;
 }
 
+// Return just a diffuse non-shiny basic coloring
+function basic_color(r,g,b){
+    return [r/3, g/3, b/3, 0,
+            r,   g,   b,   0,
+            0,   0,   0,   1,
+            0,   0,   0,   0]
+}
+
 /**
  * Your own creative input goes here - this function will be called on every screen update.
  *
  * Return a scene graph for a specific time. Time given as 'beats' according to song tempo.
  *
  * This is an important function to re-write creatively to make your own entry.
+ * 
+ * You can start deleting and replacing parts of the example as soon as you start to
+ * get an idea of how the structure is built. Exploring with small changes is a recommended
+ * way of learning.
  *
  */
 function buildSceneAtTime(t){
@@ -211,57 +238,66 @@ function buildSceneAtTime(t){
     // Initialize empty scenegraph. Root node with nothing inside:
     var sceneroot={f:[],o:[],c:[]};
 
-    // Animation parameters
-    //var stufftrans=[translate_wi(0,0,0),rotY_wi(-t*.8),rotX_wi(t*.02)];
-    var stufftrans=[translate_wi(0,-3.3,0)];
 
+    // Build animated contents step by step, in subgraphs
+    var player_one = snowman(2*t);
+    var player_two = snowman(2*t + 2);
+    var parivaljakko = {f:[],o:[],c:[
+        {f:[translate_wi(5,0,0),  rotY_wi(1.6)],  o:[], c:[player_one]},
+        {f:[translate_wi(-5,0,0), rotY_wi(-1.6)], o:[], c:[player_two]}
+    ]}
 
-        var stuff = snowman(2*t);
+    // Generating colors can be put into functions, like anything
+    var cpohja = basic_color(.9,.6,.4);
 
-        var cpohja=
-            [.3,.2,.1,1,
-             .9,.6,.4,1,
-             0, 0, 0,1,
-             2,1, 0,0];
+    // Colors can be animated, as can anything. Use "t" for sync and innovate...
+    var cloota = basic_color(.2, .5 + Math.sin(t), .4);
 
-        var ctausta=
-            [.1,.1,.2,1,
-             .3,.3,.8,1,
-              .1, .1, .1,2,
-             2,1,0.4,0];
+    // Names can be given to any nuts or bolts, to help you animate and manage your scene:
+    var parivaljakon_sijainti = [translate_wi(0,-3,0)];
+    //var parivaljakon_sijainti = [translate_wi(-1+((t%3)|0),-3,0)];
 
-        var tausta = {
-            f:[], //[rotZ_wi(t*.16)],
-            o:[new Material(ctausta),objBackground],
-            c:[]
-        };
+    var ctausta=
+        [.1, .1, .2, 1,
+         .3, .3, .8, 1,
+         .1, .1, .1, 2,
+          0,  0,  0, 0 ];
 
-        sceneroot.c.push({f:[],
-                          o:[],
-                          c:[
+    var tausta = {
+        f:[], //[rotZ_wi(t*.16)],
+        o:[new Material(ctausta), objBackground],
+        c:[]
+    };
+
+    sceneroot.c.push({f:[],
+                      o:[],
+                      c:[
+                              {f:[translate_wi(0,-3,0),scaleXYZ_wi(60,.1,60)],
+                               o:[new Material(cpohja),objTile],
+                               c:[]},
+
                               {f:[translate_wi(0,-3,0),scaleXYZ_wi(2,2,2)],
-                               o:[new Material(cpohja),objTile],
+                               o:[new Material(cloota),objTile],
                                c:[]},
 
-                              {f:[translate_wi(0,-3,0),scaleXYZ_wi(30,.1,30)],
-                               o:[new Material(cpohja),objTile],
-                               c:[]},
-                              {f:stufftrans,
+                              {f:parivaljakon_sijainti,
                                o:[],
-                               c:[stuff]},
-                              {f:[scaleXYZ_wi(2,1,3)],
+                               c:[parivaljakko]},
+
+                              {f:[scaleXYZ_wi(3,3,3)],
                                o:[],
                                c:[tausta]
                               },
 
-                              {f:[translate_wi(0,3,0), rotY_wi(t*.16), translate_wi(0,0,20-10*Math.sin(t*.01)), rotX_wi(.2)],
+                              // The scene must have exactly one Camera. It doesn't work without.
+                              {f:[translate_wi(0,3,0), rotY_wi(t*.26), translate_wi(0,0,30-10*Math.sin(t*.01)), rotX_wi(.2)],
                                o:[],
                                c:[],
                                r:[new Camera()]
                               }
                           ]
                          }
-                        );
+                    );
 
     return sceneroot;
 }
