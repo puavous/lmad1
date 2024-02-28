@@ -42,39 +42,52 @@ created using the great SoundBox minisynth:
 
 http://sb.bitsnbites.eu/?data=U0JveAwC7dm9SsNQGMbx56RpBoeqizgGexWCuzeiWIoSxBIIRcwSQmiQlCKIeCdOjl6Nl6AnX5Dix5zo_5e-73vaLCfhTH1OD6SJfNc5izV6i2Ud7tp27BnnVc5040V2NXI9W3Z6jqNAS6Wdnm31lfouCL7f_6qat7rv-f6vFCnp9HSrZ71__7PZQrEWzYyrab9pHobzKEmivu__Qje66_RrndtT0_ZwwOd_qVyPX85_0cy1rY0AAAAAAAAAAPibulHZvtqoTH4ZlUmmuhrPT3oY8qPW-y__-C-qWKBYK1cZ8WVEAQAAAAAAAAAAAP_Sx8LYkpHrTetfnInkt7dNqV6m9vNb8S4BAAAAAAAAAAAwLHldJ-7OkV29jGXeU_mX4z23vGuarKxqZRr2Q6UkZQAAAAAAAAAAABiWTw
 
+One older version, as an example of "keeping track of your song versions":
+
 http://sb.bitsnbites.eu/?data=U0JveAwC7dk9SgNBGAbgd2MS0MKfSsvFnELwOJZCGhsRJN0SEiQhCCLexMrS03gE3c0aiKLWRp9n-L4ZdqaY2fa9Pky2U3Y7Z6NsPY9SO9qr20m_6DylM1j0L-tVO5JhrlKt9fGHPslvNxx-ff9J3ae5y82n87P3eV7XIgAAAAAAAPw16ynZQVYpWcomJUuK5Uge7nO7ya9s799kXrNlIjabZ5om3RtLwQAAAAAAAP6l14uirhTp9gftl85uUq62i0aqpPqp_EYAAAAAAAA2y7St0-7Ocb167KV4qVKe9_a7zW7RxmTLIOybqoRkAAAAAAAAbJY3
-
-http://sb.bitsnbites.eu/?data=U0JveAwC7dsxSgNBGAXgN0lcBUGbCJYL3kO8iY1HsLFLt4ghiEsgbJPz2NrbeY842WCZ3sD3wT_vzTA3GGZyk0zTTvO0SD7rPJ7NL5L8XJZJl7R989KUaplV3vORt7ymq22V5diHbNLXdbvNaBgOuV4fsu8DAAAAAAAA_8_uudRJyay5O5xMrpJ2X_bvY13NI9N1YwMAAAAAAIAT8r0o-Vqk7GbNfd0-nJfp7jrtPLfj_7H9lb9XsGMJAAAAAAAAp-IX
-
-http://sb.bitsnbites.eu/?data=U0JveAwC7dwxSgQxFADQn9kxLgjarGAjDHgDDyAewt5mb6AgdtMNi-X2u9ewt7K1t_MI9uNkZ1EbtXXhveT__B9yg5BUxxHTaOqYtxHPQ1zvzaYR8XaQqi6iWeb7nAZRPGznt3VR5mLbr9fl1JiXY70aUolYbXoAAAAAAAD4R_rbNESkqPPZuFMdRjSl-Lwk636OrttUAAAAAAAAsENe2xQvbaS-zhdDe7mfJv1RNLM4-XpJVnR_rAAAAAAAALArqnkbk_LdYkQ-HdJTnSbnj3fvy3yVx7dkg5v4fQAAAAAAAMAu-QA
 
 */
 
-// --------------------------------------------------------------------------------
-// Variables used in this production, specifically:
-var songBeatsPerMinute = 116;
+// ----------------------------------------------------------------------------
+// Global variables that you must define - they are used by the library code:
 
-// You can change/add whatever you want here:
+/** Song tempo; the library computes time in beats for easy sync. */
+var songBeatsPerMinute = 116;
+/** You must give an RGBA color; scene background is cleared by the library.*/
+var clearColor=[0,0,0,1];
+/** You must give a light direction in camera space. */
+var defaultLightDirection=[1,1,1,0];
+// (so far, the only lighting model available; will improve in later workshop
+// instances, but not yet in the one we have today...)
+
+// ----------------------------------------------------------------------------
+// Global variables that belong to your own production - the library does not
+// use these, so you can change or add whatever you want here:
+
 var objTile, objBackground, objBall;
 
-// FIXME: Find a proper place for these:
-var clearColor=[0,0,0,1];
-var defaultLightDirection=[1,1,1,0];
-
-// --------------------------------------------------------------------------------
-
+// ----------------------------------------------------------------------------
 /**
  * Initialize the constant and pre-computed "assets" used in your own
- * production; this function is called once before entering the main
+ * production; the library calls this function once before entering the main
  * loop.
  *
  * Things like graphics primitives / building blocks can be generated
- * here.
+ * here. Basically anything that you want to compute once, before the
+ * show starts. Due to the current library workings, this includes all
+ * shapes that you're going to use - modifying shapes on-the-fly is not
+ * yet supported.
  */
 function initAssets(){
-    // Create primitive building blocks by different profile sweeps:
+    // The library provides some elementary ways to create shapes, as per
+    // the MIT OCW first course in computer graphics that was its inspiration.
+    // Once a shape is created, any number of transformed copies can be placed
+    // in the scene.
 
-    // Now I have a box in the library.
+    // Here, we create the most elementary of the elementary building blocks as
+    // an example: the box and the ball.
+
+    // Now there is a box shape available in the library:
     objTile = new Box(1);
 
     // Ball can be built from circle curves:
@@ -88,22 +101,71 @@ function initAssets(){
 }
 
 
+/**
+ * Example of how you can structure your scene graph using functions that build
+ * sub-graphs. Use names that are relevant to your production. snowman() builds
+ * a snowman for example.
+ *
+ */
 function snowman(t){
+
+    /**
+     * Example of a scene graph node. If you have any experience with JSON,
+     * you'll get it that a node is and object with 3 properties named "f", "o",
+     * and "c", and they all are lists. If this is your first encounter, you
+     * learn some basic JSON syntax here. Ask your tutor to clarify.
+     *
+     * The names are short and carefully selected to have minimal footprint in a
+     * demoscene intro. Here is the semantics and some mnemonics to help you
+     * remember what they mean:
+     *
+     *   "f" stands for transForms or Functions: a list of 4x4 matrices that are
+     *   right-multiplied to scene transformation matrix before entering the
+     *   node.
+     *
+     *   "o" stands for Objects: a list of actual objects / shapes that are
+     *   drawn using the current transformation.
+     *
+     *   "c" stands for Children: a list of nodes that will be processed after
+     *   applying "f" and drawing "o". If you have been wondering what recursive
+     *   processing means, then here is a good example about it.
+     *
+     * All the lists f, o, and c must always exist (or there will be a runtime
+     * error and crash) but can be empty, marked with empty braces [].
+     *
+     * The current library version allows property "r" for special uses, but
+     * it is not mandatory, and will be explained elsewhere on a need-to-know
+     * basis.
+     */
     var stuff = {
         f: [],
         o: [],
         c: []
     };
+
+    /**
+     * An example of a 4x4 matrix that is used in the default shading model
+     * (currently the only one available; calendar looks a bit so-so whether new
+     * models are coming at Instanssi 2024 or must be left to later time):
+     *
+     * First row:  Ambient  color RGBA - base color in shadowed region
+     * Second row: Diffuse  color RGBA - diffuse reflectance in lit region 
+     * Third row:  Specular color RGBA - specular 'shiny' reflectance
+     * Fourth row: [ shininess, (unused), mesh brightness, (unused) ]
+     */
     var clr=
-        [.1,.12,.05,1,
-         .2,.4,.5,1,
-         .6,.3,.1,2, // specular
-         10,1,0,0];
+        [ .1,  .12, .05, 1, // ambient
+          .2,  .4,  .5,  1, // diffuse
+          .6,  .3,  .1,  2, // specular
+          10,   1,   0,  0  // control
+        ];
+
     var black=
-        [.01,.02,.05,1,
-         .02,.04,.05,1,
-         .6,.3,.1,2, // specular
-         10,1,0,0];
+        [ .01, .02, .05, 1,
+          .02, .04, .05, 1,
+          .6,  .3,  .1,  2, // specular
+          10,   1,   0,  0  ];
+
     stuff.c.push({f: [translate_wi(0,1,0)],
                   o: [new Material(clr),objBall],
                   c: []
@@ -205,7 +267,7 @@ function buildSceneAtTime(t){
 
 
 
-// --------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 /**
  * (Optionally) initialize additional HTML and CSS parts of the
