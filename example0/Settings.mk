@@ -13,11 +13,6 @@ PROD_NAME_FULL=Example_4k
 # Your handle/nickname, also included in the zip package name (don't use spaces!)
 PROD_AUTHOR=The_Old_Dude
 
-# By default, us info text file "bunnies.nfo" if your your production
-# short name is "bunnies", but you can change it here if need be...
-NFO_NAME=$(PROD_NAME).nfo
-
-
 ## Change these to match your local installation directories...
 #
 # If you are in my workshop, using the provided starter code package,
@@ -46,3 +41,11 @@ PNGIN=ruby $(LMAD1)/tools/pnginator_modified.rb
 #GZTHERM=$(LMAD1)/external/gzthermal
 DEFDB=echo "You may optionally download the defdb program and use it here with args:"
 GZTHERM=echo "You may optionally download the gzthermal program and use it here with args:"
+
+# --------------------------------------------------------------------
+# Cosmetic
+# --------------------------------------------------------------------
+
+# Default info file name is "README.txt" which seems to be customary.
+# Change it, if you like "bunnies.nfo" for production short-named "bunnies"
+NFO_NAME=README.txt
