@@ -130,7 +130,18 @@ the sessions - otherwise there is little chance of finishing in time.
      18:00- Enjoy compos and everyone's own entries on screen.
 ```
 
-## Current status as of 1.4
+## Version history
+
+Starting from 2024, I'll keep a log here about what's new and shiny:
+
+- Version 1.4, premiere at Instanssi 2024: Focus on smoother and faster start at
+  first workshop session.
+  
+  + "Before workshop" instructions about tools.
+  
+  + Video tutorial for creating soundtrack.
+
+## Current status and roadmap as of 1.4
 
 "Version 1.0" of this library was successfully used to produce some 4
 productions in Instanssi 2018 compos, most of them 4k intros. After some hours
@@ -141,7 +152,7 @@ In Instanssi 2020, "version 1.2" was pretty smooth to carry out. Instanssi
 2023 had a successful "version 1.3" with 6 intros from the workshop. I don't
 find myself under pressure to do more than tiny polishing towards
 "version 1.4". As much as I would like to impress with a new feature every
-yearj, the available spare time remains very limited.
+year, the available spare time remains very limited.
 
 There might always be some improvements. I better promise
 nothing, though; it all depends on the time I can spare.
