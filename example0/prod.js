@@ -1,7 +1,7 @@
 /* -*- mode: javascript; tab-width: 4; indent-tabs-mode: nil; -*- */
 
 /**
- * @fileOverview This file "prod.js" is the intro content
+ * @fileOverview This file "prod.js" is the graphical content of the intro.
  *
  * This initial example belongs to the starter package of "Let's make a demo
  * 1.x" party coding workshop. During 3 x 4 tutored hours and your own effort
@@ -119,8 +119,12 @@ function initAssets(){
 
 /**
  * Example of how you can structure your scene graph using functions that build
- * sub-graphs. Use names that are relevant to your production. snowman() builds
- * a snowman for example.
+ * sub-graphs. Use names that are relevant to your production. Function
+ * "snowman" builds a snowman for example. If you build a squirrel, you can call
+ * the function "squirrel".
+ *
+ * Pro tip: Create meaningful and named parameters, too. Here, "handwave_amount"
+ * would have been better than "t" etc. Do better than these examples..
  *
  */
 function snowman(t){
@@ -135,23 +139,24 @@ function snowman(t){
      * demoscene intro. Here is the semantics and some mnemonics to help you
      * remember what they mean:
      *
-     *   "f" stands for Frame transforms or Functions: a list of 4x4 matrices that are
-     *   right-multiplied to scene transformation matrix before entering the
-     *   node.
+     *   "f" stands for Frame transformations or Functions: a list of 4x4
+     *   matrices that are right-multiplied to current scene transformation
+     *   matrix before entering the node further.
      *
      *   "o" stands for Objects: a list of actual objects / shapes that are
-     *   drawn using the current transformation.
+     *   drawn using the current transformation, after applying all "f".
      *
      *   "c" stands for Children: a list of nodes that will be processed after
      *   applying "f" and drawing "o". If you have been wondering what recursive
      *   processing means, then here is a good example about it.
      *
      * All the lists f, o, and c must always exist (or there will be a runtime
-     * error and crash) but can be empty, marked with empty braces [].
+     * error and crash) but any can be empty, marked with empty braces []. An
+     * empty list just means that the particular processing step is not relevant
+     * for that node.
      *
-     * The current library version allows property "r" for special uses, but
-     * it is not mandatory, and will be explained elsewhere on a need-to-know
-     * basis.
+     * The current library version uses property "r" for special uses, but it is
+     * not mandatory, and will be explained later, on a need-to-know basis.
      */
     var stuff = {
         f: [],
@@ -161,13 +166,16 @@ function snowman(t){
 
     /**
      * An example of a 4x4 matrix that is used in the default shading model
-     * (currently the only one available; calendar looks a bit so-so whether new
+     * (currently the best one available; calendar looks a bit so-so whether new
      * models are coming at Instanssi 2024 or must be left to later time):
      *
      * First row:  [ Ambient  R,G,B = base color in shadowed region,      (unused) ]
      * Second row: [ Diffuse  R,G,B = diffuse reflectance in lit region,  (unused) ]
      * Third row:  [ Specular R,G,B = specular 'shiny' reflectance,      shininess ]
      * Fourth row: [ (unused), (unused), (unused), mesh brightness ]
+     * 
+     * I suppose shininess needs to be larger than 0. Unused ones can be anything,
+     * they are unfortunate noise for our 4k.
      */
     var clr=
         [ .1,  .12, .05, 1, // ambient
@@ -183,10 +191,18 @@ function snowman(t){
           .6,  .3,  .1,  2,
            0,   0,   0,  0  ];
 
+    // We made an empty node called "stuff", but now we start using it as a container
+    // of more stuff, and do this by pushing new nodes in its child list:
     stuff.c.push({f: [translate_wi(0,1,0)],
                   o: [new Material(clr), objBall],
                   c: []
                  });
+
+    // You can use such pushing for example for pushing multiple nodes in a for-loop ...
+
+    // Pushing one-by-one makes it possible to manage combining parts without getting
+    // into kilometer-deep and wide JSON structures that make you sick and get out of hands.
+
     stuff.c.push({f: [translate_wi(0,2,0), scale_wi(.7)],
                   o: [new Material(clr), objBall],
                   c: [
@@ -196,8 +212,9 @@ function snowman(t){
                       {f: [rotY_wi(-.2), rotX_wi(.4*Math.sin(.06*t)),rotZ_wi(3.14-.4*Math.sin(.1*t)), translate_wi(1,0,0), scaleXYZ_wi(.8,.3,.3)],
                        o: [objBall],
                        c: []}
-                             ]
+                     ]
                  });
+    
     stuff.c.push({f: [translate_wi(0,3,0), scale_wi(.4), rotX_wi(-.3)],
                   o: [new Material(clr), objBall],
                   c: [{f: [translate_wi(0,.5,0), scaleXYZ_wi(1.5,.2,1.5)],
@@ -213,7 +230,10 @@ function snowman(t){
     return stuff;
 }
 
-// Return just a diffuse non-shiny basic coloring
+/** 
+ * Example of a function that returns a diffuse non-shiny basic coloring
+ * compatible with the Vanilla 1.4 shader
+ */
 function basic_color(r,g,b){
     return [r/3, g/3, b/3, 0,
             r,   g,   b,   0,
@@ -222,21 +242,24 @@ function basic_color(r,g,b){
 }
 
 /**
- * Your own creative input goes here - this function will be called on every screen update.
+ * Your own creative "direction" happens here - this function will be called on every
+ * screen update.
  *
- * Return a scene graph for a specific time. Time given as 'beats' according to song tempo.
+ * You are expected to return a scene graph for any time step here.
+ * Time is given as 'beats' according to song tempo that you have set above.
  *
  * This is an important function to re-write creatively to make your own entry.
  * 
  * You can start deleting and replacing parts of the example as soon as you start to
  * get an idea of how the structure is built. Exploring with small changes is a recommended
- * way of learning.
+ * way of learning. You can also talk you a workshop tutor and explore the possibilities
+ * available - they are limited, but can still be put together in a million ways or more.
  *
  */
 function buildSceneAtTime(t){
 
     // Initialize empty scenegraph. Root node with nothing inside:
-    var sceneroot={f:[],o:[],c:[]};
+    var sceneroot = {f:[],o:[],c:[]};
 
 
     // Build animated contents step by step, in subgraphs
@@ -247,8 +270,8 @@ function buildSceneAtTime(t){
         {f:[translate_wi(-5,0,0), rotY_wi(-1.6)], o:[], c:[player_two]}
     ]}
 
-    // Generating colors can be put into functions, like anything
-    var cpohja = basic_color(.9,.6,.4);
+    // Generating colors can be put into functions just like anything - for convenience and brevity
+    var cpohja = basic_color(.9, .6, .4);
 
     // Colors can be animated, as can anything. Use "t" for sync and innovate...
     var cloota = basic_color(.2, .5 + Math.sin(t), .4);
@@ -264,10 +287,14 @@ function buildSceneAtTime(t){
           0,  0,  0, 0 ];
 
     var tausta = {
-        f:[], //[rotZ_wi(t*.16)],
+        f:[],
         o:[new Material(ctausta), objBackground],
         c:[]
     };
+
+    // At times, surplus complexity tends to appear, and it could be refactored away.
+    // For example, the following code pushes a useless node with children that could have
+    // been pushed one-by-one more cleanly.
 
     sceneroot.c.push({f:[],
                       o:[],
@@ -296,8 +323,9 @@ function buildSceneAtTime(t){
                                r:[new Camera()]
                               },
 
-                              // With "Vanilla 1.4" intro, the scene must have exactly one Light
-                              {f:[translate_wi(10*Math.sin(t/9),2,0), scale_wi(.1)],
+                              // With "Vanilla 1.4" intro, the scene must have exactly one Light.
+                              // It doesn't work without.
+                              {f:[translate_wi(10*Math.sin(t/9),3+Math.sin(t), Math.sin(t/3)), scale_wi(.1)],
                                 o:[new Material(basic_color(9,9,9)), objTile],
                                 c:[],
                                 r:[new Light()]
