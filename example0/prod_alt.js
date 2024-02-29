@@ -7,6 +7,10 @@
  * No time to comment - I just try to make this a possibility in the 2 hours
  * right here now.
  *
+ * Ask help at the workshop - the first step will be to replace "prod.js" of
+ * your intro source with this file. And then there's more, we'll look into it
+ * on-site.. Cheers, 9 minutes before opening ceremony, "The Old Dude" :).
+ *
  **/
 
 /*
