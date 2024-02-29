@@ -19,7 +19,7 @@ LIBFILES="lib/curve_presets.js \
   lib/minified_shaders.js \
   lib/shaders_simple.js"
 
-EXAMPLEFILES="example0/example.nfo \
+EXAMPLEFILES="example0/README.txt \
   example0/Makefile \
   example0/prod.js \
   example0/Settings.mk \
