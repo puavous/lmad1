@@ -10,8 +10,9 @@
 # By Gasman <http://matt.west.co.tt/>
 # from an original idea by Daeken: http://daeken.com/superpacking-js-demos
 
-
-MAX_WIDTH = 4096
+# Edit by qma - current browsers support wider than 4096 pix lines(?) no limits..
+#MAX_WIDTH = 4096
+MAX_WIDTH = 16384
 USE_PNGOUT = true
 
 require 'zlib'
