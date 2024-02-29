@@ -71,11 +71,10 @@ var shaders = [vert_shader_vanilla14, frag_shader_vanilla14];
 var clearColor = [0,0,0,1];
 
 
-
 /** You must give a light direction in camera space. */
 // FIXME: No - the Light will be in scenegraph before I'24 !!
 // FIXME: The fog will disappear from the example even before..
-var defaultLightDirection = [1,1,1,0];
+// var defaultLightDirection = [1,1,1,0];
 
 // ----------------------------------------------------------------------------
 // Global variables that belong to your own production - the library does not
@@ -289,15 +288,22 @@ function buildSceneAtTime(t){
                                o:[],
                                c:[tausta]
                               },
-
+                                
                               // The scene must have exactly one Camera. It doesn't work without.
                               {f:[translate_wi(0,3,0), rotY_wi(t*.26), translate_wi(0,0,30-10*Math.sin(t*.01)), rotX_wi(.2)],
                                o:[],
                                c:[],
                                r:[new Camera()]
+                              },
+
+                              // With "Vanilla 1.4" intro, the scene must have exactly one Light
+                              {f:[translate_wi(10*Math.sin(t/9),2,0), scale_wi(.1)],
+                                o:[new Material(basic_color(9,9,9)), objTile],
+                                c:[],
+                                r:[new Light()]
                               }
-                          ]
-                         }
+                        ]
+                    }
                     );
 
     return sceneroot;
