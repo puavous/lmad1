@@ -54,16 +54,27 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7dk9SgNBGAbgd2MS0MKfSsvFnELwOJZCGhsRJN0SEi
 /** Song tempo; the library computes time in beats for easy sync. */
 var songBeatsPerMinute = 116;
 
+/** 
+ * Frame producer function must be selected; this tutorial example depends on
+ * the exact selection done here. In fact, everything after this selection could
+ * be very different for different approaches of how to paint each graphics frame.
+ *
+ * TODO: In the future (maybe not yet in 2024) there could be a larger selection
+ * of "demo type" choices here. So far there is the classic adaptation of course
+ * exercise answers: You provide a scenegraph with objects, camera, and light.
+ * The frame producer function traverses the graph and puts stuff to screen.
+ */
+var frameProducerFunction = frameProducerVanilla14;
+
 /**
  * Shader selection; this tutorial example depends on the exact ones selected.
- * You better know what you do, if you change these. That said, why not ...
- * The library compiles the combination of shaders given here and uses that
- * as the shader program for everything that you draw.
- * 
- * TODO: In the future (maybe not yet in 2024) there could be a larger
- * selection of "demo type" choices here. So far let's have one simple one:
- * It has a Phong shading model with exactly one light source.
- * No white fog this year..
+ * You better know what you do, if you change these. That said, why not ... The
+ * library compiles the combination of shaders given here and uses that as the
+ * shader program for everything that you draw.
+ *
+ * TODO: (Probably after 2024) This is related to the "demo type" choices which
+ * I'd like to provide in the library. So far let's have one simple one: It has
+ * a Phong shading model with exactly one light source. No white fog this year..
  */
 var shaders = [vert_shader_vanilla14, frag_shader_vanilla14];
 
@@ -280,7 +291,7 @@ function buildSceneAtTime(t){
 
     var ctausta=
         [.1, .1, .2, 1,
-         .3, .3, .8, 1,
+         .3, .3,  1, 1,
          .1, .1, .1, 2,
           0,  0,  0, 0 ];
 
@@ -301,7 +312,7 @@ function buildSceneAtTime(t){
     sceneroot.c.push({f:[],
                       o:[],
                       c:[
-                              {f:[translate_wi(0,-3,0), scaleXYZ_wi(60,.1,60)],
+                              {f:[translate_wi(0,-3,0), scaleXYZ_wi(60,.2,60)],
                                o:[new Material(cpohja), objTile],
                                c:[]},
 
@@ -319,7 +330,7 @@ function buildSceneAtTime(t){
                               },
                                 
                               // The scene must have exactly one Camera. It doesn't work without.
-                              {f:[translate_wi(0,3,0), rotY_wi(t*.26), translate_wi(0,0,30-10*Math.sin(t*.01)), rotX_wi(.2)],
+                              {f:[translate_wi(0,3,0), rotY_wi(t/3), translate_wi(0,0,30), rotX_wi(.2)],
                                o:[],
                                c:[],
                                r:[new Camera()]
@@ -327,7 +338,7 @@ function buildSceneAtTime(t){
 
                               // With "Vanilla 1.4" intro, the scene must have exactly one Light.
                               // It doesn't work without.
-                              {f:[translate_wi(10*Math.sin(t/9), 3+Math.sin(t), 0), scale_wi(.1)],
+                              {f:[translate_wi(9*Math.sin(t/9), 3+Math.sin(t), 0), scale_wi(.1)],
                                 o:[new Material(basic_color(9,9,9)), objTile],
                                 c:[],
                                 r:[new Light()]
