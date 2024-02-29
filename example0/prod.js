@@ -261,7 +261,6 @@ function buildSceneAtTime(t){
     // Initialize empty scenegraph. Root node with nothing inside:
     var sceneroot = {f:[],o:[],c:[]};
 
-
     // Build animated contents step by step, in subgraphs
     var player_one = snowman(2*t);
     var player_two = snowman(2*t + 2);
@@ -278,7 +277,6 @@ function buildSceneAtTime(t){
 
     // Names can be given to any nuts or bolts, to help you animate and manage your scene:
     var parivaljakon_sijainti = [translate_wi(0,-3,0)];
-    //var parivaljakon_sijainti = [translate_wi(-1+((t%3)|0),-3,0)];
 
     var ctausta=
         [.1, .1, .2, 1,
@@ -292,19 +290,23 @@ function buildSceneAtTime(t){
         c:[]
     };
 
+    var lootakorkeus = Math.min(-7 + t/4, 3);
+
     // At times, surplus complexity tends to appear, and it could be refactored away.
     // For example, the following code pushes a useless node with children that could have
-    // been pushed one-by-one more cleanly.
+    // been pushed one-by-one more cleanly. Or, actually, the empty root node did not need
+    // to be created in the first place... silly me... but this makes an instructional
+    // example, so leave it like this.. 
 
     sceneroot.c.push({f:[],
                       o:[],
                       c:[
-                              {f:[translate_wi(0,-3,0),scaleXYZ_wi(60,.1,60)],
-                               o:[new Material(cpohja),objTile],
+                              {f:[translate_wi(0,-3,0), scaleXYZ_wi(60,.1,60)],
+                               o:[new Material(cpohja), objTile],
                                c:[]},
 
-                              {f:[translate_wi(0,-3,0),scaleXYZ_wi(2,2,2)],
-                               o:[new Material(cloota),objTile],
+                              {f:[translate_wi(0,lootakorkeus,0), scaleXYZ_wi(2,2,2)],
+                               o:[new Material(cloota), objTile],
                                c:[]},
 
                               {f:parivaljakon_sijainti,
@@ -325,7 +327,7 @@ function buildSceneAtTime(t){
 
                               // With "Vanilla 1.4" intro, the scene must have exactly one Light.
                               // It doesn't work without.
-                              {f:[translate_wi(10*Math.sin(t/9),3+Math.sin(t), Math.sin(t/3)), scale_wi(.1)],
+                              {f:[translate_wi(10*Math.sin(t/9), 3+Math.sin(t), 0), scale_wi(.1)],
                                 o:[new Material(basic_color(9,9,9)), objTile],
                                 c:[],
                                 r:[new Light()]
