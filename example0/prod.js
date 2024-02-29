@@ -22,17 +22,17 @@
  *
  * 3. Make sure that you can build and preview the example without problems.
  *
- * 4. Explore and try to learn how the example works like it obviously does.
+ * 4. Explore and try to learn how the example works.
  *
- * 5. Gradually, piece by piece, make it your own. Ask help from the tutor
- *    available in the workshop. I recommend starting from very small changes to
- *    the example that help your understanding - how you change a color, how you
- *    change a location, how you change a rotation, how you sync something with
- *    the song time, ...
+ * 5. Gradually, piece by piece, make it your own. Ask help from a workshop
+ *    tutor. I recommend starting from very small changes to the example that
+ *    help your understanding - how you change a color, how you change a
+ *    location, how you change a rotation, how you sync something with the song
+ *    time, ...
  *
  * 6. At some point, when comfortable, you can let go of these how-to comments
  *    and make this code file completely yours. One thing I recommend is storing
- *    your SoundBox song URL in a comment.
+ *    your SoundBox song URL in a comment so it doesn't get lost.
  *
  **/
 
@@ -49,7 +49,7 @@ http://sb.bitsnbites.eu/?data=U0JveAwC7dk9SgNBGAbgd2MS0MKfSsvFnELwOJZCGhsRJN0SEi
 */
 
 // ----------------------------------------------------------------------------
-// Global variables that you must define - they are used by the library code:
+// Global variables that you MUST define - they are used by the library code:
 
 /** Song tempo; the library computes time in beats for easy sync. */
 var songBeatsPerMinute = 116;
@@ -61,10 +61,11 @@ var songBeatsPerMinute = 116;
  * as the shader program for everything that you draw.
  * 
  * TODO: In the future (maybe not yet in 2024) there could be a larger
- * selection of "demo type" choices here. So far let's have one simple one.
+ * selection of "demo type" choices here. So far let's have one simple one:
+ * It has a Phong shading model with exactly one light source.
+ * No white fog this year..
  */
-var shaders = [vert_shader_vanilla14,
-    frag_shader_vanilla14];
+var shaders = [vert_shader_vanilla14, frag_shader_vanilla14];
 
 /** You must give an RGBA color; scene background is cleared by the library.*/
 var clearColor = [0,0,0,1];
