@@ -81,15 +81,10 @@ var shaders = [vert_shader_vanilla14, frag_shader_vanilla14];
 /** You must give an RGBA color; scene background is cleared by the library.*/
 var clearColor = [0,0,0,1];
 
-
-/** You must give a light direction in camera space. */
-// FIXME: No - the Light will be in scenegraph before I'24 !!
-// FIXME: The fog will disappear from the example even before..
-// var defaultLightDirection = [1,1,1,0];
-
 // ----------------------------------------------------------------------------
 // Global variables that belong to your own production - the library does not
-// use these, so you can change or add whatever you want here:
+// use these, so you can change or add whatever you want here. They need to be
+// global so they are available in your draw function below:
 
 var objTile, objBackground, objBall;
 
