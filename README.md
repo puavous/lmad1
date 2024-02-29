@@ -137,12 +137,21 @@ Starting from 2024, I'll keep a log here about what's new and shiny:
 - Version 1.4, premiere at Instanssi 2024: Focus on smoother and faster start at
   first workshop session.
   
-  + "Before workshop" instructions about tools.
+  + "Before workshop" instructions about tools and installations.
   
-  + Video tutorial for creating soundtrack.
+  + Video tutorial about creating soundtrack.
 
   + No need to rename source files - just make a copy of the whole starter
-    example and start replacing contents with own.
+    example folder and start replacing contents with own.
+
+  + Massively improved comments on starter prod.js
+
+  + No more white fog or hardcoded light. Material parameters well-documented.
+
+  + More customization possible from the participant's prod.js
+
+  + Many small size optimizations suggested by tmptknn at and since last year's
+    Instanssi.
 
 ## Current status and roadmap as of 1.4
 
@@ -166,10 +175,11 @@ order:
    modifying the example entry. (Was very easy at Instanssi 2023; lots to download, so starting is bandwidth-heavy. Only a few small things need to be fixed in next version:
    Small installation guide for tools (done).
    Simplify info file customization; it is now a nuisance (done).
-   Add some guiding "do this / that here" type of comments to the starter example code.
-   Simplify the example (snowman already quite a load to understand).
-   Make the white fog disappear from example.
-   Note-to-self: Pick up last year's own entry as a starter example for the following year? )
+   Add some guiding "do this / that here" type of comments to the starter example code. (done)
+   Simplify the example (snowman already quite a load to understand) (deemed unnecessary, with comments).
+   Make the white fog disappear from example (done).
+   Note-to-self: Pick up last year's own entry as a starter example for the following year?(not necessary)). Let's see how it goes 2024
+   and what new problems lie ahead.
 
 2. Improve documentation to make it easier to work between the guided
    workshop hours, or use this even for self-study (in the far, far, far
