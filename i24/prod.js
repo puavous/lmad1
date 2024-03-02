@@ -32,14 +32,10 @@ var clearColor = [0,0,0,1];
 // use these, so you can change or add whatever you want here. They need to be
 // global so they are available in your draw function below:
 
-var objTile, objBall;
+var objTile;
 
 function initAssets(){
     objTile = new Box(1);
-
-    // Ball can be built from circle curves:
-    objBall = new GenCyl(new funCircle(1,10,.5), 32,
-                         new funCircle(0,32));
 }
 
 /** 
@@ -51,6 +47,25 @@ function basic_color(r,g,b){
             r,   g,   b,   0,
             0,   0,   0,   1,
             0,   0,   0,   0]
+}
+
+function teeTauhkaa(t,rota=1){
+    var root = {f:[],o:[],c:[]};
+    var ram = t/40*rota;
+
+    for(var i = 0; i<t ; i++){
+      root.c.push({
+        f:[translate_wi(0,i,-i), rotZ_wi(rota), scaleXYZ_wi(1000,.1,.1)],
+        o:[new Material(basic_color(1,1,1)), objTile],
+        c:[]})
+
+        root.c.push({
+            f:[translate_wi(0,-i,-i), rotZ_wi(rota), scaleXYZ_wi(1000,.1,.1)],
+            o:[new Material(basic_color(1,1,1)), objTile],
+            c:[]})
+        }
+    
+    return root;
 }
 
 /**
@@ -68,17 +83,23 @@ function buildSceneAtTime(t){
     // Colors can be animated, as can anything. Use "t" for sync and innovate...
     var cloota = basic_color(.2, .5 + Math.sin(t), .4);
 
-    // Names can be given to any nuts or bolts, to help you animate and manage your scene:
-    var parivaljakon_sijainti = [translate_wi(0,-3,0)];
-
     var lootakorkeus = Math.min(-7 + t/4, 3);
     var lootaYrot = Math.sin(t/20);
 
     var lootaXrot = 0, lootaZrot = 0;
+    var a=0;
+    if (t>16){
+
+
+        a = Math.max(0,(1-(t-16)/16));
+        clearColor=[a,a,a,1];
+    }
     if (t>32){
        lootaXrot = (t-32)/5;
        lootaZrot = (t-32)/4;
     }
+
+    tauhka = teeTauhkaa(t,t/20);
 
     sceneroot.c.push({f:[],
                       o:[],
@@ -93,9 +114,14 @@ function buildSceneAtTime(t){
                                 */
  
                               {f:[translate_wi(0,lootakorkeus,0), rotY_wi(lootaYrot), 
-                                rotX_wi(lootaXrot), rotZ_wi(lootaZrot), scaleXYZ_wi(2,2,2)],
+                                rotX_wi(lootaXrot), rotZ_wi(lootaZrot), scale_wi(2+5*a)],
                                o:[new Material(cloota), objTile],
                                c:[]},
+
+                               {f:[translate_wi(0,0,-5)],
+                                o:[],
+                                c:[tauhka]},
+
                                 
                               // The scene must have exactly one Camera. It doesn't work without.
                               {f:[translate_wi(0,0,30)], ///*translate_wi(0,3,0), rotY_wi(t/3), translate_wi(0,0,30), rotX_wi(.2)*/
