@@ -75,7 +75,7 @@ function buildSceneAtTime(t){
 
     // Initialize empty scenegraph. Root node with nothing inside:
     var sceneroot = {f:[],o:[],c:[]};
-    if (t>75) {clearColor=[1,1,1,1]; return sceneroot;}
+    if (t>72) {clearColor=[1,1,1,1]; return sceneroot;}
 
     // Generating colors can be put into functions just like anything - for convenience and brevity
     var cpohja = basic_color(.1, .2, .6);
@@ -85,6 +85,8 @@ function buildSceneAtTime(t){
 
     var lootakorkeus = Math.min(-7 + t/4, 3);
     var lootaYrot = Math.sin(t/20);
+
+    if (t>64) {lootakorkeus -= 64-t; }
 
     var lootaXrot = 0, lootaZrot = 0;
     var a=0;
@@ -140,7 +142,6 @@ function buildSceneAtTime(t){
                         ]
                     }
                     );
-
     return sceneroot;
 }
 
@@ -155,7 +156,20 @@ function buildSceneAtTime(t){
  * text shown as usual HTML or hypertext. Not often used in actual
  * demoscene productions.
  */
+var viestit=["","Hello, Instanssi 2024","Great intros coming up","from scene veterans","and workshop first-timers",
+"Thanks for participating","Good luck in the compo!!","Remember to vote, too!","","",""]
+var scrolltextdiv,messageHTML = "";
+var kukkuu = 0;
 function initDocument(){
+    // A crude scrolltext: one HTML element containing an unwrapped line
+    _document.body.appendChild(s = scrolltextdiv = _document.createElement("div"));
+    s.innerHTML = messageHTML;
+    s = s.style;
+    s.position = "fixed"; s.left = s.top = 10;
+    s.color = "#fff";
+    s.fontSize = "10vh";
+    s.whiteSpace = "nowrap";
+    s.fontFamily = "monospace";    
 }
 
 /**
@@ -164,4 +178,7 @@ function initDocument(){
  * often used in actual demoscene productions.
  */
 function updateDocument(t){
+    if (!kukkuu) {initDocument(); kukkuu=1;}
+    var vnumero=((t/8)|0);
+    scrolltextdiv.innerHTML=viestit[vnumero]
 }

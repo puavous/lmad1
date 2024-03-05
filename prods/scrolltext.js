@@ -81,6 +81,9 @@ var messageHTML = ". . . "    +spaces    +". . . "    +spaces
  * text shown as usual HTML or hypertext. Not often used in actual
  * demoscene productions.
  */
+var scrolltextnode, scrolltextdiv;
+var messageHTML = "Jatuota";
+
 function initDocument(){
 
     // A crude scrolltext: one HTML element containing an unwrapped line
