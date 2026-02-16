@@ -67,6 +67,6 @@ veryclean: cleaner
 
 # The workshop starter package
 
-lmad1_workshop_Instanssi2024.zip:
-	-rm -r lmad1_workshop_Instanssi2024
-	bash tools/create_starter_pack.sh Instanssi2024
+lmad1_workshop_Instanssi2026.zip:
+	-rm -r lmad1_workshop_Instanssi2026
+	bash tools/create_starter_pack.sh Instanssi2026

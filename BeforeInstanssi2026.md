@@ -1,23 +1,22 @@
-# How to prepare for the LMAD1 workshop at Instanssi 2024
+# How to prepare for the LMAD1 workshop at Instanssi 2026
 
 Most participants are Finns, but they'll do fine with English instructions, I'm
-sure. We're inclusive, and gladly accept international participants, of course.
+sure. We're inclusive, and gladly accept international participants.
 
 ## What you do not need
 
 What you do **not need** to do:
 
-- You don't need to fork, clone, or download this library. A snapshot "starter
-  package" will be provided at the event. Using this development version at the
-  event would be counter-productive.
+- You don't need to fork, clone, or download this library. This year
+  we'll be using a completely new toolset that will be announced at
+  the Instanssi event.
 
-- You don't need to take a preparatory programming course or worry about knowing
-  how to program or do graphics. We'll learn as we do stuff at the event.
+- You don't need to take a preparatory programming course or worry
+  about knowing how to program or do graphics. We'll learn as we do
+  stuff at the event.
 
-- You don't have to practice with the library... Perhaps better not to. I might
-  have a couple of hours time right before the workshop which could revamp
-  anything or everything in the library - for the better, of course, but it
-  might confuse you if you had done a lot of work on the current one.
+- You don't have to practice with this library... As said, there will
+  be newer, greater tools available in Instanssi 2026.
 
 ## What you absolutely need
 
@@ -120,9 +119,6 @@ What you **can do** to make things go even smoother:
   from any copyrighted songs! It is safest to just do your own, completely
   original soundtrack.
 
-  SoundBox must be used because the lmad1 library is wired to use it as the
-  sound engine.
-  
   **Mentally prepare to let go** of parts and instruments also
   in the soundtrack. Two reasons: To keep the final demo interesting with
   graphics, its running length might have to be reduced. To be able to
@@ -141,17 +137,22 @@ What you **can do** to make things go even smoother:
   avoid some common problems encountered in earlier workshops. I hope
   it makes the process smoother for you!
 
+  SoundBox is the most beginner-friendly alternative even though for
+  Instanssi 2026 you could alternatively use Sointu. One of these two
+  must be used because they are hardwired in the demo platform of the
+  workshop.
+
 - **Check out earlier productions** that have been created at the workshop, so
   you'll know what to expect, more or less. You may contrast these to high-end
   4k intros by experienced programmers using their mad skills and more elaborate
-  tools than my simple library. We can't suddenly become pros at a new thing.
-  This workshop is for your very first step towards demo programming, so you'll
+  tools. We can't suddenly become pros at a new thing.
+  This workshop is for your very first step towards demo creation, so you'll
   start with simple things that you can master. Crawl before you walk or run, so
   to speak... That said, you are allowed to do more elaborate stuff at the
   workshop and possibly get help for what you try to accomplish -- but always
-  with lesser priority than first-timers using the lmad1 library!
+  with lesser priority than first-timers using the tools provided by the workshop organizers!
 
-  Direct links to videos of some earlier lmad1-productions in Instanssi streams (mind your ears and speakers - audio tracks make some unpleasant surprises here):
+  Direct links to videos of some earlier workshop productions in Instanssi streams (mind your ears and speakers - audio tracks make some unpleasant surprises here):
 
   + Entries from 2 to 7 at Instanssi 2023 were made in the workshop: [Full compo
     stream in YouTube](https://www.youtube.com/watch?v=bu7VoU3IrAU)
@@ -162,6 +163,6 @@ What you **can do** to make things go even smoother:
   
   + Assembly Summer 2019 One Scene compo: [YouTube](https://www.youtube.com/watch?v=3ciW4HLmYCc)
 
-Looking forward to Instanssi 2024 and this year's workshop,
+Looking forward to Instanssi 2026 and this year's workshop,
 
 Paavo "The Old Dude" Nieminen
