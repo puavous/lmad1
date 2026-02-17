@@ -141,7 +141,8 @@ What you **can do** to make things go even smoother:
   SoundBox is the most beginner-friendly alternative even though for
   Instanssi 2026 you could alternatively use Sointu. One of these two
   must be used because they are hardwired in the demo platform of the
-  workshop.
+  workshop. If you go retro and use my lmad1 toolset, your only option
+  is SoundBox.
 
 - **Check out earlier productions** that have been created at the workshop, so
   you'll know what to expect, more or less. You may contrast these to high-end
