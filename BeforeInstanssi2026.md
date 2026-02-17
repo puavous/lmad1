@@ -1,6 +1,8 @@
 # How to prepare for the demo workshop at Instanssi 2026
 
-Most participants are Finns, but they'll do fine with these English
+This year the Instanssi demo workshop is given by a team of 5 super
+competent instructors on behalf of whom I thus salute you.  Most
+participants are Finns, but they'll do fine with these English
 instructions, I'm sure. We're inclusive, and gladly accept
 international participants.
 
@@ -10,8 +12,8 @@ What you do **not need** to do:
 
 - You don't need to fork, clone, or download this library. This year
   we'll be using a completely new toolset that will be announced at
-  the Instanssi event. Even if you want to be super retro and use the
-  old tools, ask for a pre-prepared starter package at the event.
+  the Instanssi event. Even if you want to be super retro and use this
+  old lmad1 tool, ask for a pre-prepared starter package at the event.
 
 - You don't need to take a preparatory programming course or worry
   about knowing how to program or do graphics. We'll learn as we do
@@ -115,7 +117,7 @@ What you **can do** to make things go even smoother:
 - **Create a preliminary soundtrack** using [SoundBox](https://sb.bitsnbites.eu),
   or have a musical friend do one for you. Save often as URL. **Do not**
   use any recognizable melodies or pieces
-  from any copyrighted songs! It is safest to just do your own, completely
+  from any copyrighted songs! It is safest to just compose your own, completely
   original soundtrack.
 
   **Mentally prepare to let go** of parts and instruments also
@@ -158,7 +160,7 @@ What you **can do** to make things go even smoother:
 
   + Instanssi 2020 had numerous workshop productions, too: [YouTube](https://www.youtube.com/watch?v=iBWlcQw-EYc)
 
-  Further examples of very creative ideas with limited number of elements, many executed during a 3-day party workshop:
+  Further examples of very creative ideas with a limited number of elements, many executed during a 3-day party workshop similar to the present one:
   
   + Assembly Summer 2019 One Scene compo: [YouTube](https://www.youtube.com/watch?v=3ciW4HLmYCc)
 
