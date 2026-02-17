@@ -1,7 +1,8 @@
-# How to prepare for the LMAD1 workshop at Instanssi 2026
+# How to prepare for the demo workshop at Instanssi 2026
 
-Most participants are Finns, but they'll do fine with English instructions, I'm
-sure. We're inclusive, and gladly accept international participants.
+Most participants are Finns, but they'll do fine with these English
+instructions, I'm sure. We're inclusive, and gladly accept
+international participants.
 
 ## What you do not need
 
@@ -9,14 +10,12 @@ What you do **not need** to do:
 
 - You don't need to fork, clone, or download this library. This year
   we'll be using a completely new toolset that will be announced at
-  the Instanssi event.
+  the Instanssi event. Even if you want to be super retro and use the
+  old tools, ask for a pre-prepared starter package at the event.
 
 - You don't need to take a preparatory programming course or worry
   about knowing how to program or do graphics. We'll learn as we do
   stuff at the event.
-
-- You don't have to practice with this library... As said, there will
-  be newer, greater tools available in Instanssi 2026.
 
 ## What you absolutely need
 
