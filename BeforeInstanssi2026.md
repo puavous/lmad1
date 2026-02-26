@@ -11,9 +11,9 @@ international participants.
 What you do **not need** to do:
 
 - You don't need to fork, clone, or download this library. This year
-  we'll be using a completely new toolset that will be announced at
-  the Instanssi event. Even if you want to be super retro and use this
-  old lmad1 tool, ask for a pre-prepared starter package at the event.
+  we'll be using a [completely new toolset](https://gitlab.com/bits_lab/loertsy) announced at the Instanssi
+  event. Even if you want to be super retro and use this old lmad1
+  tool, ask for a pre-prepared starter package at the event.
 
 - You don't need to take a preparatory programming course or worry
   about knowing how to program or do graphics. We'll learn as we do
